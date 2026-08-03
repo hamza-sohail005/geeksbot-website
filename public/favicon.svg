@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Antenna ball -->
+  <circle cx="32" cy="6" r="5" fill="#111"/>
+  <!-- Antenna connector -->
+  <ellipse cx="32" cy="13" rx="3" ry="2.5" fill="#111"/>
+  <!-- Antenna stick -->
+  <rect x="30.5" y="10" width="3" height="8" fill="#111"/>
+  <!-- Left ear -->
+  <rect x="2" y="32" width="7" height="9" rx="3.5" fill="#111"/>
+  <!-- Right ear -->
+  <rect x="55" y="32" width="7" height="9" rx="3.5" fill="#111"/>
+  <!-- Head (large rounded shape) -->
+  <rect x="8" y="17" width="48" height="42" rx="18" fill="#111"/>
+  <!-- Face panel (white area) -->
+  <rect x="14" y="26" width="36" height="24" rx="10" fill="white"/>
+  <!-- Left glass frame -->
+  <rect x="17" y="30" width="13" height="13" rx="4" fill="white" stroke="#111" stroke-width="3"/>
+  <!-- Right glass frame -->
+  <rect x="34" y="30" width="13" height="13" rx="4" fill="white" stroke="#111" stroke-width="3"/>
+  <!-- Glass bridge -->
+  <line x1="30" y1="37" x2="34" y2="37" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+  <!-- Left pupil -->
+  <rect x="20.5" y="33.5" width="6" height="7" rx="2.5" fill="#111"/>
+  <!-- Right pupil -->
+  <rect x="37.5" y="33.5" width="6" height="7" rx="2.5" fill="#111"/>
+</svg>
