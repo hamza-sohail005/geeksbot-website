@@ -3,7 +3,14 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const HOVER_SELECTOR = "a, button, .btn, .s-cards, .portfolio__image, .cards";
+const HOVER_SELECTOR = "a, button, .btn, .s-cards, .portfolio__image, .about-reason, .faq__item, .case-study, .hero-robot__orbit-item";
+
+// Content cards that get a hover-style highlight on desktop pointer hover.
+// Also used below to trigger that same highlight for whichever of these is
+// scrolled through the middle of the viewport - so the effect isn't limited
+// to pointer users.
+const IN_VIEW_FOCUS_SELECTOR =
+  ".hero-robot__orbit-item, .about-reason, .faq__item, .services-orbit__card, .s-cards, .testimonial__card, .stats__card, .small-features__item, .portfolio__item, .about-mission__card, .team__card, .contact__info-card, .service-detail__image, .process__card, .case-study";
 
 export default function ScrollEffects() {
   const pathname = usePathname();
@@ -49,6 +56,85 @@ export default function ScrollEffects() {
     animatedEls.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
+  }, [pathname]);
+
+  // Mirrors :hover for scrolling: only the single card closest to the
+  // cursor's actual screen position gets the highlight (not the viewport's
+  // center - that ignored where the pointer really was). Wheel-scrolling
+  // without moving the mouse keeps the pointer fixed on screen, so as cards
+  // scroll past that same fixed point, whichever one is now nearest it takes
+  // over the highlight - exactly like a real hover would if the page moved
+  // under a stationary cursor.
+  useEffect(() => {
+    const focusEls = Array.from(document.querySelectorAll(IN_VIEW_FOCUS_SELECTOR));
+    if (focusEls.length === 0) return;
+
+    let current = null;
+    let ticking = false;
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+    let hasPointer = false;
+
+    function update() {
+      ticking = false;
+      let closest = null;
+      let closestDist = Infinity;
+
+      for (const el of focusEls) {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(cx - pointerX, cy - pointerY);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = el;
+        }
+      }
+
+      if (closest !== current) {
+        current?.classList.remove("in-view-focus");
+        closest?.classList.add("in-view-focus");
+        current = closest;
+      }
+    }
+
+    function schedule() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    function onMouseMove(e) {
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      hasPointer = true;
+      schedule();
+    }
+
+    // Before the pointer has ever moved (fresh load, or a touch/scroll-only
+    // session) there's no real position to anchor to - fall back to the
+    // viewport center rather than a stale (0,0) corner.
+    function onScroll() {
+      if (!hasPointer) {
+        pointerX = window.innerWidth / 2;
+        pointerY = window.innerHeight / 2;
+      }
+      schedule();
+    }
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("mousemove", onMouseMove);
+      current?.classList.remove("in-view-focus");
+    };
   }, [pathname]);
 
   useEffect(() => {

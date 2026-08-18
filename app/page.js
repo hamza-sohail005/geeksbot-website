@@ -7,39 +7,38 @@ import ServicesOrbit from "@/components/ServicesOrbit";
 
 const aboutCards = [
   {
-    icon: "/images/about-icon-1.svg",
-    title: "Excellence in Solution",
-    text: "We are committed delivering innovative, reliable & scalable.",
+    title: "AI That Actually Helps",
+    text: "Every solution we build uses AI where it actually helps, not just because it sounds good. From smart chatbots to automated workflows, we pick the right tool for the job.",
   },
   {
-    icon: "/images/about-icon-2.svg",
-    title: "Difference We Deliver",
-    text: (
-      <>
-        Our team of experts brings <br /> years of experience across.
-      </>
-    ),
+    title: "Growth You Can Actually Measure",
+    text: "We use analytics to turn guesswork into actionable insight. From content marketing and paid search to conversion optimization, everything is tracked against real ROI, so you always know what is working.",
+  },
+  {
+    title: "Delivered On Time, Every Time",
+    text: "We plan every project around realistic milestones and stick to them. You will always know where things stand, without having to chase us for an update.",
+  },
+  {
+    title: "A Team That Stays Involved",
+    text: "We do not disappear after launch. Our team stays close after delivery, keeping an eye on performance and ready to help as your business keeps growing.",
   },
 ];
 
 const testimonials = [
   {
-    text: "GeeksBot transformed our online presence completely. Their team delivered a stunning website that increased our conversions by 150%. Absolutely recommend their services!",
-    image: "/images/team-01.png",
+    text: "GeeksBot rebuilt our website from the ground up and it made a real difference. Our online sales are up significantly since launch.",
     name: "Sarah Johnson",
     role: "CEO, TechVentures",
     featured: false,
   },
   {
-    text: "Working with GeeksBot was a game-changer for our startup. They built our entire SaaS platform from scratch and the quality exceeded all expectations. The team is incredibly talented and professional.",
-    image: "/images/team-02.png",
+    text: "We came to GeeksBot with just an idea for a SaaS platform. They built the entire thing from scratch and it turned out even better than we hoped.",
     name: "Michael Chen",
     role: "Founder, CloudSync",
     featured: true,
   },
   {
-    text: "Their digital marketing strategy doubled our leads within 3 months. The ROI has been phenomenal. GeeksBot truly understands what modern businesses need.",
-    image: "/images/team-01.png",
+    text: "Our leads more than doubled within a few months of working with GeeksBot. They understand what actually moves the needle for a growing business.",
     name: "Emily Rodriguez",
     role: "CMO, GrowthLab",
     featured: false,
@@ -50,20 +49,20 @@ const smallFeatures = [
   {
     icon: "/images/icon-01.svg",
     variant: "small-features__icon--pink",
-    title: "24/7 Support",
-    text: "Our dedicated team is available around the clock to resolve your queries and keep your systems running smoothly.",
+    title: "Support Around The Clock",
+    text: "Our team is here whenever you need us, day or night, to keep things running.",
   },
   {
     icon: "/images/icon-02.svg",
     variant: "small-features__icon--green",
-    title: "Take Ownership",
-    text: "We treat every project as our own, taking full responsibility from concept to launch and beyond.",
+    title: "We Take Real Ownership",
+    text: "We treat every project like it is our own, from the first meeting to launch and beyond.",
   },
   {
     icon: "/images/icon-03.svg",
     variant: "small-features__icon--orange",
-    title: "Team Work",
-    text: "We collaborate closely with you at every step, ensuring transparency and alignment with your vision.",
+    title: "We Work As One Team",
+    text: "You will always know what is happening and why, because we keep you close at every step.",
   },
 ];
 
@@ -122,36 +121,37 @@ export default function HomePage() {
         <div className="container">
           <div className="hero__content animate">
             <div className="hero-label">
-              <h4 className="label-text">IT Solutions for a Smarter Future</h4>
+              <h4 className="label-text">Trusted IT Partner For Modern Businesses</h4>
             </div>
             <h1 className="hero__title">
-              IT Solutions For A <span>Digital-First</span> World
+              A <span>Digital Agency</span> That Builds What Your Business Actually Needs
             </h1>
             <p className="hero__description">
-              We help businesses transform their digital presence with
-              cutting-edge web development, UI/UX design, and data-driven
-              marketing strategies that deliver measurable results.
+              GeeksBot helps companies grow with AI chatbots, automation
+              tools, websites, and mobile apps built around real business
+              goals. Every project is designed for measurable results well
+              into 2026.
             </p>
 
             <div className="hero__actions">
               <Link href="/contact" className="btn btn--primary header-btn">
-                Book a Free Consultation
+                Book A Free Consultation
               </Link>
               <span className="hero__contact">
                 <div className="company-status">
-                  <span>90</span>
-                  <span>K</span>
-                  <h5>Happy Client</h5>
-                </div>
-                <div className="company-status">
                   <span>650</span>
                   <span>+</span>
-                  <h5>Total Projects</h5>
+                  <h5>Projects Completed</h5>
                 </div>
                 <div className="company-status">
-                  <span>85</span>
+                  <span>90</span>
+                  <span>K+</span>
+                  <h5>Happy Clients</h5>
+                </div>
+                <div className="company-status">
+                  <span>15</span>
                   <span>+</span>
-                  <h5>Work Together</h5>
+                  <h5>Years Experience</h5>
                 </div>
               </span>
             </div>
@@ -229,53 +229,37 @@ export default function HomePage() {
       <section className="about">
         <div className="container">
           <div className="about__wrapper">
-            <div className="about__images">
-              <div>
-                <Image src="/images/about-01.png" alt="GeeksBot team collaborating on a project" width={300} height={300} />
-                <Image src="/images/about-02.png" alt="Creative workspace at GeeksBot" width={300} height={300} />
+            <div className="about__intro animate">
+              <div className="about_sub-title-background">
+                <h4 className="about__subtitle">Why Businesses Choose GeeksBot</h4>
               </div>
-              <div>
-                <Image src="/images/about-03.png" alt="GeeksBot delivering digital solutions" width={300} height={300} />
-              </div>
+              <h2 className="about__title">We Build For The Long Run</h2>
+              <p className="about__description">
+                GeeksBot brings together web development and digital
+                marketing under one roof, so nothing falls through the cracks
+                between building your product and getting people to use it.
+                We mix real technical skill with a genuine interest in your
+                business growth. Before we write a single line of code, we
+                run a short audit of what you already have and build a clear
+                roadmap for 2026, so nothing is guesswork.
+              </p>
             </div>
 
             <div className="about__content animate">
-              <div className="about_sub-title-background">
-                <h4 className="about__subtitle">Why Choose Us</h4>
-              </div>
-              <h2 className="about__title">
-                Empower Your Business
-                <br />
-                Every Step of the Way
-              </h2>
-              <p className="about__description">
-                At GeeksBot, we combine technical expertise with creative
-                thinking to build solutions that drive real business growth.
-                Our team of skilled developers, designers, and strategists
-                work together to deliver projects on time and beyond
-                expectations.
-              </p>
-
-              <div className="about-cards">
-                {aboutCards.map((card) => (
-                  <div className="cards" key={card.title}>
-                    <div className="about-icon">
-                      <span className="about-icon-bg">
-                        <Image src={card.icon} alt={`${card.title} icon`} width={32} height={32} />
-                      </span>
-                    </div>
-                    <div className="about-card-content">
-                      <h3>
-                        <Link href="/about">{card.title}</Link>
-                      </h3>
+              <div className="about-reasons">
+                {aboutCards.map((card, i) => (
+                  <div className="about-reason" key={card.title}>
+                    <span className="about-reason__index">{String(i + 1).padStart(2, "0")}</span>
+                    <div className="about-reason__body">
+                      <h3>{card.title}</h3>
                       <p>{card.text}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <Link href="/about" className="btn btn--primary header-btn" style={{ marginTop: "40px" }}>
-                About Us
+              <Link href="/about" className="btn btn--primary header-btn">
+                Learn About Us
               </Link>
             </div>
           </div>
@@ -292,11 +276,10 @@ export default function HomePage() {
               <h4 className="about__subtitle">Testimonials</h4>
             </div>
             <h2 className="section-title__heading">
-              What Our <span className="gradient-text">Clients Say</span>
+              Businesses Like Yours <span className="gradient-text">Trust GeeksBot</span>
             </h2>
             <p className="section-title__text">
-              Hear from businesses we&apos;ve helped grow with our digital
-              solutions.
+              Real feedback from real clients we have worked with.
             </p>
           </div>
 
@@ -309,7 +292,6 @@ export default function HomePage() {
                 <Stars />
                 <p className="testimonial__text">&quot;{testimonial.text}&quot;</p>
                 <div className="testimonial__author">
-                  <Image src={testimonial.image} alt={testimonial.name} width={48} height={48} />
                   <div>
                     <h4>{testimonial.name}</h4>
                     <span>{testimonial.role}</span>
@@ -344,16 +326,17 @@ export default function HomePage() {
       <section className="cta">
         <div className="container">
           <div className="cta__content animate">
-            <h2 className="cta__title">Ready to Build Something Amazing? Let&apos;s Talk.</h2>
+            <h2 className="cta__title">Ready To Build Something That Actually Works?</h2>
             <p className="cta__text">
-              Whether you need a brand-new website, a mobile app, or a
-              complete digital transformation — our team is ready to turn
-              your ideas into reality. Get a free consultation today.
+              Whether you need a chatbot, an app, or a full digital rebuild,
+              our team is ready to help you turn the idea into something real
+              in 2026. Let us help grow your brand&apos;s reach, starting with
+              a free consultation.
             </p>
           </div>
           <div className="animate">
             <Link href="/contact" className="btn btn--white">
-              Get Started Now
+              Get Started Today
             </Link>
           </div>
         </div>
