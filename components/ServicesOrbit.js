@@ -1,11 +1,31 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const leftServices = [
   {
+    href: "/ai-chatbot-development",
+    title: "AI Chatbot Development",
+    text: "AI chatbots that answer, qualify, and support customers 24/7.",
+    icon: (
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    ),
+  },
+  {
+    href: "/ai-automation-services",
+    title: "Automation Service",
+    text: "Workflow automation that cuts busywork and connects your tools.",
+    icon: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
+  },
+];
+
+const rightServices = [
+  {
     href: "/web-development",
-    title: "Web Development",
-    text: "High-performance websites built for speed and growth.",
+    title: "Web Application Development",
+    text: "Fast, secure web apps built to grow with your business.",
     icon: (
       <>
         <polyline points="16 18 22 12 16 6" />
@@ -15,8 +35,8 @@ const leftServices = [
   },
   {
     href: "/app-development",
-    title: "App Development",
-    text: "Scalable mobile apps for iOS & Android platforms.",
+    title: "Mobile App Development",
+    text: "iOS and Android apps built to launch and scale with confidence.",
     icon: (
       <>
         <rect x="7" y="2" width="10" height="20" rx="2" />
@@ -24,86 +44,19 @@ const leftServices = [
       </>
     ),
   },
-  {
-    href: "/ui-ux-design",
-    title: "UI/UX Design",
-    text: "Beautiful, intuitive and user-focused designs.",
-    icon: <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />,
-  },
 ];
 
-const rightServices = [
-  {
-    href: "/digital-marketing",
-    title: "Digital Marketing",
-    text: "Data-driven strategies that drive real results.",
-    icon: (
-      <>
-        <path d="M3 11v3a1 1 0 0 0 1 1h3l4 4V6L7 10H4a1 1 0 0 0-1 1z" />
-        <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-        <path d="M18 6a8 8 0 0 1 0 12" />
-      </>
-    ),
-  },
-  {
-    href: "/seo-optimization",
-    title: "SEO Optimization",
-    text: "Rank higher and attract more organic traffic.",
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </>
-    ),
-  },
+// Curved connector paths in a 1200x640 reference box, one per service in
+// display order (left0, left1, right0, right1). pathLength="100"
+// normalizes stroke-dasharray math for the scroll-in "draw" animation.
+const connectors = [
+  { d: "M160,160 C 430,160 430,270 590,300" },
+  { d: "M160,480 C 430,480 430,370 590,340" },
+  { d: "M1040,160 C 770,160 770,270 640,300" },
+  { d: "M1040,480 C 770,480 770,370 640,340" },
 ];
 
-const leftNodes = [
-  (
-    <>
-      <polyline points="9 8 5 12 9 16" />
-      <polyline points="15 8 19 12 15 16" />
-    </>
-  ),
-  (
-    <>
-      <rect x="4" y="4" width="11" height="11" rx="1.5" />
-      <polyline points="14 11 20 11 20 20 11 20 11 14" />
-    </>
-  ),
-  (
-    <>
-      <polyline points="9 8 5 12 9 16" />
-      <polyline points="15 8 19 12 15 16" />
-    </>
-  ),
-];
-
-// Only 2 items on the right (5 services total) - place them at the
-// top and bottom rows so they stay visually balanced against the
-// 3-item left column, leaving the middle row clear next to the bot.
-const rightNodes = [
-  {
-    row: 1,
-    icon: (
-      <>
-        <path d="M3 11v3a1 1 0 0 0 1 1h3l4 4V6L7 10H4a1 1 0 0 0-1 1z" />
-        <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-      </>
-    ),
-  },
-  {
-    row: 3,
-    icon: (
-      <>
-        <circle cx="9" cy="8" r="3" />
-        <path d="M3 20a6 6 0 0 1 12 0" />
-      </>
-    ),
-  },
-];
-
-function ServiceIcon({ children, size = 20 }) {
+function ServiceIcon({ children, size = 22 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       {children}
@@ -111,92 +64,128 @@ function ServiceIcon({ children, size = 20 }) {
   );
 }
 
-function ServiceItem({ service, reverse }) {
+function ServiceCard({ service, id, hovered, onHover, onLeave, side }) {
+  const state =
+    hovered === id ? "is-active" : hovered !== null ? "is-dim" : "";
+
   return (
-    <Link href={service.href} className="services-orbit__item">
-      {!reverse && (
-        <span className="services-orbit__item-icon">
-          <ServiceIcon>{service.icon}</ServiceIcon>
-        </span>
-      )}
-      <span className="services-orbit__item-text">
+    <Link
+      href={service.href}
+      className={`services-orbit__card services-orbit__card--${side} ${state}`}
+      onMouseEnter={() => onHover(id)}
+      onMouseLeave={onLeave}
+      onFocus={() => onHover(id)}
+      onBlur={onLeave}
+    >
+      <span className="services-orbit__card-icon">
+        <ServiceIcon>{service.icon}</ServiceIcon>
+      </span>
+      <span className="services-orbit__card-text">
         <h4>{service.title}</h4>
         <p>{service.text}</p>
       </span>
-      {reverse && (
-        <span className="services-orbit__item-icon">
-          <ServiceIcon>{service.icon}</ServiceIcon>
-        </span>
-      )}
+      <span className="services-orbit__card-arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </span>
     </Link>
   );
 }
 
 export default function ServicesOrbit() {
+  const [hovered, setHovered] = useState(null);
+  const isActive = hovered !== null;
+
   return (
     <section className="services-orbit">
       <div className="container">
         <div className="section-title animate">
-          <div className="about_sub-title-background">
+          <div className="about_sub-title-background services-orbit__badge">
+            <span className="services-orbit__badge-dot"></span>
             <h4 className="about__subtitle">Our Services</h4>
+            <span className="services-orbit__badge-dot"></span>
           </div>
           <h2 className="section-title__heading">
-            Solutions That Power <span className="gradient-text">Your Business</span>
+            What We Can <span className="gradient-text">Build For You</span>
           </h2>
+          <p className="services-orbit__subtitle">
+            We keep up with the latest digital tools and trends so you do not have to. It is part of why more businesses are starting to see GeeksBot as one of the top agencies worth calling first.
+          </p>
         </div>
 
-        <div className="services-orbit__diagram animate">
-          <span className="services-orbit__ring services-orbit__ring--1"></span>
-          <span className="services-orbit__ring services-orbit__ring--2"></span>
-
-          {leftServices.map((service, i) => (
-            <div className="services-orbit__item-cell services-orbit__item-cell--left" style={{ gridRow: i + 1 }} key={service.title}>
-              <ServiceItem service={service} reverse />
-            </div>
-          ))}
-
-          {leftNodes.map((icon, i) => (
-            <div className="services-orbit__node-cell services-orbit__node-cell--left" style={{ gridRow: i + 1 }} key={`ln-${i}`}>
-              <span className="services-orbit__node">
-                <ServiceIcon size={16}>{icon}</ServiceIcon>
-              </span>
-            </div>
-          ))}
-
-          <div className="services-orbit__center-wrap">
-            <span className="services-orbit__center-glow"></span>
-            <div className="services-orbit__center">
-              <div className="services-orbit__center-mask">
-                <Image
-                  src="/images/robot-face.png"
-                  alt="GeeksBot AI assistant"
-                  width={260}
-                  height={260}
-                  className="services-orbit__center-img"
-                  priority
+        <div className="services-orbit__stage animate">
+          <svg className="services-orbit__connectors" viewBox="0 0 1200 640" preserveAspectRatio="none" aria-hidden="true">
+            {connectors.map((c, i) => (
+              <g key={i} className={`services-orbit__connector ${hovered === i ? "is-active" : ""}`}>
+                <path
+                  id={`services-orbit-path-${i}`}
+                  d={c.d}
+                  pathLength="100"
+                  className="services-orbit__connector-path"
                 />
-              </div>
+                <circle r="4" className="services-orbit__connector-dot">
+                  <animateMotion dur="3.2s" repeatCount="indefinite" begin={`${i * 0.45}s`}>
+                    <mpath href={`#services-orbit-path-${i}`} />
+                  </animateMotion>
+                </circle>
+              </g>
+            ))}
+          </svg>
+
+          <div className="services-orbit__rings" aria-hidden="true">
+            <span className="services-orbit__ring services-orbit__ring--1"></span>
+            <span className="services-orbit__ring services-orbit__ring--2"></span>
+            <span className="services-orbit__ring services-orbit__ring--3"></span>
+          </div>
+
+          <div className="services-orbit__center">
+            <span className={`services-orbit__center-glow ${isActive ? "is-boost" : ""}`}></span>
+            <div className="services-orbit__center-mask">
+              <Image
+                src="/images/robot-face.png"
+                alt="GeeksBot AI assistant"
+                width={340}
+                height={340}
+                className={`services-orbit__center-img ${isActive ? "is-active" : ""}`}
+                priority
+              />
             </div>
           </div>
 
-          {rightNodes.map((node, i) => (
-            <div className="services-orbit__node-cell services-orbit__node-cell--right" style={{ gridRow: node.row }} key={`rn-${i}`}>
-              <span className="services-orbit__node">
-                <ServiceIcon size={16}>{node.icon}</ServiceIcon>
-              </span>
-            </div>
-          ))}
+          <div className="services-orbit__col services-orbit__col--left">
+            {leftServices.map((service, i) => (
+              <ServiceCard
+                key={service.title}
+                service={service}
+                id={i}
+                side="left"
+                hovered={hovered}
+                onHover={setHovered}
+                onLeave={() => setHovered(null)}
+              />
+            ))}
+          </div>
 
-          {rightServices.map((service, i) => (
-            <div className="services-orbit__item-cell services-orbit__item-cell--right" style={{ gridRow: rightNodes[i].row }} key={service.title}>
-              <ServiceItem service={service} />
-            </div>
-          ))}
+          <div className="services-orbit__col services-orbit__col--right">
+            {rightServices.map((service, i) => (
+              <ServiceCard
+                key={service.title}
+                service={service}
+                id={i + 2}
+                side="right"
+                hovered={hovered}
+                onHover={setHovered}
+                onLeave={() => setHovered(null)}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="services-orbit__cta animate">
-          <Link href="/features" className="btn btn--primary header-btn">
-            Explore All Services
+          <Link href={leftServices[0].href} className="btn btn--primary header-btn services-orbit__cta-btn">
+            See All Our Services
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />

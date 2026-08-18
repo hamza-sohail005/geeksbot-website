@@ -7,11 +7,15 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
 const services = [
-  { href: "/web-development", label: "Web Development" },
-  { href: "/ui-ux-design", label: "UI/UX Design" },
-  { href: "/digital-marketing", label: "Digital Marketing" },
-  { href: "/seo-optimization", label: "SEO Optimization" },
-  { href: "/app-development", label: "App Development" },
+  { href: "/ai-chatbot-development", label: "AI Chatbot Development" },
+  { href: "/ai-automation-services", label: "Automation Service" },
+  { href: "/web-development", label: "Web Application Development" },
+  { href: "/app-development", label: "Mobile App Development" },
+];
+
+const portfolioLinks = [
+  { href: "/portfolio#our-work", label: "Our Work" },
+  { href: "/portfolio#case-studies", label: "Case Studies" },
 ];
 
 const navLinks = [
@@ -75,13 +79,23 @@ export default function Header() {
                   ))}
                 </ul>
               </li>
-              <li>
+              <li className="header__dropdown">
                 <Link
-                  href="/features"
-                  className={`header__nav-link ${pathname === "/features" ? "active" : ""}`}
+                  href="/portfolio"
+                  className={`header__nav-link header__dropdown-toggle ${pathname === "/portfolio" ? "active" : ""}`}
                 >
-                  Features
+                  Portfolio
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
+                <ul className="header__dropdown-menu">
+                  {portfolioLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href}>{link.label}</Link>
+                    </li>
+                  ))}
+                </ul>
               </li>
               <li>
                 <Link

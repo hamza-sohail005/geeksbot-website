@@ -39,12 +39,11 @@ export default function Page() {
 
           <LegalSection title="2. Services">
             <p style={legalStyles.paragraph}>
-              GeeksBot provides a comprehensive range of digital and IT
-              services, including but not limited to: custom web
-              development, UI/UX design, digital marketing, search engine
-              optimization (SEO), mobile application development, brand
-              identity design, e-commerce solutions, and ongoing website
-              maintenance and support.
+              GeeksBot provides a comprehensive range of digital and AI
+              services, including but not limited to: AI chatbot
+              development, automation services, custom web application
+              development, mobile application development, and ongoing
+              application maintenance and support.
             </p>
             <p style={legalStyles.paragraph}>
               The specific scope, deliverables, timelines, and pricing for

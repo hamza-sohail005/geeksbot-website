@@ -18,8 +18,9 @@ export default function Footer() {
                 className="footer__brand-logo"
               />
               <p className="footer__brand-text">
-                Empowering businesses with innovative IT solutions, modern
-                design, and result-driven digital strategies.
+                GeeksBot is an agency based in the U.S. We help businesses
+                grow with AI powered tools, thoughtful design, and marketing
+                that is built to deliver real results.
               </p>
               <ul className="footer__social">
                 <li>
@@ -52,8 +53,8 @@ export default function Footer() {
                 <ul className="footer__links-list">
                   <li><Link href="/">Home</Link></li>
                   <li><Link href="/about">About Us</Link></li>
-                  <li><Link href="/web-development">Web Development</Link></li>
-                  <li><Link href="/features">Features</Link></li>
+                  <li><Link href="/web-development">Services</Link></li>
+                  <li><Link href="/portfolio">Portfolio</Link></li>
                   <li><Link href="/contact">Contact Us</Link></li>
                 </ul>
               </div>
@@ -61,19 +62,27 @@ export default function Footer() {
               <div className="footer__links">
                 <h4 className="footer__links-title">Our Services</h4>
                 <ul className="footer__links-list">
-                  <li><Link href="/web-development">Web Development</Link></li>
-                  <li><Link href="/app-development">App Development</Link></li>
-                  <li><Link href="/ui-ux-design">UI/UX Design</Link></li>
-                  <li><Link href="/digital-marketing">Digital Marketing</Link></li>
-                  <li><Link href="/seo-optimization">SEO Optimization</Link></li>
+                  <li><Link href="/ai-chatbot-development">AI Chatbot Development</Link></li>
+                  <li><Link href="/ai-automation-services">Automation Service</Link></li>
+                  <li><Link href="/web-development">Web Application Development</Link></li>
+                  <li><Link href="/app-development">Mobile App Development</Link></li>
                 </ul>
               </div>
 
               <div className="footer__links">
-                <h4 className="footer__links-title">Support</h4>
+                <h4 className="footer__links-title">Resources</h4>
                 <ul className="footer__links-list">
-                  <li><Link href="/contact">Help Center</Link></li>
-                  <li><Link href="/terms">Terms of Service</Link></li>
+                  <li><Link href="/help-center">Support</Link></li>
+                  <li><Link href="/faqs">FAQs</Link></li>
+                </ul>
+              </div>
+
+              <div className="footer__links">
+                <h4 className="footer__links-title">Legal</h4>
+                <ul className="footer__links-list">
+                  <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                  <li><Link href="/terms">Terms &amp; Conditions</Link></li>
+                  <li><Link href="/cookie-policy">Cookie Policy</Link></li>
                 </ul>
               </div>
             </div>

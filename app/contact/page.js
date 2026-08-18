@@ -4,12 +4,12 @@ import PageHero from "@/components/PageHero";
 export const metadata = {
   title: "Contact Us",
   description:
-    "Get in touch with GeeksBot for web development, UI/UX design, digital marketing, and IT solutions. Book a free consultation today.",
+    "Get in touch with GeeksBot for AI chatbot development, automation services, web application development, and mobile app development. Book a free consultation today.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact Us - GeeksBot",
     description:
-      "Get in touch with GeeksBot for web development, UI/UX design, digital marketing, and IT solutions.",
+      "Get in touch with GeeksBot for AI chatbot development, automation services, web application development, and mobile app development.",
     url: "https://geeksbot.com/contact",
   },
 };
@@ -34,7 +34,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h4>Our Address</h4>
-                <p>123 Business Avenue, Suite 400<br />New York, NY 10001, USA</p>
+                <p>C158, 1, Block 9 Gulshan-e-Iqbal,<br />Karachi, KHI 75300, Pakistan</p>
               </div>
 
               <div className="contact__info-card animate">
@@ -44,7 +44,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h4>Phone Number</h4>
-                <p>+1 (555) 123-4567<br />+1 (555) 987-6543</p>
+                <p>+92 (323) 201-3083</p>
               </div>
 
               <div className="contact__info-card animate">
@@ -58,7 +58,7 @@ export default function ContactPage() {
                 <p>geeksbotdev@gmail.com</p>
               </div>
             </div>
-
+            
             <ContactForm />
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function ContactPage() {
       <section className="map" style={{ padding: "0 0 100px" }}>
         <div className="container">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.305935303!2d-74.25986548248684!3d40.69714941932609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1690000000000!5m2!1sen!2s"
+            src="https://www.google.com/maps?q=C158%2C%201%2C%20Block%209%20Gulshan-e-Iqbal%2C%20Karachi%2C%20KHI%2075300%2C%20Pakistan&output=embed"
             width="100%"
             height="450"
             style={{ border: 0, borderRadius: "20px" }}

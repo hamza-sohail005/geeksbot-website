@@ -3,34 +3,52 @@ import Image from "next/image";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
-  title: "About Us",
+  title: "About Geeks Bot | Trusted Digital Agency in USA",
   description:
-    "Learn about GeeksBot - a passionate team of developers, designers, and strategists dedicated to delivering exceptional digital solutions that drive real business results.",
+    "Learn about Geeks Bot, a trusted digital agency in USA specializing in AI chatbot development, web application development, automation services, and mobile app development.",
   alternates: { canonical: "/about" },
 };
 
 const aboutCards = [
   {
-    icon: "/images/about-icon-1.svg",
-    title: "Excellence in Solution",
-    text: "We are committed delivering innovative, reliable & scalable.",
+    title: "Why Businesses Choose Geeks Bot",
+    text: "We listen to your goals, understand your industry, and recommend solutions that create real value for your business instead of simply delivering projects.",
   },
   {
-    icon: "/images/about-icon-2.svg",
-    title: "Difference We Deliver",
-    text: (
-      <>
-        Our team of experts brings <br /> years of experience across.
-      </>
-    ),
+    title: "Experience You Can Trust",
+    text: "Our team has delivered websites, business applications, AI chatbots, automation systems, and mobile apps that meet modern business requirements.",
+  },
+  {
+    title: "Honest, Transparent Communication",
+    text: "You will always know what stage your project is at and why. We would rather have an honest conversation than leave you guessing.",
+  },
+  {
+    title: "Built To Grow With Your Business",
+    text: "Every solution is built on a foundation that can scale, so you are not stuck rebuilding from scratch the moment your business takes off.",
+  },
+];
+
+const insights = [
+  {
+    tag: "Automation",
+    title: "Why Most Automation Projects Stall Before Launch",
+    text: "The projects that succeed start with a short audit of your actual workflow, not a list of tools. We map where time is really being lost before we write a single integration.",
+  },
+  {
+    tag: "AI Chatbots",
+    title: "What Makes A Chatbot Worth Talking To",
+    text: "A chatbot earns trust by knowing when to answer and when to hand off to a human. We design conversation flows around your real customer questions, not generic scripts.",
+  },
+  {
+    tag: "Web & Mobile",
+    title: "Building For Where Your Business Will Be In Two Years",
+    text: "We choose technology based on what your team can maintain and what your growth actually requires, so your platform holds up long after launch day.",
   },
 ];
 
 const team = [
-  { image: "/images/team-01.png", name: "Sarah Johnson", role: "CEO & Founder" },
-  { image: "/images/team-02.png", name: "Michael Chen", role: "Lead Developer" },
-  { image: "/images/team-01.png", name: "Emily Rodriguez", role: "UI/UX Designer" },
-  { image: "/images/team-02.png", name: "David Williams", role: "Marketing Director" },
+  { initials: "AP", variant: "team__avatar--teal", name: "Arsalan Pervez", role: "Co-Founder" },
+  { initials: "AS", variant: "team__avatar--pink", name: "Ashar Shahbaz", role: "Co-Founder" },
 ];
 
 function TeamSocial() {
@@ -60,57 +78,34 @@ export default function AboutPage() {
     <>
       <PageHero
         title="About Us"
-        text="We are a passionate team of developers, designers, and strategists dedicated to delivering exceptional digital solutions that drive real business results."
+        text="At Geeks Bot, we help businesses grow with innovative digital solutions that solve real business challenges. Founded by Arsalan Pervez and Ashar Shahbaz, we specialize in AI chatbot development, web application development, automation services, and mobile app development."
       />
 
-      {/* ===== Mission / Vision / Values ===== */}
-      <section className="about-mission">
+      {/* ===== Insights ===== */}
+      <section className="case-studies">
         <div className="container">
-          <div className="about-mission__grid">
-            <div className="about-mission__card animate">
-              <div className="about-mission__icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <circle cx="12" cy="12" r="6" />
-                  <circle cx="12" cy="12" r="2" />
-                </svg>
-              </div>
-              <h3>Our Mission</h3>
-              <p>
-                To empower businesses with innovative digital solutions that
-                drive growth, enhance efficiency, and create lasting impact in
-                an ever-evolving digital landscape.
-              </p>
+          <div className="section-title animate">
+            <div className="about_sub-title-background">
+              <h4 className="about__subtitle">How We Think</h4>
             </div>
+            <h2 className="section-title__heading">
+              Insights From <span className="gradient-text">Building This Every Day</span>
+            </h2>
+            <p className="section-title__text">
+              A few things we have learned from delivering chatbots,
+              automation, and full digital products for real businesses.
+            </p>
+          </div>
 
-            <div className="about-mission__card animate">
-              <div className="about-mission__icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+          <div className="case-studies__grid">
+            {insights.map((item, i) => (
+              <div className="case-study animate" key={item.title}>
+                <span className="case-study__index">{String(i + 1).padStart(2, "0")}</span>
+                <span className="case-study__tag">{item.tag}</span>
+                <h3 className="case-study__title">{item.title}</h3>
+                <p className="case-study__text">{item.text}</p>
               </div>
-              <h3>Our Vision</h3>
-              <p>
-                To be the leading digital agency recognized for transforming
-                ideas into powerful digital experiences that redefine
-                industries and inspire innovation worldwide.
-              </p>
-            </div>
-
-            <div className="about-mission__card animate">
-              <div className="about-mission__icon">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </div>
-              <h3>Our Values</h3>
-              <p>
-                We believe in integrity, collaboration, and excellence. Every
-                project we undertake is driven by our commitment to quality,
-                transparency, and client satisfaction.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -119,48 +114,41 @@ export default function AboutPage() {
       <section className="about">
         <div className="container">
           <div className="about__wrapper">
-            <div className="about__images">
-              <div>
-                <Image src="/images/about-01.png" alt="GeeksBot team working together" width={300} height={300} />
-                <Image src="/images/about-02.png" alt="Creative design process at GeeksBot" width={300} height={300} />
+            <div className="about__intro animate">
+              <div className="about_sub-title-background">
+                <h4 className="about__subtitle">Empowering Businesses with Smart Digital Solutions</h4>
               </div>
-              <div>
-                <Image src="/images/about-03.png" alt="GeeksBot project delivery" width={300} height={300} />
-              </div>
+              <h2 className="about__title">We Never Rely On Generic Solutions</h2>
+              <p className="about__description">
+                Every business has different goals, which is why we take time
+                to understand your business, identify challenges, and develop
+                technology that delivers practical results. Our founders,
+                Arsalan Pervez and Ashar Shahbaz, have successfully
+                completed projects for businesses across different
+                industries as Top Rated professionals on Upwork.
+              </p>
+              <p className="about__description">
+                Your success is our priority. From planning and development
+                to testing and ongoing support, we work closely with our
+                clients to ensure every solution delivers measurable
+                business value.
+              </p>
             </div>
 
             <div className="about__content animate">
-              <div className="about_sub-title-background">
-                <h4 className="about__subtitle">Who We Are</h4>
-              </div>
-              <h2 className="about__title">Empower Your Business Every Step of the Way</h2>
-              <p className="about__description">
-                With over 15 years of experience in the digital industry, we
-                have helped hundreds of businesses transform their online
-                presence. Our team combines creativity with technical
-                expertise to deliver solutions that not only look great but
-                also perform exceptionally.
-              </p>
-
-              <div className="about-cards">
-                {aboutCards.map((card) => (
-                  <div className="cards" key={card.title}>
-                    <div className="about-icon">
-                      <span className="about-icon-bg">
-                        <Image src={card.icon} alt={`${card.title} icon`} width={32} height={32} />
-                      </span>
-                    </div>
-                    <div className="about-card-content">
-                      <h3>
-                        <Link href="/about">{card.title}</Link>
-                      </h3>
+              <div className="about-reasons">
+                {aboutCards.map((card, i) => (
+                  <div className="about-reason" key={card.title}>
+                    <span className="about-reason__index">{String(i + 1).padStart(2, "0")}</span>
+                    <div className="about-reason__body">
+                      <h3>{card.title}</h3>
                       <p>{card.text}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <Link href="/contact" className="btn btn--primary header-btn" style={{ marginTop: "40px" }}>
+              <Link href="/contact" className="btn btn--primary header-btn">
                 Contact Us
               </Link>
             </div>
@@ -173,22 +161,25 @@ export default function AboutPage() {
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">
-              <h4 className="about__subtitle">Our Team</h4>
+              <h4 className="about__subtitle">Meet Our Team</h4>
             </div>
             <h2 className="section-title__heading">
-              Meet The <span className="gradient-text">Team Members</span>
+              Behind Every Project Is A <span className="gradient-text">Passionate Team</span>
             </h2>
             <p className="section-title__text">
-              Our talented team of professionals is dedicated to delivering
-              exceptional results for every project we undertake.
+              Led by Arsalan Pervez and Ashar Shahbaz, our team combines
+              creativity, technical expertise, and industry knowledge to
+              deliver solutions that help businesses grow with confidence.
             </p>
           </div>
 
           <div className="team__grid">
             {team.map((member) => (
               <div className="team__card animate" key={member.name}>
-                <div className="team__image">
-                  <Image src={member.image} alt={member.name} width={280} height={280} />
+                <div className="team__avatar-wrap">
+                  <div className={`team__avatar ${member.variant}`}>
+                    <span>{member.initials}</span>
+                  </div>
                 </div>
                 <div className="team__info">
                   <h4>{member.name}</h4>
@@ -205,11 +196,12 @@ export default function AboutPage() {
       <section className="cta">
         <div className="container">
           <div className="cta__content animate">
-            <h2 className="cta__title">Ready to Take Your Business to the Next Level?</h2>
+            <h2 className="cta__title">Ready to Grow Your Business?</h2>
             <p className="cta__text">
-              Partner with GeeksBot and get access to a dedicated team of
-              experts who are passionate about delivering digital solutions
-              that drive growth and success.
+              Whether you are looking for AI chatbot development, web
+              application development, automation services, or mobile app
+              development, Geeks Bot is here to help. Let&apos;s create
+              technology that helps your business grow.
             </p>
           </div>
           <div className="animate">

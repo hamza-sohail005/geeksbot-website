@@ -17,7 +17,7 @@ from the original static HTML/CSS project.
   (`components/CountUp.js`) and mission/vision/values sections.
 - **Working email integration**: the Contact page (`app/contact/page.js` +
   `components/ContactForm.js`) now actually sends an email when submitted,
-  via a real API route at `app/api/contact/route.js` using **nodemailer**.
+  via **EmailJS** (sent directly from the browser, no backend server needed).
   Previously the form had `action="#"` and did nothing.
 - **SEO metadata migrated**: every page's `<meta>`, Open Graph, and Twitter
   tags now live in Next.js's `metadata` export, which is stronger than static
@@ -34,7 +34,7 @@ from the original static HTML/CSS project.
 
 ```bash
 npm install
-cp .env.example .env.local   # then fill in real SMTP credentials
+cp .env.example .env.local   # then fill in real EmailJS credentials
 npm run dev
 ```
 
@@ -42,22 +42,36 @@ Open http://localhost:3000
 
 ## Email setup (required for the contact form to work)
 
+The contact form uses [EmailJS](https://www.emailjs.com/) to send email
+straight from the browser — no server/API route or SMTP credentials needed.
+
 Fill in `.env.local`:
 
 ```
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-CONTACT_TO_EMAIL=info@geeksbot.com
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_xxxxxxx
+NEXT_PUBLIC_EMAILJS_ADMIN_TEMPLATE_ID=template_xxxxxxx
+NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID=template_xxxxxxx
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your-public-key
 ```
 
-- If using Gmail, you need an **App Password** (not your normal password) —
-  generate one under Google Account → Security → 2-Step Verification →
-  App Passwords.
-- For production, a transactional email service (Resend, SendGrid, Postmark)
-  is more reliable than Gmail SMTP — swap the transporter config in
-  `app/api/contact/route.js` if you go that route later.
+All four values come from the [EmailJS dashboard](https://dashboard.emailjs.com/admin):
+
+1. **Email Services** → connect the `geeksbotdev@gmail.com` Gmail account →
+   copy its Service ID into `NEXT_PUBLIC_EMAILJS_SERVICE_ID`.
+2. **Email Templates** → create the admin notification template (To Email:
+   `geeksbotdev@gmail.com`, Reply To: `{{from_email}}`) → copy its Template ID
+   into `NEXT_PUBLIC_EMAILJS_ADMIN_TEMPLATE_ID`.
+3. **Email Templates** → create the auto-reply template (To Email:
+   `{{from_email}}`) → copy its Template ID into
+   `NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID`.
+4. **Account** → **General** → copy the Public Key into
+   `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`.
+
+These `NEXT_PUBLIC_*` variables are bundled into the client-side JS (that's
+required for EmailJS to work from the browser) — this is expected and safe;
+EmailJS's Public Key is designed to be exposed this way, and abuse is
+mitigated by EmailJS's per-account request limits and domain restrictions
+(configurable under Account → Security).
 
 ## Images
 

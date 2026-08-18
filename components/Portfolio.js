@@ -6,8 +6,9 @@ import Image from "next/image";
 
 const filters = [
   { label: "All", value: "all" },
-  { label: "Web Development", value: "web" },
-  { label: "UI/UX Design", value: "design" },
+  { label: "Web Apps", value: "web" },
+  { label: "Mobile Apps", value: "mobile" },
+  { label: "Chatbots", value: "chatbot" },
 ];
 
 const projects = [
@@ -15,58 +16,61 @@ const projects = [
     category: "web",
     wide: true,
     image: "/images/project-01.png",
-    tag: "Web Development",
-    title: "E-Commerce Platform",
-    desc: "A fully responsive e-commerce store with product management, secure payments, and seamless checkout experience.",
+    tag: "Web Apps",
+    title: "Online Store For A Retail Brand",
+    desc: "A fast, secure online store where customers can browse and pay in just a few clicks, built to increase conversions.",
     href: "/web-development",
   },
   {
-    category: "design",
+    category: "web",
     wide: false,
-    image: "/images/project-02.png",
-    tag: "UI/UX Design",
-    title: "SaaS Dashboard",
-    desc: "Clean, intuitive dashboard interface designed for a cloud-based analytics platform with real-time data visualization.",
-    href: "/ui-ux-design",
+    image: "/images/showcase-business-growth.png",
+    tag: "Web Apps",
+    title: "Dashboard For A SaaS Company",
+    desc: "A clean, easy to use dashboard that shows live analytics, so teams can see what is happening the moment it happens.",
+    href: "/web-development",
   },
   {
     category: "web",
     wide: false,
     image: "/images/project-03.png",
-    tag: "Web Development",
-    title: "Corporate Website",
-    desc: "Modern corporate website with custom CMS, blog integration, and optimized performance for a logistics company.",
+    tag: "Web Apps",
+    title: "Website For A Logistics Company",
+    desc: "A modern company website with a built in blog and fast load times, made to support their team's day to day work.",
     href: "/web-development",
   },
   {
-    category: "design",
+    category: "mobile",
     wide: true,
     image: "/images/project-04.png",
-    tag: "UI/UX Design",
-    title: "Mobile App Redesign",
-    desc: "Complete UI/UX overhaul for a fintech mobile app, improving user retention by 40% with a fresh, modern interface.",
-    href: "/ui-ux-design",
+    tag: "Mobile Apps",
+    title: "App Redesign For A Fintech Brand",
+    desc: "A full redesign of their mobile app that made it easier to use and helped more people stick around after signing up.",
+    href: "/app-development",
   },
 ];
 
-export default function Portfolio() {
+export default function Portfolio({ showIntro = true, showCta = true }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   return (
-    <section className="portfolio">
+    <section className="portfolio" id="our-work">
       <div className="container">
+        {showIntro && (
         <div className="section-title animate">
           <div className="about_sub-title-background">
-            <h4 className="about__subtitle">Our Portfolio</h4>
+            <h4 className="about__subtitle">Our Work</h4>
           </div>
           <h2 className="section-title__heading">
-            Our Recent <span className="gradient-text">Creative Works</span>
+            Real Projects, <span className="gradient-text">Real Results</span>
           </h2>
           <p className="section-title__text">
-            Take a look at some of our finest work. Each project is crafted
-            with precision, creativity, and a focus on delivering results.
+            Here is a look at some of the work we have delivered, from
+            chatbots to full mobile apps. Each project was built to solve a
+            real problem, not just look good in a portfolio.
           </p>
         </div>
+        )}
 
         <div className="portfolio__filters animate">
           {filters.map((filter) => (
@@ -111,11 +115,13 @@ export default function Portfolio() {
           })}
         </div>
 
+        {showCta && (
         <div className="portfolio__cta animate">
-          <Link href="/features" className="btn btn--primary header-btn">
-            View All Projects
+          <Link href="/portfolio" className="btn btn--primary header-btn">
+            See All Projects
           </Link>
         </div>
+        )}
       </div>
     </section>
   );

@@ -2,22 +2,22 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollEffects from "@/components/ScrollEffects";
+import SiteBackground from "@/components/SiteBackground";
 
 export const metadata = {
   metadataBase: new URL("https://geeksbot.com"),
   title: {
-    default: "GeeksBot - IT Solutions & Digital Services",
+    default: "Digital Agency in USA. AI, Web and Mobile App Development. GeeksBot",
     template: "%s | GeeksBot",
   },
   description:
-    "GeeksBot offers professional IT solutions including web development, UI/UX design, digital marketing, SEO optimization, and mobile app development to help businesses grow digitally.",
+    "GeeksBot is a digital agency in the USA. We build AI chatbots, automation, web apps, and mobile apps for businesses that want real, measurable growth.",
   keywords: [
-    "IT solutions",
-    "web development",
-    "UI/UX design",
-    "digital marketing",
-    "SEO optimization",
-    "app development",
+    "digital agency USA",
+    "AI chatbot development",
+    "automation service",
+    "web application development",
+    "mobile app development",
     "GeeksBot",
   ],
   authors: [{ name: "GeeksBot" }],
@@ -29,9 +29,9 @@ export const metadata = {
     apple: "/favicon.png",
   },
   openGraph: {
-    title: "GeeksBot - IT Solutions & Digital Services",
+    title: "Digital Agency in USA. AI, Web and Mobile App Development. GeeksBot",
     description:
-      "We help businesses transform their digital presence with cutting-edge web development, UI/UX design, and data-driven marketing strategies.",
+      "GeeksBot helps companies grow with AI chatbots, automation tools, websites, and mobile apps built around real business goals.",
     url: "https://geeksbot.com/",
     siteName: "GeeksBot",
     images: ["/images/GeeksBot-Full.png"],
@@ -39,9 +39,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GeeksBot - IT Solutions & Digital Services",
+    title: "Digital Agency in USA. AI, Web and Mobile App Development. GeeksBot",
     description:
-      "Professional IT solutions including web development, UI/UX design, digital marketing, and app development.",
+      "GeeksBot is a digital agency in the USA. We build AI chatbots, automation, web apps, and mobile apps for businesses that want real, measurable growth.",
   },
 };
 
@@ -63,6 +63,7 @@ export default function RootLayout({ children }) {
         <div className="cursor" id="cursor"></div>
         <div className="cursor-follower" id="cursorFollower"></div>
 
+        <SiteBackground />
         <Header />
         <main>{children}</main>
         <Footer />

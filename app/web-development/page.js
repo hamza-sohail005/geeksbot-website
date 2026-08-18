@@ -3,36 +3,36 @@ import Image from "next/image";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
-  title: "Web Development",
+  title: "Web App Development Services | Custom Web Applications USA",
   description:
-    "Professional web development services by GeeksBot. We build modern, responsive websites and web applications using React, Next.js, Vue.js, Node.js, and more.",
+    "Build secure and scalable web applications with Geeks Bot. We provide custom web app development services for startups, ecommerce, and enterprise businesses across the USA.",
   alternates: { canonical: "/web-development" },
 };
 
 const features = [
-  "Custom Website Development",
-  "E-Commerce Solutions",
-  "CMS Development",
-  "API Integration",
-  "Performance Optimization",
+  "Custom Web App Development Services",
+  "Progressive Web App Development Services",
+  "Enterprise Web App Development Services",
+  "Shopify Web App Development Services",
+  "Web Application Maintenance and Support",
 ];
 
 const process = [
   {
     title: "Discovery",
-    text: "We start by understanding your business goals, target audience, and project requirements to create a solid foundation for development.",
+    text: "We begin by understanding your business goals, users, and project requirements. This allows us to create the right strategy for your web application and ensure every feature supports your business objectives.",
   },
   {
     title: "Design",
-    text: "Our designers craft intuitive wireframes and visual mockups that align with your brand identity and provide an exceptional user experience.",
+    text: "Our designers create intuitive user interfaces and seamless user experiences that make your web application easy to use across desktop, tablet, and mobile devices.",
   },
   {
     title: "Development",
-    text: "Our expert developers bring the designs to life using the latest technologies, ensuring clean code, responsiveness, and optimal performance.",
+    text: "Our experienced web app developers build secure and scalable web applications using modern technologies and industry best practices. We develop custom web applications, integrate third party services, and optimize every solution for speed and reliability.",
   },
   {
     title: "Launch",
-    text: "After thorough testing and quality assurance, we deploy your project and provide ongoing support to ensure everything runs smoothly.",
+    text: "Before deployment, every web application is thoroughly tested for performance, security, and usability. After launch, we provide ongoing support, updates, and improvements to keep your application running smoothly.",
   },
 ];
 
@@ -40,8 +40,8 @@ export default function Page() {
   return (
     <>
       <PageHero
-        title="Web Development"
-        text="We build modern, high-performance websites and web applications tailored to your business needs. From custom solutions to scalable platforms, our development team delivers results that drive growth."
+        title="Web App Development Services"
+        text="Transform your ideas into powerful digital solutions with our Web App Development Services. At Geeks Bot, we design and develop secure, scalable, and high performance web applications that help businesses improve operations, engage customers, and support long term growth."
         parent={{ label: "Services", href: "/" }}
       />
 
@@ -49,13 +49,21 @@ export default function Page() {
         <div className="container">
           <div className="service-detail__wrapper">
             <div className="service-detail__content animate">
-              <h2>Build Powerful Digital Experiences</h2>
+              <h2>Build Custom Web Applications That Grow Your Business</h2>
               <p>
-                Our web development services combine cutting-edge technology
-                with creative design to deliver websites that not only look
-                stunning but also perform exceptionally. We focus on creating
-                user-centric solutions that help businesses establish a
-                strong online presence and achieve their digital goals.
+                Every business has unique challenges that require more than
+                an ordinary website. Our web app development services focus
+                on building custom web applications that improve
+                productivity, simplify business processes, and create better
+                user experiences.
+              </p>
+              <p>
+                As a trusted web application development firm in USA, we
+                create modern web applications using the latest technologies
+                and development practices. From startups to enterprise
+                organizations, our team develops responsive and scalable web
+                solutions that are built for performance, security, and
+                future growth.
               </p>
               <ul className="service-detail__list">
                 {features.map((feature) => (
@@ -69,11 +77,11 @@ export default function Page() {
                 ))}
               </ul>
               <Link href="/contact" className="btn btn--primary header-btn">
-                Get Started
+                Book a Call Today
               </Link>
             </div>
             <div className="service-detail__image animate">
-              <Image src="/images/project-01.png" alt="Web Development" width={600} height={450} />
+              <Image src="/images/showcase-code-development.png" alt="Web App Development" width={600} height={450} />
             </div>
           </div>
         </div>
@@ -82,7 +90,7 @@ export default function Page() {
       <section className="process">
         <div className="container">
           <div className="section-title animate">
-            <h2 className="section-title__heading">Our Development Process</h2>
+            <h2 className="section-title__heading">Our Web App Development Process</h2>
           </div>
           <div className="process__grid">
             {process.map((step) => (
@@ -98,16 +106,17 @@ export default function Page() {
       <section className="cta">
         <div className="container">
           <div className="cta__content animate">
-            <h2 className="cta__title">Ready to Build Your Next Web Project?</h2>
+            <h2 className="cta__title">Ready to Build Your Next Web Application?</h2>
             <p className="cta__text">
-              Let&apos;s work together to create a powerful web presence that
-              drives results for your business. Get in touch with our team
-              today.
+              Whether you need a custom business platform, enterprise web
+              application, progressive web app, or Shopify web solution,
+              Geeks Bot is here to help. Let&apos;s build a web application
+              that moves your business forward.
             </p>
           </div>
           <div className="animate">
             <Link href="/contact" className="btn btn--white">
-              Get Started Now
+              Book a Call Today
             </Link>
           </div>
         </div>
