@@ -1,6 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import ServiceCoreVisual from "@/components/ServiceCoreVisual";
+
+const whyGeeksbot = [
+  { icon: "target", title: "Business Aligned", text: "Built around your goals and real outcomes." },
+  { icon: "users", title: "User Obsessed", text: "Intuitive experiences people enjoy using." },
+  { icon: "trend", title: "Future Ready", text: "Scalable foundations built for growth." },
+  { icon: "shield", title: "Reliable Partner", text: "Invested in your success well past launch." },
+];
 
 export const metadata = {
   title: "Mobile App Development Company | Custom iOS & Android Apps",
@@ -80,9 +87,10 @@ export default function Page() {
                 Book a Call Today
               </Link>
             </div>
-            <div className="service-detail__image animate">
-              <Image src="/images/showcase-mobile-app-ui.png" alt="Mobile App Development" width={600} height={450} />
-            </div>
+            <ServiceCoreVisual
+              benefits={whyGeeksbot}
+              flowLabel="Why choose GeeksBot for mobile app development"
+            />
           </div>
         </div>
       </section>

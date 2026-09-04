@@ -1,6 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import ServiceCoreVisual from "@/components/ServiceCoreVisual";
+
+const whyGeeksbot = [
+  { icon: "loop", title: "Less Repetition", text: "Manual, repetitive work handled for you." },
+  { icon: "link", title: "Connected Operations", text: "Tools, data and workflows acting as one." },
+  { icon: "spark", title: "Smarter Decisions", text: "AI applied where it truly improves work." },
+  { icon: "trend", title: "Room To Scale", text: "Automate more as the business grows." },
+];
 
 export const metadata = {
   title: "AI Automation Agency | AI Automation Services for Businesses",
@@ -80,9 +87,10 @@ export default function Page() {
                 Book a Call Today
               </Link>
             </div>
-            <div className="service-detail__image animate">
-              <Image src="/images/showcase-cloud-technology.png" alt="AI Automation Services" width={600} height={450} />
-            </div>
+            <ServiceCoreVisual
+              benefits={whyGeeksbot}
+              flowLabel="Why choose GeeksBot for AI automation"
+            />
           </div>
         </div>
       </section>

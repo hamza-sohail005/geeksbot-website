@@ -1,6 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import ServiceCoreVisual from "@/components/ServiceCoreVisual";
+
+const whyGeeksbot = [
+  { icon: "target", title: "Business Focused", text: "Every feature serves a clear goal." },
+  { icon: "gauge", title: "Fast Experiences", text: "Performance that keeps users engaged." },
+  { icon: "layers", title: "Flexible Foundation", text: "Architecture that adapts as needs change." },
+  { icon: "shield", title: "Digital Credibility", text: "A polished experience customers trust." },
+];
 
 export const metadata = {
   title: "Web App Development Services | Custom Web Applications USA",
@@ -80,9 +87,10 @@ export default function Page() {
                 Book a Call Today
               </Link>
             </div>
-            <div className="service-detail__image animate">
-              <Image src="/images/showcase-code-development.png" alt="Web App Development" width={600} height={450} />
-            </div>
+            <ServiceCoreVisual
+              benefits={whyGeeksbot}
+              flowLabel="Why choose GeeksBot for web application development"
+            />
           </div>
         </div>
       </section>

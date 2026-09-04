@@ -59,22 +59,27 @@ const categories = [
 
 const faqs = [
   {
+    id: "help-timeline",
     q: "How long does it take to build a website?",
     a: "Depending on the complexity, a standard website takes 2-4 weeks. Larger projects like e-commerce platforms or custom web apps may take 6-12 weeks.",
   },
   {
+    id: "help-maintenance",
     q: "Do you provide ongoing maintenance?",
     a: "Yes, we offer monthly maintenance plans that include security updates, bug fixes, performance monitoring, and content updates.",
   },
   {
+    id: "help-revisions",
     q: "Can I request changes after the project is delivered?",
     a: "Absolutely. We offer a 30-day revision period after project delivery. Beyond that, changes can be made under our maintenance plans.",
   },
   {
+    id: "help-tech",
     q: "What technologies do you work with?",
     a: "Our team works with React, Next.js, Vue.js, Node.js, Python, PHP, WordPress, Shopify, Flutter, and more.",
   },
   {
+    id: "help-get-started",
     q: "How do I get started?",
     a: (
       <>
@@ -156,6 +161,7 @@ export default function Page() {
             {faqs.map((faq) => (
               <details
                 className="animate"
+                id={faq.id}
                 key={faq.q}
                 style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: 0, overflow: "hidden" }}
               >

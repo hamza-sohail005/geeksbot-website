@@ -13,6 +13,7 @@ const filters = [
 
 const projects = [
   {
+    id: "portfolio-retail-store",
     category: "web",
     wide: true,
     image: "/images/project-01.png",
@@ -22,6 +23,7 @@ const projects = [
     href: "/web-development",
   },
   {
+    id: "portfolio-saas-dashboard",
     category: "web",
     wide: false,
     image: "/images/showcase-business-growth.png",
@@ -31,6 +33,7 @@ const projects = [
     href: "/web-development",
   },
   {
+    id: "portfolio-logistics-site",
     category: "web",
     wide: false,
     image: "/images/project-03.png",
@@ -40,6 +43,7 @@ const projects = [
     href: "/web-development",
   },
   {
+    id: "portfolio-fintech-app",
     category: "mobile",
     wide: true,
     image: "/images/project-04.png",
@@ -91,6 +95,7 @@ export default function Portfolio({ showIntro = true, showCta = true }) {
             return (
               <div
                 key={project.title}
+                id={project.id}
                 className={`portfolio__item ${project.wide ? "portfolio__item--wide" : ""} animate ${visible ? "portfolio-show" : "portfolio-hide"}`}
               >
                 <div className="portfolio__image">

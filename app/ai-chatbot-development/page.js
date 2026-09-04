@@ -1,6 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
 import PageHero from "@/components/PageHero";
+import ServiceCoreVisual from "@/components/ServiceCoreVisual";
+
+const whyGeeksbot = [
+  { icon: "target", title: "Business Ready", text: "AI shaped around your real business needs." },
+  { icon: "message", title: "Natural Interaction", text: "Conversations that feel human and on-brand." },
+  { icon: "clock", title: "Always Available", text: "Steady support for customers, around the clock." },
+  { icon: "spark", title: "Actionable Intelligence", text: "Turns chats into leads, insight and action." },
+];
 
 export const metadata = {
   title: "AI Chatbot Development Service | Custom AI Chatbots for Business",
@@ -79,9 +86,10 @@ export default function Page() {
                 Book a Call Today
               </Link>
             </div>
-            <div className="service-detail__image animate">
-              <Image src="/images/robot-face.png" alt="AI Chatbot Development" width={600} height={450} />
-            </div>
+            <ServiceCoreVisual
+              benefits={whyGeeksbot}
+              flowLabel="Why choose GeeksBot for AI chatbot development"
+            />
           </div>
         </div>
       </section>

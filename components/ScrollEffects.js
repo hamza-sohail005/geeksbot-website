@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { scrollToAndHighlight } from "@/lib/scrollToAndHighlight";
 
 const HOVER_SELECTOR = "a, button, .btn, .s-cards, .portfolio__image, .about-reason, .faq__item, .case-study, .hero-robot__orbit-item";
 
@@ -10,7 +11,7 @@ const HOVER_SELECTOR = "a, button, .btn, .s-cards, .portfolio__image, .about-rea
 // scrolled through the middle of the viewport - so the effect isn't limited
 // to pointer users.
 const IN_VIEW_FOCUS_SELECTOR =
-  ".hero-robot__orbit-item, .about-reason, .faq__item, .services-orbit__card, .s-cards, .testimonial__card, .stats__card, .small-features__item, .portfolio__item, .about-mission__card, .team__card, .contact__info-card, .service-detail__image, .process__card, .case-study";
+  ".hero-robot__orbit-item, .about-reason, .faq__item, .services-orbit__card, .s-cards, .testimonial__card, .stats__card, .small-features__item, .portfolio__item, .about-mission__card, .team__card, .contact__info-card, .process__card, .case-study";
 
 export default function ScrollEffects() {
   const pathname = usePathname();
@@ -37,6 +38,18 @@ export default function ScrollEffects() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Jump to and highlight a specific element on landing at a #hash target -
+  // covers direct links and hardcoded anchors (e.g. Header's portfolio links).
+  // Keyed on pathname only, so it fires on page-changing navigation; a
+  // same-page hash jump (pathname unchanged) is handled by whichever caller
+  // triggered it directly - see GeekAssistant.js's navigateTo handler.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.location.hash) return;
+    const id = window.location.hash.slice(1);
+    const timer = setTimeout(() => scrollToAndHighlight(id), 150);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
   // Re-run on every route change: client-side navigation swaps in a new
   // page's .animate elements without remounting this component, so the
   // observer has to be rebuilt each time or new pages stay invisible.
@@ -58,13 +71,13 @@ export default function ScrollEffects() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  // Mirrors :hover for scrolling: only the single card closest to the
-  // cursor's actual screen position gets the highlight (not the viewport's
-  // center - that ignored where the pointer really was). Wheel-scrolling
-  // without moving the mouse keeps the pointer fixed on screen, so as cards
-  // scroll past that same fixed point, whichever one is now nearest it takes
-  // over the highlight - exactly like a real hover would if the page moved
-  // under a stationary cursor.
+  // Mirrors :hover for scrolling: a card gets the highlight only while the
+  // pointer is actually over it - there's no "nearest card from far away"
+  // fallback (that lit a card up even with the cursor across the page).
+  // Wheel-scrolling without moving the mouse keeps the pointer fixed on
+  // screen, so as cards scroll past that same fixed point, whichever one is
+  // now under it takes over the highlight - exactly like a real hover would
+  // if the page moved under a stationary cursor.
   useEffect(() => {
     const focusEls = Array.from(document.querySelectorAll(IN_VIEW_FOCUS_SELECTOR));
     if (focusEls.length === 0) return;
@@ -83,6 +96,15 @@ export default function ScrollEffects() {
       for (const el of focusEls) {
         const rect = el.getBoundingClientRect();
         if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+        // Pointer must be inside this card's box - otherwise it isn't a hover.
+        const inside =
+          pointerX >= rect.left &&
+          pointerX <= rect.right &&
+          pointerY >= rect.top &&
+          pointerY <= rect.bottom;
+        if (!inside) continue;
+        // When cards overlap the pointer (nested selectors), pick the one
+        // whose center is closest so only a single element highlights.
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
         const dist = Math.hypot(cx - pointerX, cy - pointerY);

@@ -1,12 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
-
-const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const ADMIN_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_ADMIN_TEMPLATE_ID;
-const AUTOREPLY_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_AUTOREPLY_TEMPLATE_ID;
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+import { sendContactEmail } from "@/lib/sendContactEmail";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -20,24 +15,8 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("sending");
 
-    const templateParams = {
-      from_name: form.name,
-      first_name: form.name.trim().split(/\s+/)[0] || form.name,
-      from_email: form.email,
-      message: form.message,
-    };
-
     try {
-      await emailjs.send(SERVICE_ID, ADMIN_TEMPLATE_ID, templateParams, { publicKey: PUBLIC_KEY });
-
-      try {
-        await emailjs.send(SERVICE_ID, AUTOREPLY_TEMPLATE_ID, templateParams, { publicKey: PUBLIC_KEY });
-      } catch (autoReplyError) {
-        // The admin notification already went through - don't fail the
-        // whole submission just because the auto-reply couldn't be sent.
-        console.error("Auto-reply email error:", autoReplyError);
-      }
-
+      await sendContactEmail(form);
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {

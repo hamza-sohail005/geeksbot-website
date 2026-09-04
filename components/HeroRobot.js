@@ -2,6 +2,25 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { speak } from "@/lib/speak";
+import { GEEK_GREETING } from "@/lib/geekGreeting";
+
+// The bubble's short "Welcome to GeeksBot" text and the arm-wave animation
+// are plain CSS, so they play on every mount/reload unconditionally. The
+// spoken greeting (the full GEEK_GREETING line, heard but never shown as
+// text) only plays once per browser TAB - sessionStorage instead of
+// localStorage, so it clears itself the moment the tab/browser closes
+// instead of staying silent forever until someone manually clears site
+// data. A plain reload (F5) in the same tab still only greets once, but a
+// fresh tab always gets to hear it again.
+// (v4: a live ElevenLabs fetch at click time - even a prefetched one that's
+// only *awaited* at click time - can lose "user gesture" standing in strict
+// browsers like Safari, which require play() to run synchronously inside
+// the gesture handler. Since the greeting text never changes, it's
+// pre-rendered once to a static file (public/audio/geek-greeting.mp3) so
+// play() can fire with zero async gap after the gesture.)
+const VOICE_GREETED_KEY = "geekVoiceGreetedV4";
+const GREETING_AUDIO_SRC = "/audio/geek-greeting.mp3";
 
 export default function HeroRobot() {
   const wrapperRef = useRef(null);
@@ -13,6 +32,7 @@ export default function HeroRobot() {
   const hoverRef = useRef(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
+  const [isGreeting, setIsGreeting] = useState(false);
   const bounceTimeout = useRef(null);
 
   useEffect(() => {
@@ -54,6 +74,57 @@ export default function HeroRobot() {
 
   useEffect(() => {
     return () => clearTimeout(bounceTimeout.current);
+  }, []);
+
+  // Speaks the full greeting as background audio - no visible text for it -
+  // while keeping the robot's arm waving for as long as it's talking, so the
+  // voice reads as coming from the robot greeting you, not a random sound.
+  // Browsers block audio that isn't triggered by a user gesture, so playback
+  // still waits for the visitor's first click/tap/key anywhere on the page -
+  // but audio.play() is called synchronously inside that gesture handler
+  // (no fetch, no await first) using the pre-rendered static file, which is
+  // both instant and reliable across browsers with stricter gesture rules.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.sessionStorage.getItem(VOICE_GREETED_KEY)) return;
+
+    const audio = new Audio(GREETING_AUDIO_SRC);
+    audio.preload = "auto";
+    let cancelled = false;
+
+    function cleanup() {
+      window.removeEventListener("pointerdown", greet);
+      window.removeEventListener("keydown", greet);
+      window.removeEventListener("touchstart", greet);
+    }
+
+    function greet() {
+      cleanup();
+      window.sessionStorage.setItem(VOICE_GREETED_KEY, "1");
+      setIsGreeting(true);
+      audio.onended = () => {
+        if (!cancelled) setIsGreeting(false);
+      };
+      audio.onerror = () => {
+        if (!cancelled) setIsGreeting(false);
+      };
+      audio.play().catch(() => {
+        // Static file couldn't play for some reason - fall back to live TTS
+        // (which itself falls back to the browser's built-in voice).
+        speak(GEEK_GREETING).finally(() => {
+          if (!cancelled) setIsGreeting(false);
+        });
+      });
+    }
+
+    window.addEventListener("pointerdown", greet, { once: true });
+    window.addEventListener("keydown", greet, { once: true });
+    window.addEventListener("touchstart", greet, { once: true });
+
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
   }, []);
 
   function handleMouseMove(e) {
@@ -123,7 +194,7 @@ export default function HeroRobot() {
       <div className="hero-robot__float">
         <div
           ref={parallaxRef}
-          className={`hero-robot__parallax ${isHovering ? "is-hovering" : ""} ${isBouncing ? "is-bouncing" : ""}`}
+          className={`hero-robot__parallax ${isHovering ? "is-hovering" : ""} ${isBouncing ? "is-bouncing" : ""} ${isGreeting ? "is-greeting" : ""}`}
         >
           <Image
             src="/images/hero-robot-body.png"

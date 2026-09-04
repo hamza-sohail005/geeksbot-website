@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollEffects from "@/components/ScrollEffects";
 import SiteBackground from "@/components/SiteBackground";
+import GeekAssistant from "@/components/GeekAssistant";
 
 export const metadata = {
   metadataBase: new URL("https://geeksbot.com"),
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <ScrollEffects />
+        <GeekAssistant />
       </body>
     </html>
   );

@@ -11,18 +11,21 @@ export const metadata = {
 
 const caseStudies = [
   {
+    id: "case-retail-scaling",
     tag: "Web Apps",
     title: "Scaling A Retail Platform For Peak Season",
     text: "How we rebuilt a growing retailer's checkout flow to handle heavy traffic without losing a single sale.",
     href: "/web-development",
   },
   {
+    id: "case-fintech-relaunch",
     tag: "Mobile Apps",
     title: "Relaunching A Fintech App Customers Actually Trust",
     text: "A ground up redesign that improved onboarding completion and cut support tickets significantly.",
     href: "/app-development",
   },
   {
+    id: "case-chatbot-support",
     tag: "Chatbots",
     title: "Automating Support Without Losing The Human Touch",
     text: "An AI chatbot that resolves most incoming questions while handing off the tricky ones seamlessly.",
@@ -57,7 +60,7 @@ export default function PortfolioPage() {
 
           <div className="case-studies__grid">
             {caseStudies.map((item, i) => (
-              <Link href={item.href} className="case-study animate" key={item.title}>
+              <Link href={item.href} className="case-study animate" id={item.id} key={item.title}>
                 <span className="case-study__index">{String(i + 1).padStart(2, "0")}</span>
                 <span className="case-study__tag">{item.tag}</span>
                 <h3 className="case-study__title">{item.title}</h3>

@@ -151,7 +151,10 @@ body {
   background: #3f9dbd;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 999999;
+  /* Above .geek/.geek-fs (z-index 1000000) - otherwise the assistant
+     panel's opaque background paints over the cursor and it disappears
+     while hovering it. */
+  z-index: 2000000;
   transform: translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
 }
@@ -163,7 +166,7 @@ body {
   border: 2px solid rgba(63, 157, 189, 0.5);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 999998;
+  z-index: 1999999;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
@@ -207,7 +210,7 @@ img {
 }
 
 button {
-  cursor: pointer;
+  cursor: none;
   border: none;
   background: none;
   font-family: inherit;
@@ -398,7 +401,7 @@ button {
   letter-spacing: 0.2px;
   border-radius: 50px;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  cursor: pointer;
+  cursor: none;
   border: none;
   position: relative;
   overflow: hidden;
@@ -467,7 +470,7 @@ button {
   display: none;
   flex-direction: column;
   gap: 5px;
-  cursor: pointer;
+  cursor: none;
   width: 28px;
 }
 
@@ -911,6 +914,14 @@ button {
   100% { transform: rotate(0deg); }
 }
 
+/* While Geek's spoken greeting is playing (background voice, no on-screen
+   text), keep the arm waving for the whole thing instead of just the
+   initial one-off wave - a bit quicker per cycle than the first wave so it
+   doesn't feel sluggish when it repeats. */
+.hero-robot__parallax.is-greeting .hero-robot__img--arm {
+  animation: heroArmWave 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
 .hero-robot__bubble {
   position: absolute;
   top: 8%;
@@ -1106,6 +1117,12 @@ button {
   .hero__decor-panel,
   .hero__decor-cube {
     animation: none;
+  }
+
+  /* The bubble's entrance animation is what makes it visible (opacity
+     starts at 0) - without it, keep it shown outright. */
+  .hero-robot__bubble {
+    opacity: 1;
   }
 }
 
@@ -2732,7 +2749,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  cursor: pointer;
+  cursor: none;
   transition: color 0.2s;
 }
 
@@ -3236,29 +3253,388 @@ textarea.contact__input {
   color: #2dd4bf;
 }
 
-.service-detail__image {
+/* ===== Service "Why GeeksBot" visual (right side of .service-detail) ===== */
+.service-core {
   position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 50px rgba(63,157,189,0.1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  align-self: center;
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
 }
 
-.service-detail__image:hover,
-.service-detail__image.in-view-focus {
-  transform: translateY(-6px);
-  box-shadow: 0 26px 60px rgba(63,157,189,0.2);
+.service-core__inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 660 / 680;
 }
 
-.service-detail__image img {
-  border-radius: 20px;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+/* --- shared SVG canvas (arc, core, travelling light) --- */
+.service-core__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translate(calc(var(--px, 0px) * 0.45), calc(var(--py, 0px) * 0.45));
 }
 
-.service-detail__image:hover img,
-.service-detail__image.in-view-focus img {
-  transform: scale(1.07);
+.service-core__halo {
+  fill: none;
+  stroke: rgba(63, 157, 189, 0.18);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scHaloSpin 90s linear infinite;
 }
+
+.service-core__arc {
+  fill: none;
+  stroke: url(#scArcGrad);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(45, 212, 191, 0.35));
+}
+
+/* node markers where a benefit meets the curve */
+.service-core__marker-halo {
+  fill: rgba(45, 212, 191, 0.12);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.6);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-core__marker-dot {
+  fill: var(--card-bg);
+  stroke: rgba(63, 157, 189, 0.5);
+  stroke-width: 1.4;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.service-core__marker.is-active .service-core__marker-halo {
+  opacity: 1;
+  transform: scale(1);
+  animation: scHaloSpin 8s linear infinite;
+}
+
+.service-core__marker.is-active .service-core__marker-dot {
+  fill: #2dd4bf;
+  stroke: #2dd4bf;
+}
+
+/* travelling light */
+.service-core__spark-dot {
+  fill: #2dd4bf;
+  filter: drop-shadow(0 0 5px rgba(45, 212, 191, 0.8));
+  animation: scSparkPulse 2.8s ease-in-out infinite;
+}
+
+.service-core__spark-aura {
+  opacity: 0.75;
+}
+
+/* --- the G core --- */
+.service-core__core {
+  transform: translate(calc(var(--px, 0px) * -0.15), calc(var(--py, 0px) * -0.15));
+}
+
+.service-core__ring circle {
+  fill: none;
+  stroke: rgba(63, 157, 189, 0.28);
+  stroke-width: 1;
+}
+
+.service-core__ring-node {
+  fill: #2dd4bf;
+  stroke: none;
+}
+
+.service-core__ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.service-core__ring--a {
+  animation: scHaloSpin 30s linear infinite;
+}
+
+.service-core__ring--b {
+  stroke: rgba(45, 212, 191, 0.3);
+  animation: scHaloSpin 21s linear infinite reverse;
+}
+
+.service-core__disc {
+  filter: drop-shadow(0 8px 20px rgba(45, 212, 191, 0.3));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: scBreathe 5.4s ease-in-out infinite;
+}
+
+.service-core__glyph {
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  fill: #fff;
+}
+
+.service-core[data-hovered="true"] .service-core__ring,
+.service-core[data-hovered="true"] .service-core__disc {
+  animation-play-state: paused;
+}
+
+/* --- "Why GeeksBot" label beside the core --- */
+.service-core__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 27%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: right;
+  transform: translateY(-42%)
+    translate(calc(var(--px, 0px) * 0.3), calc(var(--py, 0px) * 0.3));
+}
+
+.service-core__label-sm {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #2dd4bf;
+}
+
+.service-core__label-lg {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(21px, 2.3vw, 27px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  color: var(--heading);
+}
+
+.service-core__label-xs {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--heading);
+  opacity: 0.72;
+}
+
+/* --- benefit points --- */
+.service-core__benefits {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  transform: translate(var(--px, 0px), var(--py, 0px));
+}
+
+.service-core__benefit {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  width: 44%;
+  min-width: 194px;
+  transform: translate(-24px, -50%);
+  pointer-events: auto;
+  cursor: default;
+  outline: none;
+}
+
+.service-core__badge {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 6px 18px rgba(63, 157, 189, 0.12);
+  color: #3f9dbd;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.45s ease, box-shadow 0.45s ease, color 0.45s ease;
+}
+
+.service-core__b-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.service-core__b-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.24em;
+  color: #3f9dbd;
+  margin-bottom: -1px;
+  transition: color 0.45s ease;
+}
+
+.service-core__b-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-muted);
+  transition: color 0.45s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-core__b-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  opacity: 0.72;
+  transition: color 0.45s ease, opacity 0.45s ease;
+}
+
+.service-core__benefit.is-active .service-core__badge,
+.service-core__benefit:hover .service-core__badge {
+  transform: scale(1.08);
+  color: #159c8c;
+  border-color: rgba(45, 212, 191, 0.55);
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1),
+    0 10px 24px rgba(45, 212, 191, 0.26);
+}
+
+.service-core__benefit.is-active .service-core__b-num,
+.service-core__benefit:hover .service-core__b-num {
+  color: #2dd4bf;
+}
+
+.service-core__benefit.is-active .service-core__b-title,
+.service-core__benefit:hover .service-core__b-title {
+  color: var(--heading);
+  transform: translateX(2px);
+}
+
+.service-core__benefit.is-active .service-core__b-desc,
+.service-core__benefit:hover .service-core__b-desc {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.service-core__benefit:focus-visible {
+  border-radius: 14px;
+  box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.55);
+}
+
+/* --- dark mode nudges --- */
+[data-theme="dark"] .service-core__halo {
+  stroke: rgba(148, 163, 184, 0.18);
+}
+[data-theme="dark"] .service-core__marker-dot {
+  stroke: rgba(148, 163, 184, 0.4);
+}
+[data-theme="dark"] .service-core__benefit.is-active .service-core__badge,
+[data-theme="dark"] .service-core__benefit:hover .service-core__badge {
+  color: #5fe6d6;
+}
+
+@keyframes scHaloSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scBreathe {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 8px 20px rgba(45, 212, 191, 0.3));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 12px 28px rgba(45, 212, 191, 0.42));
+  }
+}
+
+@keyframes scSparkPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* --- below ~1200px the arc can't breathe in half a column: the visual
+   becomes a clean vertical stack (same content, same generous spacing) --- */
+.service-core.is-compact {
+  max-width: 500px;
+}
+
+.service-core.is-compact .service-core__inner {
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-core.is-compact .service-core__canvas {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  align-self: flex-start;
+  margin: 2px 0 12px;
+  transform: none;
+}
+
+.service-core.is-compact .service-core__core {
+  transform: none;
+}
+
+.service-core.is-compact .service-core__label {
+  position: static;
+  width: auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  text-align: left;
+  transform: none;
+  margin-bottom: 26px;
+}
+
+.service-core.is-compact .service-core__label-xs {
+  display: block;
+  white-space: normal;
+}
+
+.service-core.is-compact .service-core__benefits {
+  position: static;
+  inset: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  transform: none;
+}
+
+.service-core.is-compact .service-core__benefit {
+  position: static;
+  width: 100%;
+  min-width: 0;
+  transform: none;
+}
+
+.service-core.is-compact .service-core__b-desc {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* safety net: never let the visual create a horizontal scrollbar */
+.service-detail {
+  overflow-x: clip;
+}
+
 
 /* Process section */
 .process {
@@ -3460,7 +3836,7 @@ textarea.contact__input {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  cursor: pointer;
+  cursor: none;
   box-shadow: 0 8px 25px rgba(63, 157, 189, 0.3);
   transition: all 0.3s ease;
 }
@@ -3691,11 +4067,6 @@ html {
 [data-theme="dark"] .contact__info-card.in-view-focus {
   box-shadow: 0 20px 55px rgba(45, 212, 191, 0.22);
   border-color: rgba(45, 212, 191, 0.32);
-}
-
-[data-theme="dark"] .service-detail__image:hover,
-[data-theme="dark"] .service-detail__image.in-view-focus {
-  box-shadow: 0 26px 64px rgba(45, 212, 191, 0.24);
 }
 
 [data-theme="dark"] .portfolio__item:hover,
@@ -4236,5 +4607,629 @@ html {
 
   .stats__label {
     font-size: 12px;
+  }
+}
+
+/* ===== Geek Assistant ===== */
+.geek {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  z-index: 1000000;
+  font-family: "Inter", sans-serif;
+}
+
+.geek__launcher {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  box-shadow: 0 8px 25px rgba(63, 157, 189, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.geek__launcher:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(63, 157, 189, 0.45);
+}
+
+.geek__launcher--close {
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+}
+
+/* Rotating theme-color ring around the idle launcher, echoing the hero
+   robot's orbit rings. */
+.geek__launcher-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #3f9dbd, #2dd4bf, #3f9dbd);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  animation: geekLauncherRingSpin 3s linear infinite;
+}
+
+@keyframes geekLauncherRingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Cropped to the hero robot's head so the launcher reads as the same
+   character, just zoomed to a face-only badge. */
+.geek__launcher-avatar {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background-image: url("/images/hero-robot-body.png");
+  background-size: 260% auto;
+  background-position: 51% 14%;
+  background-repeat: no-repeat;
+  background-color: #0b1f2a;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.18);
+}
+
+.geek__launcher-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(10, 19, 48, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geek__launcher-ring {
+    animation: none;
+  }
+}
+
+.geek__panel {
+  position: absolute;
+  bottom: 68px;
+  right: 0;
+  width: min(360px, calc(100vw - 32px));
+  height: min(520px, calc(100vh - 160px));
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.geek__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.geek__header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.geek__header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.geek__mute {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: background 0.2s ease;
+}
+
+.geek__mute:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.geek__expand {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: background 0.2s ease;
+  margin-right: 6px;
+}
+
+.geek__expand:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.geek__header-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.geek__header-subtitle {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.geek__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.geek__msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.geek__msg--assistant {
+  align-self: flex-start;
+  background: var(--bg-soft, var(--bg));
+  color: var(--heading);
+  border: 1px solid var(--border-soft);
+  border-bottom-left-radius: 4px;
+}
+
+.geek__msg--user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.geek__msg--error {
+  align-self: center;
+  color: #ef4444;
+  font-size: 13px;
+}
+
+.geek__msg--typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 14px;
+}
+
+.geek__msg--typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: geekTyping 1.2s infinite ease-in-out;
+}
+
+.geek__msg--typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.geek__msg--typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes geekTyping {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.geek__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+.geek__mic {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  flex-shrink: 0;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.geek__mic:hover {
+  color: #3f9dbd;
+}
+
+.geek__mic:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.geek__mic--listening {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  animation: geekMicPulse 1.4s ease-out infinite;
+}
+
+@keyframes geekMicPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 157, 189, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(63, 157, 189, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 157, 189, 0);
+  }
+}
+
+.geek__input {
+  flex: 1;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--heading);
+}
+
+.geek__input:focus {
+  outline: none;
+  border-color: #3f9dbd;
+}
+
+.geek__send {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.geek__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.geek__confirm {
+  background: var(--bg-soft, var(--bg));
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--heading);
+}
+
+.geek__confirm-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.geek__confirm p {
+  margin: 2px 0;
+  word-break: break-word;
+}
+
+.geek__confirm-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.geek__confirm-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: none;
+  transition: opacity 0.2s ease;
+}
+
+.geek__confirm-actions button:first-child {
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+}
+
+.geek__confirm-actions button:last-child {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
+}
+
+.geek__confirm-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.geek__confirm-result {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .geek {
+    right: 16px;
+    bottom: 86px;
+  }
+
+  .geek__panel {
+    width: calc(100vw - 24px);
+    right: -8px;
+  }
+}
+
+/* ===== Geek highlight (FAQ/portfolio items Geek jumps visitors to) ===== */
+.geek-highlight {
+  animation: geekHighlightPulse 2s ease-out;
+  border-radius: 12px;
+}
+
+@keyframes geekHighlightPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 157, 189, 0.5);
+  }
+  60% {
+    box-shadow: 0 0 0 14px rgba(63, 157, 189, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 157, 189, 0);
+  }
+}
+
+/* ===== Geek full-screen voice mode ===== */
+.geek-fs {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: geekFsIn 0.25s ease;
+}
+
+@keyframes geekFsIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.geek-fs__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.geek-fs__collapse {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.geek-fs__collapse:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.geek-fs__title {
+  flex: 1;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.geek-fs__stage {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px 20px;
+}
+
+.geek-fs__orb {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  height: 64px;
+}
+
+.geek-fs__orb span {
+  width: 8px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  transition: background 0.3s ease;
+}
+
+.geek-fs__orb--listening span,
+.geek-fs__orb--speaking span {
+  background: linear-gradient(180deg, #3f9dbd, #2dd4bf);
+  animation: geekFsWave 0.9s ease-in-out infinite;
+}
+
+.geek-fs__orb--listening span:nth-child(2),
+.geek-fs__orb--speaking span:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.geek-fs__orb--listening span:nth-child(3),
+.geek-fs__orb--speaking span:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.geek-fs__orb--listening span:nth-child(4),
+.geek-fs__orb--speaking span:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.geek-fs__orb--listening span:nth-child(5),
+.geek-fs__orb--speaking span:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+@keyframes geekFsWave {
+  0%, 100% {
+    height: 16px;
+  }
+  50% {
+    height: 56px;
+  }
+}
+
+.geek-fs__orb--processing span {
+  background: linear-gradient(180deg, #3f9dbd, #2dd4bf);
+  animation: geekFsPulse 1s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+@keyframes geekFsPulse {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.geek-fs__status {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.geek-fs__interim {
+  font-size: 15px;
+  color: var(--heading);
+  font-style: italic;
+  margin: 0;
+  max-width: 320px;
+  text-align: center;
+}
+
+.geek-fs__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.geek-fs__form {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid var(--border-soft);
+  flex-shrink: 0;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.geek-fs__mic {
+  width: 48px;
+  height: 48px;
+}
+
+@media (max-width: 480px) {
+  .geek-fs__stage {
+    padding: 20px;
+  }
+
+  .geek-fs__orb {
+    height: 48px;
+  }
+
+  @keyframes geekFsWave {
+    0%, 100% {
+      height: 12px;
+    }
+    50% {
+      height: 40px;
+    }
   }
 }
