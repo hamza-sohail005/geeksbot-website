@@ -147,7 +147,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Stats ===== */}
-      <section className="stats">
+      <section className="stats home-surface home-surface--white">
         <div className="container">
           <div className="stats__grid">
             <div className="stats__card animate">
@@ -206,10 +206,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Portfolio />
+      <div className="home-surface home-surface--deepblue">
+        <Portfolio />
+      </div>
 
       {/* ===== About / Why Choose Us ===== */}
-      <section className="about">
+      <section className="about home-surface home-surface--blue">
         <div className="container">
           <div className="about__wrapper">
             <div className="about__intro animate">
@@ -249,10 +251,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ServicesOrbit />
+      <div className="home-surface home-surface--white">
+        <ServicesOrbit />
+      </div>
 
       {/* ===== Testimonials ===== */}
-      <section className="testimonials">
+      <section className="testimonials home-surface home-surface--ice">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">
@@ -287,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Small Features ===== */}
-      <section className="small-features" id="features">
+      <section className="small-features home-surface home-surface--ice" id="features">
         <div className="container">
           <div className="small-features__grid">
             {smallFeatures.map((feature) => (
@@ -306,7 +310,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== CTA ===== */}
-      <section className="cta">
+      <section className="cta home-surface home-surface--deepdark">
         <div className="container">
           <div className="cta__content animate">
             <h2 className="cta__title">Ready To Build Something That Actually Works?</h2>

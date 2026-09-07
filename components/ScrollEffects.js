@@ -19,8 +19,13 @@ export default function ScrollEffects() {
   useEffect(() => {
     const header = document.getElementById("header");
     const scrollTop = document.getElementById("scrollTop");
-    // Sections the transparent navbar can't be read against in light mode.
+    // Sections the transparent navbar can't be read against (any theme).
     const DARK_BEHIND = ".cta, .footer, .sbcs-section--dark";
+    // Dark-theme only: the homepage surface-rhythm sections. Over the light
+    // ones the (light) nav text needs to flip dark; over the blue ones the
+    // default light nav text is fine but gets the stronger on-dark treatment.
+    const DARK_SURFACE = ".home-surface--deepblue, .home-surface--blue";
+    const LIGHT_SURFACE = ".home-surface--white, .home-surface--ice";
     let ticking = false;
 
     function apply() {
@@ -31,14 +36,20 @@ export default function ScrollEffects() {
       if (window.scrollY > 300) scrollTop?.classList.add("visible");
       else scrollTop?.classList.remove("visible");
 
-      // What's directly behind the middle of the navbar? If it's a dark
-      // section, flip the nav to light text so it stays visible.
+      // What's directly behind the middle of the navbar? Flip the nav text
+      // to stay legible against whatever scrolls under the transparent bar.
       if (header) {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark";
         const y = Math.max(8, header.offsetHeight * 0.5);
         const stack = document.elementsFromPoint(window.innerWidth / 2, y);
         const behind = stack.find((el) => !el.closest("#header"));
-        const onDark = !!behind?.closest?.(DARK_BEHIND);
+        const onDark =
+          !!behind?.closest?.(DARK_BEHIND) ||
+          (isDark && !!behind?.closest?.(DARK_SURFACE));
+        const onLight = isDark && !!behind?.closest?.(LIGHT_SURFACE);
         header.classList.toggle("header--on-dark", onDark);
+        header.classList.toggle("header--on-light", onLight);
       }
     }
 
@@ -52,9 +63,16 @@ export default function ScrollEffects() {
     apply();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
+    // Re-evaluate the nav contrast the moment the theme is toggled.
+    const themeObserver = new MutationObserver(apply);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
+      themeObserver.disconnect();
     };
   }, [pathname]);
 
