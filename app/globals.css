@@ -12,6 +12,12 @@
   --border-soft: rgba(63, 157, 189, 0.08);
   --header-bg: rgba(255, 255, 255, 0.95);
   --nav-text: #4b5563;
+  /* Floating glass navbar (see .header.sticky) */
+  --header-glass: rgba(255, 255, 255, 0.5);
+  --header-glass-open: rgba(255, 255, 255, 0.82);
+  --header-glass-fallback: rgba(255, 255, 255, 0.75);
+  --header-glass-border: rgba(255, 255, 255, 0.6);
+  --header-glass-shadow: 0 10px 34px rgba(15, 23, 42, 0.07);
 }
 
 [data-theme="dark"] {
@@ -25,6 +31,11 @@
   --border-soft: rgba(148, 163, 184, 0.14);
   --header-bg: rgba(10, 15, 30, 0.9);
   --nav-text: #cbd5e1;
+  --header-glass: rgba(12, 18, 34, 0.46);
+  --header-glass-open: rgba(10, 15, 30, 0.86);
+  --header-glass-fallback: rgba(10, 15, 30, 0.82);
+  --header-glass-border: rgba(148, 163, 184, 0.14);
+  --header-glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
 }
 
 /* ===== Reset & Base ===== */
@@ -223,21 +234,50 @@ button {
 }
 
 /* ===== Header ===== */
+/* At the top of the page the bar is fully transparent and blends into the
+   hero. On scroll it becomes a floating translucent glass panel - page
+   content keeps moving behind it, softly blurred rather than hidden. The bar
+   is position:fixed so height changes never shift page layout. */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 99999;
-  padding: 20px 0;
-  transition: all 0.3s ease;
+  padding: 22px 0;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease, backdrop-filter 0.3s ease,
+    -webkit-backdrop-filter 0.3s ease;
 }
 
 .header.sticky {
-  background: var(--header-bg);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
-  padding: 14px 0;
-  backdrop-filter: blur(12px);
+  padding: 12px 0;
+  background: var(--header-glass);
+  border-bottom-color: var(--header-glass-border);
+  box-shadow: var(--header-glass-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* Mobile menu open: nudge the bar more opaque so nav items stay legible */
+.header[data-menu-open="true"] {
+  background: var(--header-glass-open);
+  border-bottom-color: var(--header-glass-border);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+}
+
+/* Fallback for browsers without backdrop-filter: a more opaque tint so text
+   never sits on unreadable moving content */
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+  .header.sticky {
+    background: var(--header-glass-fallback);
+  }
+  .header[data-menu-open="true"] {
+    background: var(--header-glass-open);
+  }
 }
 
 .header .container {
@@ -313,7 +353,8 @@ button {
   transition: transform 0.3s ease;
 }
 
-.header__dropdown:hover .header__dropdown-toggle svg {
+.header__dropdown:hover .header__dropdown-toggle svg,
+.header__dropdown.open .header__dropdown-toggle svg {
   transform: rotate(180deg);
 }
 
@@ -343,7 +384,8 @@ button {
   height: 16px;
 }
 
-.header__dropdown:hover .header__dropdown-menu {
+.header__dropdown:hover .header__dropdown-menu,
+.header__dropdown.open .header__dropdown-menu {
   opacity: 1;
   visibility: visible;
 }
@@ -4272,12 +4314,20 @@ html {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    background: var(--card-bg);
+    height: 100dvh;
+    background: var(--header-glass-open);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 9999;
+  }
+
+  @supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+    .header__nav {
+      background: var(--card-bg);
+    }
   }
 
   .header__nav.open {
