@@ -2115,97 +2115,74 @@ button {
   transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ---- Spotlight hover: the card under the cursor lights up, the rest go
-   dark. Default (nothing hovered) keeps the middle card as the accent. ---- */
+/* ---- Spotlight hover: whichever of the three cards the cursor is on
+   takes the GeeksBot brand gradient; the other two just stay as normal
+   cards. No permanent accent card, no dark dimming. Shared by both
+   themes - only the resting card surface differs (white vs ink). ---- */
 
-/* default accent card */
+/* the middle card is a normal card until hovered, like the other two */
 .testimonial__card--featured {
-  background: linear-gradient(135deg, #2d8ca8, #3f9dbd, #2dd4bf);
-  border: none;
+  background: var(--card-bg);
+  border: 1px solid rgba(63, 157, 189, 0.08);
 }
 .testimonial__card--featured::before {
-  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  background: linear-gradient(135deg, rgba(63, 157, 189, 0.1), rgba(45, 212, 191, 0.1));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.testimonial__card--featured .testimonial__text { color: rgba(255,255,255,0.92); }
-.testimonial__card--featured .testimonial__author h4 { color: #fff; }
-.testimonial__card--featured .testimonial__author span { color: rgba(255,255,255,0.72); }
-.testimonial__card--featured .testimonial__author { border-top-color: rgba(255,255,255,0.22); }
+.testimonial__card--featured .testimonial__text { color: #475569; }
+.testimonial__card--featured .testimonial__author h4 { color: var(--heading); }
+.testimonial__card--featured .testimonial__author span { color: var(--text-subtle); }
+.testimonial__card--featured .testimonial__author { border-top-color: rgba(63, 157, 189, 0.1); }
 
-/* THE LIT CARD (hover or scroll-focus) - clean light, elevated, teal ring */
+/* THE HOVERED / SCROLL-FOCUSED CARD - takes the brand gradient + lifts */
 .testimonials__grid .testimonial__card:hover,
 .testimonials__grid .testimonial__card.in-view-focus {
-  background: var(--card-bg);
-  border-color: rgba(63,157,189,0.45);
-  transform: translateY(-14px) scale(1.035);
-  box-shadow: 0 0 0 2px rgba(63,157,189,0.45), 0 30px 66px rgba(63,157,189,0.24);
+  background: linear-gradient(135deg, #2d8ca8, #3f9dbd, #2dd4bf);
+  border-color: transparent;
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 26px 60px rgba(63, 157, 189, 0.32);
   z-index: 3;
 }
 .testimonials__grid .testimonial__card:hover .testimonial__text,
-.testimonials__grid .testimonial__card.in-view-focus .testimonial__text { color: #475569; }
+.testimonials__grid .testimonial__card.in-view-focus .testimonial__text { color: rgba(255, 255, 255, 0.92); }
 .testimonials__grid .testimonial__card:hover .testimonial__author h4,
-.testimonials__grid .testimonial__card.in-view-focus .testimonial__author h4 { color: var(--heading); }
+.testimonials__grid .testimonial__card.in-view-focus .testimonial__author h4 { color: #fff; }
 .testimonials__grid .testimonial__card:hover .testimonial__author span,
-.testimonials__grid .testimonial__card.in-view-focus .testimonial__author span { color: var(--text-subtle); }
+.testimonials__grid .testimonial__card.in-view-focus .testimonial__author span { color: rgba(255, 255, 255, 0.75); }
 .testimonials__grid .testimonial__card:hover .testimonial__author,
-.testimonials__grid .testimonial__card.in-view-focus .testimonial__author { border-top-color: rgba(63,157,189,0.12); }
+.testimonials__grid .testimonial__card.in-view-focus .testimonial__author { border-top-color: rgba(255, 255, 255, 0.24); }
 .testimonials__grid .testimonial__card:hover::before,
 .testimonials__grid .testimonial__card.in-view-focus::before {
   opacity: 1;
   transform: scale(1.1);
-  background: linear-gradient(135deg, rgba(63,157,189,0.16), rgba(45,212,191,0.16));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .testimonials__grid .testimonial__card:hover .testimonial__stars svg,
 .testimonials__grid .testimonial__card.in-view-focus .testimonial__stars svg { transform: scale(1.12); }
 
-/* THE DIMMED CARDS - every other card while one is lit, goes dark */
+/* THE OTHER TWO - left exactly as they are, just a hair smaller so the
+   active card clearly leads */
 .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover),
 .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) {
-  background: linear-gradient(155deg, #16324a, #0c1c2c);
-  border-color: transparent;
-  transform: scale(0.955);
-  box-shadow: 0 12px 32px rgba(8, 15, 26, 0.16);
-}
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__text,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__text { color: rgba(255,255,255,0.5); }
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__author h4,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__author h4 { color: rgba(255,255,255,0.82); }
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__author span,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__author span { color: rgba(255,255,255,0.45); }
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__author,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__author { border-top-color: rgba(255,255,255,0.12); }
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__stars svg,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__stars svg { opacity: 0.35; }
-.testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover)::before,
-.testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus)::before {
-  opacity: 0.14;
-  background: rgba(255, 255, 255, 0.5);
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.5);
+  transform: scale(0.985);
 }
 
-/* dark theme */
-[data-theme="dark"] .testimonials__grid .testimonial__card:hover,
-[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus {
-  background: var(--card-bg);
-  border-color: rgba(45,212,191,0.5);
-  box-shadow: 0 0 0 2px rgba(45,212,191,0.5), 0 30px 66px rgba(45,212,191,0.3);
-}
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover),
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) {
-  background: linear-gradient(155deg, #070d16, #04070d);
-}
-
-/* no :has() support -> keep the classic single-card highlight, no dimming */
-@supports not selector(:has(*)) {
-  .testimonials__grid .testimonial__card:hover,
-  .testimonials__grid .testimonial__card.in-view-focus {
-    background: linear-gradient(135deg, rgba(63,157,189,0.14), rgba(45,212,191,0.1)), var(--card-bg);
-  }
-}
+/* dark theme - resting cards sit on the ink surface; the hover gradient
+   + white text above is shared with the light theme. */
+[data-theme="dark"] .testimonial__card .testimonial__text { color: var(--text); }
+[data-theme="dark"] .testimonial__card .testimonial__author h4 { color: var(--heading); }
+[data-theme="dark"] .testimonial__card .testimonial__author span { color: var(--text-subtle); }
+[data-theme="dark"] .testimonials__grid .testimonial__card:hover .testimonial__text,
+[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus .testimonial__text { color: rgba(255, 255, 255, 0.92); }
+[data-theme="dark"] .testimonials__grid .testimonial__card:hover .testimonial__author h4,
+[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus .testimonial__author h4 { color: #fff; }
+[data-theme="dark"] .testimonials__grid .testimonial__card:hover .testimonial__author span,
+[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus .testimonial__author span { color: rgba(255, 255, 255, 0.75); }
 
 .testimonial__stars {
   display: flex;
@@ -2282,18 +2259,9 @@ button {
   transition: color 0.3s ease;
 }
 
+/* hovered card is the teal gradient in both themes -> white name */
 .testimonial__card:hover .testimonial__author h4,
 .testimonial__card.in-view-focus .testimonial__author h4 {
-  color: #2b8ca8;
-}
-
-[data-theme="dark"] .testimonial__card:hover .testimonial__author h4,
-[data-theme="dark"] .testimonial__card.in-view-focus .testimonial__author h4 {
-  color: #6fe0d4;
-}
-
-.testimonial__card--featured:hover .testimonial__author h4,
-.testimonial__card--featured.in-view-focus .testimonial__author h4 {
   color: #fff;
 }
 
@@ -4591,37 +4559,10 @@ html {
   box-shadow: 0 10px 30px rgba(45, 212, 191, 0.24);
 }
 
-/* --- TESTIMONIALS (dark): calm. All three cards stay on the ink
-   surface; the middle keeps the teal identity in every state; hovering
-   one lifts it with a teal edge - no dramatic darkening of the rest. --- */
-[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__text { color: var(--text); }
-[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__author h4 { color: var(--heading); }
-[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__author span { color: var(--text-subtle); }
-
-[data-theme="dark"] .testimonials__grid .testimonial__card:hover,
-[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus {
-  background: linear-gradient(180deg, var(--ink-500), var(--ink-600));
-  border-color: rgba(45, 212, 191, 0.55);
-  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.35), 0 26px 60px rgba(45, 212, 191, 0.16);
-}
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover),
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) {
-  background: linear-gradient(180deg, var(--ink-700), var(--ink-800));
-  border-color: rgba(45, 212, 191, 0.08);
-  opacity: 0.82;
-}
-
-/* featured (middle) card - teal, wins over every state above */
-[data-theme="dark"] .testimonial__card--featured,
-[data-theme="dark"] .testimonials__grid .testimonial__card--featured:hover,
-[data-theme="dark"] .testimonials__grid .testimonial__card--featured.in-view-focus,
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card--featured:not(:hover),
-[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card--featured:not(.in-view-focus) {
-  background: linear-gradient(140deg, #1c9c8e, #2dd4bf);
-  border: 1px solid rgba(45, 212, 191, 0.5);
-  box-shadow: 0 20px 50px rgba(45, 212, 191, 0.22);
-  opacity: 1;
-}
+/* TESTIMONIALS (dark): the spotlight behaviour is fully defined in the
+   shared block above - all three cards rest on the ink surface, the one
+   under the cursor takes the teal brand gradient, the other two are
+   untouched. Nothing theme-specific to add here. */
 
 /* --- Feature icons: neutralise the pink/green/orange tiles into three
    tonal steps of the same teal (dark theme only - light keeps its
