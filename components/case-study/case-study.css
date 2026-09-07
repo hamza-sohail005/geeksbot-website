@@ -20,14 +20,46 @@
   overflow-x: clip;
 }
 
+/* Dark: a premium warm-charcoal reading of the brand - gold + teal on a
+   deep neutral, with real elevation between page / section / card. */
 [data-theme="dark"] .sbcs {
-  --sb-cream: #1a1710;
-  --sb-cream-deep: #211c13;
-  --sb-gold: #d0aa63;
-  --sb-gold-soft: rgba(208, 170, 99, 0.12);
-  --sb-line: rgba(255, 255, 255, 0.1);
-  --sb-card: rgba(255, 255, 255, 0.04);
-  --sb-dark-bg: #0b0906;
+  --sb-cream: #131720;
+  --sb-cream-deep: #1a1f2b;
+  --sb-gold: #e6bd7e;
+  --sb-gold-soft: rgba(230, 189, 126, 0.13);
+  --sb-ink: #0a0c12;
+  --sb-line: rgba(148, 197, 214, 0.16);
+  --sb-teal: #34e0cb;
+  --sb-blue: #56b8d6;
+  --sb-card: #161b26;
+  --sb-text: #aab6c8;
+  --sb-heading: #f4f8ff;
+  --sb-dark-bg: #05070c;
+  background: linear-gradient(180deg, #070a12 0%, #090c15 100%);
+}
+
+[data-theme="dark"] .sbcs-section--tint {
+  background:
+    radial-gradient(60% 50% at 100% 0%, rgba(230, 189, 126, 0.06), transparent 60%),
+    linear-gradient(180deg, transparent, var(--sb-cream) 10%, var(--sb-cream) 90%, transparent);
+}
+[data-theme="dark"] .sbcs-section--dark {
+  background:
+    radial-gradient(70% 60% at 50% 0%, rgba(52, 224, 203, 0.08), transparent 65%),
+    var(--sb-dark-bg);
+}
+[data-theme="dark"] .sbcs-card,
+[data-theme="dark"] .sbcs-ecom-item,
+[data-theme="dark"] .sbcs-market,
+[data-theme="dark"] .sbcs-measure__col,
+[data-theme="dark"] .sbcs-tools > div,
+[data-theme="dark"] .sbcs-research,
+[data-theme="dark"] .sbcs-pipeline li,
+[data-theme="dark"] .sbcs-chips li,
+[data-theme="dark"] .sbcs-photo,
+[data-theme="dark"] .sbcs-ecosystem__nodes li,
+[data-theme="dark"] .sbcs-milestone {
+  box-shadow: inset 0 1px 0 rgba(148, 197, 214, 0.07), 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
 .sbcs .sbcs-wrap {

@@ -137,23 +137,6 @@ export default function HomePage() {
               <Link href="/contact" className="btn btn--primary header-btn">
                 Book A Free Consultation
               </Link>
-              <span className="hero__contact">
-                <div className="company-status">
-                  <span>650</span>
-                  <span>+</span>
-                  <h5>Projects Completed</h5>
-                </div>
-                <div className="company-status">
-                  <span>90</span>
-                  <span>K+</span>
-                  <h5>Happy Clients</h5>
-                </div>
-                <div className="company-status">
-                  <span>15</span>
-                  <span>+</span>
-                  <h5>Years Experience</h5>
-                </div>
-              </span>
             </div>
           </div>
 
@@ -175,7 +158,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="stats__info">
-                <CountUp target={650} suffix="+" />
+                <CountUp target={250} suffix="+" />
                 <div className="stats__label">Projects Completed</div>
               </div>
             </div>
@@ -203,7 +186,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="stats__info">
-                <CountUp target={15} suffix="+" />
+                <CountUp target={7} suffix="+" />
                 <div className="stats__label">Years Experience</div>
               </div>
             </div>

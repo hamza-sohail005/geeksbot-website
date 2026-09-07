@@ -6,30 +6,46 @@
   --bg: #fff;
   --bg-soft: #f8fffe;
   --card-bg: #fff;
+  --card-elev: #fff;
   --heading: #0f172a;
   --text: #6b7280;
   --text-muted: #64748b;
   --text-subtle: #94a3b8;
   --border-soft: rgba(63, 157, 189, 0.08);
+  --border-hair: rgba(63, 157, 189, 0.12);
   --header-bg: rgba(255, 255, 255, 0.95);
   --nav-text: #4b5563;
+  --accent: #2dd4bf;
+  --accent-2: #3f9dbd;
+  --accent-3: #38bdf8;
+  --card-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent 40%);
+  --glow-soft: 0 24px 60px rgba(63, 157, 189, 0.14);
   /* Backing for the mobile menu bar/panel only (the desktop bar is always
      transparent - see .header). */
   --header-glass-open: rgba(255, 255, 255, 0.82);
 }
 
+/* ===== Dark theme - layered, cool + luminous rather than one flat navy ===== */
 [data-theme="dark"] {
-  --bg: #0a0f1e;
-  --bg-soft: #0d1428;
-  --card-bg: #121b33;
-  --heading: #f1f5f9;
-  --text: #a9b6c9;
-  --text-muted: #a9b6c9;
-  --text-subtle: #8492a8;
-  --border-soft: rgba(148, 163, 184, 0.14);
-  --header-bg: rgba(10, 15, 30, 0.9);
-  --nav-text: #cbd5e1;
-  --header-glass-open: rgba(10, 15, 30, 0.86);
+  --bg: #070a12;
+  --bg-soft: #0b1120;
+  --card-bg: #121a2b;
+  --card-elev: #17203450;
+  --heading: #f3f8ff;
+  --text: #b9c5d8;
+  --text-muted: #93a3bb;
+  --text-subtle: #6a7c96;
+  --border-soft: rgba(125, 211, 235, 0.14);
+  --border-hair: rgba(125, 211, 235, 0.2);
+  --header-bg: rgba(9, 13, 22, 0.9);
+  --nav-text: #dbe5f2;
+  --accent: #2dd4bf;
+  --accent-2: #56b8d6;
+  --accent-3: #4bb8f5;
+  /* a faint glassy top edge on every card */
+  --card-sheen: linear-gradient(180deg, rgba(125, 211, 235, 0.08), transparent 32%);
+  --glow-soft: 0 24px 60px rgba(45, 212, 191, 0.16), inset 0 1px 0 rgba(125, 211, 235, 0.08);
+  --header-glass-open: rgba(9, 13, 22, 0.88);
 }
 
 /* ===== Reset & Base ===== */
@@ -43,6 +59,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 body {
@@ -52,7 +69,9 @@ body {
   font-weight: 400;
   color: var(--text);
   overflow-x: hidden;
-  background: transparent;
+  /* solid base so nothing ever flashes white behind the fixed .site-bg
+     layer (overscroll, momentum scroll, tall pages) */
+  background: var(--bg);
   cursor: none;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -4375,6 +4394,142 @@ html {
   color: #2dd4bf;
   border-color: rgba(45, 212, 191, 0.6);
   box-shadow: 0 0 18px rgba(45, 212, 191, 0.45);
+}
+
+/* ============================================================
+   Dark theme polish - depth, luminosity and a wider colour range
+   ============================================================ */
+
+/* Ambient background: three distinct hues (teal / sky / indigo) instead
+   of one blue wash, a touch brighter, plus a soft top vignette. */
+[data-theme="dark"] .site-bg {
+  background:
+    radial-gradient(rgba(125, 211, 235, 0.11) 1px, transparent 1px),
+    radial-gradient(70% 50% at 50% -10%, rgba(45, 212, 191, 0.1), transparent 70%),
+    linear-gradient(180deg, #060911 0%, #0a1020 55%, #070c17 100%);
+  background-size: 36px 36px, 100% 100%, 100% 100%;
+}
+[data-theme="dark"] .site-bg__blob {
+  opacity: 0.5;
+  filter: blur(120px);
+}
+[data-theme="dark"] .site-bg__blob--1 {
+  background: radial-gradient(circle, #2dd4bf, transparent 70%);
+}
+[data-theme="dark"] .site-bg__blob--2 {
+  background: radial-gradient(circle, #38bdf8, transparent 70%);
+}
+[data-theme="dark"] .site-bg__blob--3 {
+  background: radial-gradient(circle, #6366f1, transparent 72%);
+  opacity: 0.34;
+}
+[data-theme="dark"] .site-bg__particle {
+  background: rgba(125, 211, 235, 0.55);
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+}
+
+/* Hero: layered gradient with a teal core glow rather than a flat navy. */
+[data-theme="dark"] .hero {
+  background:
+    radial-gradient(60% 55% at 72% 30%, rgba(45, 212, 191, 0.14), transparent 60%),
+    radial-gradient(50% 60% at 15% 80%, rgba(99, 102, 241, 0.12), transparent 65%),
+    linear-gradient(160deg, #070b16 0%, #0a1428 42%, #0b1a30 72%, #081120 100%);
+}
+
+/* Elevated surfaces: a hair-line cyan border + glassy top sheen so cards
+   read as lifted off the page instead of blending into it. */
+[data-theme="dark"] .s-cards,
+[data-theme="dark"] .stats__card,
+[data-theme="dark"] .team__card,
+[data-theme="dark"] .about-mission__card,
+[data-theme="dark"] .about-reason,
+[data-theme="dark"] .faq__item,
+[data-theme="dark"] .testimonial__card,
+[data-theme="dark"] .services-orbit__card,
+[data-theme="dark"] .contact__info-card,
+[data-theme="dark"] .contact__form,
+[data-theme="dark"] .process__card,
+[data-theme="dark"] .case-study,
+[data-theme="dark"] .small-features__item,
+[data-theme="dark"] .header__dropdown-menu {
+  background:
+    var(--card-sheen),
+    linear-gradient(180deg, #141d2f, #10192a);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 1px 0 rgba(125, 211, 235, 0.06) inset, 0 18px 40px rgba(0, 0, 0, 0.32);
+}
+
+/* Sectioned backgrounds get a subtle hue shift so the page isn't monotone. */
+[data-theme="dark"] .testimonials {
+  background: radial-gradient(60% 80% at 50% 0%, rgba(56, 189, 248, 0.06), transparent 70%);
+}
+[data-theme="dark"] .process {
+  background: linear-gradient(180deg, #0a1120 0%, #070b14 100%);
+}
+[data-theme="dark"] .case-studies {
+  background: radial-gradient(50% 70% at 80% 20%, rgba(45, 212, 191, 0.07), transparent 70%);
+}
+
+/* Services dropdown - was nearly invisible; make it a solid dark panel. */
+[data-theme="dark"] .header__dropdown-menu {
+  background: linear-gradient(180deg, #131c2e, #0f1725);
+  border-color: rgba(125, 211, 235, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+[data-theme="dark"] .header__dropdown-menu li a {
+  color: #cdd8e8;
+}
+[data-theme="dark"] .header__dropdown-menu li a:hover {
+  color: #2dd4bf;
+  background: rgba(45, 212, 191, 0.1);
+}
+
+/* Headings + gradient text a touch brighter/cooler in dark. */
+[data-theme="dark"] .gradient-text {
+  background: linear-gradient(120deg, #5eead4, #38bdf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Inputs */
+[data-theme="dark"] .contact__input {
+  background: #0d1524;
+  border-color: rgba(125, 211, 235, 0.16);
+}
+[data-theme="dark"] .contact__input:focus {
+  border-color: #2dd4bf;
+  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.14);
+}
+
+/* Testimonials - dimmed siblings become frosted glass, not black holes. */
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover),
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) {
+  background: linear-gradient(160deg, rgba(20, 30, 48, 0.55), rgba(12, 19, 32, 0.5));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(125, 211, 235, 0.08);
+  box-shadow: none;
+}
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__text,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__text {
+  color: rgba(233, 240, 250, 0.45);
+}
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover) .testimonial__author h4,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus) .testimonial__author h4 {
+  color: rgba(233, 240, 250, 0.7);
+}
+[data-theme="dark"] .testimonials__grid .testimonial__card:hover,
+[data-theme="dark"] .testimonials__grid .testimonial__card.in-view-focus {
+  background: linear-gradient(180deg, #16223a, #111a2c);
+  border-color: rgba(45, 212, 191, 0.55);
+  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.4), 0 30px 66px rgba(45, 212, 191, 0.22);
+}
+
+/* Buttons keep their teal gradient but gain a subtle glow in dark. */
+[data-theme="dark"] .btn--primary,
+[data-theme="dark"] .header-btn {
+  box-shadow: 0 10px 30px rgba(45, 212, 191, 0.25);
 }
 
 /* Respect the user's OS-level motion preference */
