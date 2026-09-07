@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+/* Fonts are loaded via next/font in app/layout.js and exposed as
+   --font-sans (Inter), --font-display (Outfit), --font-mono (JetBrains Mono). */
 
 /* ===== Theme Variables ===== */
 :root {
@@ -52,7 +53,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 16px;
   line-height: 26px;
   font-weight: 400;
@@ -201,7 +202,7 @@ a, button, .btn, .s-cards, .portfolio__image, .about-reason, .faq__item, .case-s
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
 }
 
 a {
@@ -614,7 +615,7 @@ button {
 }
 
 .label-text {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.8px;
@@ -1207,7 +1208,7 @@ button {
 .about__subtitle {
   line-height: 16px;
   color: #3f9dbd;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.8px;
@@ -1283,7 +1284,7 @@ button {
 
 .about-reason__index {
   flex-shrink: 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -1379,7 +1380,7 @@ button {
 
 .faq__index {
   flex-shrink: 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -2050,7 +2051,7 @@ button {
   top: 20px;
   right: 30px;
   font-size: 80px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   line-height: 1;
   background: linear-gradient(135deg, rgba(63,157,189,0.1), rgba(45,212,191,0.1));
   -webkit-background-clip: text;
@@ -2183,7 +2184,7 @@ button {
   font-size: 16px;
   font-weight: 600;
   color: var(--heading);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   transition: color 0.3s ease;
 }
 
@@ -2261,7 +2262,7 @@ button {
 .stats__number {
   font-size: 52px;
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   letter-spacing: -0.02em;
   color: var(--heading);
   line-height: 1;
@@ -2270,7 +2271,7 @@ button {
 .stats__suffix {
   font-size: 30px;
   font-weight: 700;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2278,7 +2279,7 @@ button {
 }
 
 .stats__label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.3px;
@@ -2420,7 +2421,7 @@ button {
   border: 1px solid rgba(63,157,189,0.15);
   transition: all 0.3s ease;
   cursor: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
 }
 
 .portfolio__filter:hover {
@@ -2522,7 +2523,7 @@ button {
   display: inline-block;
   background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
   color: #fff;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 500;
   padding: 6px 16px;
@@ -2538,7 +2539,7 @@ button {
   font-weight: 700;
   color: #fff;
   margin-bottom: 10px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -2912,7 +2913,7 @@ button {
   align-items: center;
   gap: 8px;
   margin-bottom: 20px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 12.5px;
   letter-spacing: 0.3px;
   color: var(--text-subtle);
@@ -3041,7 +3042,7 @@ button {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-display), 'Outfit', sans-serif;
   font-size: 42px;
   font-weight: 700;
   color: #fff;
@@ -3219,7 +3220,7 @@ button {
   border: 1px solid rgba(63,157,189,0.15);
   border-radius: 12px;
   font-size: 15px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   color: var(--heading);
   background: var(--bg-soft);
   transition: all 0.3s;
@@ -3415,7 +3416,7 @@ textarea.contact__input {
 }
 
 .service-core__glyph {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display), "Outfit", sans-serif;
   font-weight: 700;
   fill: #fff;
 }
@@ -3440,7 +3441,7 @@ textarea.contact__input {
 }
 
 .service-core__label-sm {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
   font-size: 12px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -3448,7 +3449,7 @@ textarea.contact__input {
 }
 
 .service-core__label-lg {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display), "Outfit", sans-serif;
   font-size: clamp(21px, 2.3vw, 27px);
   font-weight: 700;
   line-height: 1.08;
@@ -3457,7 +3458,7 @@ textarea.contact__input {
 }
 
 .service-core__label-xs {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
   font-size: 11.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3513,7 +3514,7 @@ textarea.contact__input {
 }
 
 .service-core__b-num {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
   font-size: 11px;
   line-height: 1;
   letter-spacing: 0.24em;
@@ -3523,7 +3524,7 @@ textarea.contact__input {
 }
 
 .service-core__b-title {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-display), "Outfit", sans-serif;
   font-size: 17px;
   font-weight: 600;
   line-height: 1.25;
@@ -3745,7 +3746,7 @@ textarea.contact__input {
   display: block;
   font-size: 42px;
   font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   background: linear-gradient(135deg, rgba(63,157,189,0.18), rgba(45,212,191,0.12));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -3986,7 +3987,7 @@ textarea.contact__input {
 }
 
 .case-study__index {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 13px;
   color: #3f9dbd;
   opacity: 0.7;
@@ -3996,7 +3997,7 @@ textarea.contact__input {
 .case-study__tag {
   display: inline-block;
   align-self: flex-start;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 1px;
@@ -4666,7 +4667,7 @@ html {
   bottom: 96px;
   right: 24px;
   z-index: 1000000;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans), "Inter", sans-serif;
 }
 
 .geek__launcher {

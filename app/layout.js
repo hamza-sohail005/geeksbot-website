@@ -1,9 +1,31 @@
 import "./globals.css";
+import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollEffects from "@/components/ScrollEffects";
 import SiteBackground from "@/components/SiteBackground";
-import GeekAssistant from "@/components/GeekAssistant";
+import GeekAssistantLoader from "@/components/GeekAssistantLoader";
+
+// Self-hosted, subset and preloaded - replaces the render-blocking
+// @import in globals.css. Only the weights the design actually uses.
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL("https://geeksbot.com"),
@@ -58,7 +80,11 @@ const themeInitScript = `
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
+    >
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <div className="cursor" id="cursor"></div>
@@ -69,7 +95,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <ScrollEffects />
-        <GeekAssistant />
+        <GeekAssistantLoader />
       </body>
     </html>
   );
