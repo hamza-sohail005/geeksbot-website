@@ -19,13 +19,6 @@ const caseStudies = [
     featured: true,
   },
   {
-    id: "case-retail-scaling",
-    tag: "Web Apps",
-    title: "Scaling A Retail Platform For Peak Season",
-    text: "How we rebuilt a growing retailer's checkout flow to handle heavy traffic without losing a single sale.",
-    href: "/web-development",
-  },
-  {
     id: "case-fintech-relaunch",
     tag: "Mobile Apps",
     title: "Relaunching A Fintech App Customers Actually Trust",
@@ -49,7 +42,7 @@ export default function PortfolioPage() {
         text="A look at the work we have delivered and the thinking behind it, from quick wins to full product builds."
       />
 
-      <Portfolio showIntro={false} showCta={false} showFeatured={false} />
+      <Portfolio showIntro={false} showCta={false} />
 
       <section className="case-studies" id="case-studies">
         <div className="container">

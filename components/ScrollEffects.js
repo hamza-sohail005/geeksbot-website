@@ -19,24 +19,44 @@ export default function ScrollEffects() {
   useEffect(() => {
     const header = document.getElementById("header");
     const scrollTop = document.getElementById("scrollTop");
+    // Sections the transparent navbar can't be read against in light mode.
+    const DARK_BEHIND = ".cta, .footer, .sbcs-section--dark";
+    let ticking = false;
 
-    function handleScroll() {
-      if (window.scrollY > 20) {
-        header?.classList.add("sticky");
-      } else {
-        header?.classList.remove("sticky");
-      }
+    function apply() {
+      ticking = false;
+      if (window.scrollY > 20) header?.classList.add("sticky");
+      else header?.classList.remove("sticky");
 
-      if (window.scrollY > 300) {
-        scrollTop?.classList.add("visible");
-      } else {
-        scrollTop?.classList.remove("visible");
+      if (window.scrollY > 300) scrollTop?.classList.add("visible");
+      else scrollTop?.classList.remove("visible");
+
+      // What's directly behind the middle of the navbar? If it's a dark
+      // section, flip the nav to light text so it stays visible.
+      if (header) {
+        const y = Math.max(8, header.offsetHeight * 0.5);
+        const stack = document.elementsFromPoint(window.innerWidth / 2, y);
+        const behind = stack.find((el) => !el.closest("#header"));
+        const onDark = !!behind?.closest?.(DARK_BEHIND);
+        header.classList.toggle("header--on-dark", onDark);
       }
     }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    function handleScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(apply);
+      }
+    }
+
+    apply();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [pathname]);
 
   // Jump to and highlight a specific element on landing at a #hash target -
   // covers direct links and hardcoded anchors (e.g. Header's portfolio links).
