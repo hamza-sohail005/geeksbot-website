@@ -4537,6 +4537,60 @@ html {
   box-shadow: 0 10px 30px rgba(45, 212, 191, 0.25);
 }
 
+/* ------------------------------------------------------------
+   Testimonials in dark mode use the SAME spotlight look as the
+   light theme: light cards, a teal featured (middle) card, and
+   siblings that recede to a soft light grey - never dark navy.
+   ------------------------------------------------------------ */
+[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) {
+  background: #ffffff;
+  border: 1px solid rgba(63, 157, 189, 0.12);
+  box-shadow: 0 14px 40px rgba(2, 8, 20, 0.5);
+}
+[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__text { color: #475569; }
+[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__author h4 { color: #0f172a; }
+[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__author span { color: #64748b; }
+[data-theme="dark"] .testimonial__card:not(.testimonial__card--featured) .testimonial__author { border-top-color: rgba(15, 23, 42, 0.1); }
+
+/* featured card - teal, in every state */
+[data-theme="dark"] .testimonial__card--featured,
+[data-theme="dark"] .testimonials__grid .testimonial__card--featured:hover,
+[data-theme="dark"] .testimonials__grid .testimonial__card--featured.in-view-focus,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card--featured:not(:hover),
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card--featured:not(.in-view-focus) {
+  background: linear-gradient(135deg, #2d8ca8, #3f9dbd, #2dd4bf);
+  border: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 20px 50px rgba(45, 212, 191, 0.3);
+}
+
+/* the lit non-featured card */
+[data-theme="dark"] .testimonials__grid .testimonial__card:not(.testimonial__card--featured):hover,
+[data-theme="dark"] .testimonials__grid .testimonial__card:not(.testimonial__card--featured).in-view-focus {
+  background: #ffffff;
+  border-color: rgba(63, 157, 189, 0.5);
+  box-shadow: 0 0 0 2px rgba(63, 157, 189, 0.5), 0 30px 66px rgba(63, 157, 189, 0.3);
+}
+[data-theme="dark"] .testimonials__grid .testimonial__card:not(.testimonial__card--featured):hover .testimonial__author h4,
+[data-theme="dark"] .testimonials__grid .testimonial__card:not(.testimonial__card--featured).in-view-focus .testimonial__author h4 { color: #0f172a; }
+
+/* the dimmed siblings - soft light grey, receded; no dark blue */
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover):not(.testimonial__card--featured),
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus):not(.testimonial__card--featured) {
+  background: #e8edf4;
+  border-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 10px 26px rgba(2, 8, 20, 0.35);
+}
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover):not(.testimonial__card--featured) .testimonial__text,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus):not(.testimonial__card--featured) .testimonial__text { color: rgba(15, 23, 42, 0.5); }
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover):not(.testimonial__card--featured) .testimonial__author h4,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus):not(.testimonial__card--featured) .testimonial__author h4 { color: rgba(15, 23, 42, 0.7); }
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card:hover) .testimonial__card:not(:hover):not(.testimonial__card--featured) .testimonial__author span,
+[data-theme="dark"] .testimonials__grid:has(.testimonial__card.in-view-focus) .testimonial__card:not(.in-view-focus):not(.testimonial__card--featured) .testimonial__author span { color: rgba(15, 23, 42, 0.4); }
+
 /* Respect the user's OS-level motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
