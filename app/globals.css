@@ -4392,100 +4392,177 @@ html {
 }
 
 /* ==================================================================
-   DARK THEME - two-colour surface & rhythm system
-   Deep Ink (environment) + GeeksBot Teal (identity). Every surface
-   below is a step on the ink ladder with teal used only for edges,
-   lighting and interaction. Light theme is untouched - all scoped
-   to [data-theme="dark"].
+   DARK THEME - a WHITE + NAVY alternating-surface system, with CYAN
+   as the single accent (hover, glow, animation, active state).
+
+     colour 1  Navy   #0a1420 .. #070e17  - the dark surfaces
+     colour 2  White  #ffffff .. #f4f8fc  - the light surfaces
+     colour 3  Cyan   #22d3ee             - accent only
+
+   Homepage rhythm:  hero(navy) -> stats(white) -> portfolio(navy) ->
+   why-geeksbot(white) -> services(navy) -> testimonials(white) ->
+   features(navy) -> CTA + footer(navy).
+
+   Light theme is untouched - everything here is [data-theme="dark"].
+   .dm-dark / .dm-light carry no styling of their own in light mode.
    ================================================================== */
 
-/* --- Ambient base: one teal atmosphere over deep ink, no other hue --- */
-[data-theme="dark"] .site-bg {
-  background:
-    radial-gradient(rgba(45, 212, 191, 0.06) 1px, transparent 1px),
-    radial-gradient(85% 55% at 50% -15%, rgba(45, 212, 191, 0.09), transparent 72%),
-    linear-gradient(180deg, var(--ink-800) 0%, #0b1a28 52%, var(--ink-900) 100%);
-  background-size: 42px 42px, 100% 100%, 100% 100%;
-}
-[data-theme="dark"] .site-bg__blob {
-  opacity: 0.3;
-  filter: blur(130px);
-}
-[data-theme="dark"] .site-bg__blob--1 { background: radial-gradient(circle, #2dd4bf, transparent 70%); }
-[data-theme="dark"] .site-bg__blob--2 { background: radial-gradient(circle, #1c9c8e, transparent 70%); }
-[data-theme="dark"] .site-bg__blob--3 {
-  background: radial-gradient(circle, #2dd4bf, transparent 72%);
-  opacity: 0.18;
-}
-[data-theme="dark"] .site-bg__particle {
-  background: rgba(45, 212, 191, 0.5);
-  box-shadow: 0 0 6px rgba(45, 212, 191, 0.45);
+[data-theme="dark"] {
+  --dm-navy-1: #0a1420;
+  --dm-navy-2: #0d1a2a;
+  --dm-navy-deep: #070e17;
+  --dm-white-1: #ffffff;
+  --dm-white-2: #f3f7fc;
+  --dm-cyan: #22d3ee;
+  --dm-ink-on-light: #0f2233;
 }
 
-/* --- HERO: deepest ink, most atmosphere - a broad teal light behind
-   the robot, a fainter one low-left, fading into the page ground. --- */
+/* --- Ambient base: deep navy with a faint cyan atmosphere --- */
+[data-theme="dark"] .site-bg {
+  background:
+    radial-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    radial-gradient(85% 55% at 50% -15%, rgba(34, 211, 238, 0.08), transparent 72%),
+    linear-gradient(180deg, var(--dm-navy-1) 0%, #0b1826 52%, var(--dm-navy-deep) 100%);
+  background-size: 42px 42px, 100% 100%, 100% 100%;
+}
+[data-theme="dark"] .site-bg__blob { opacity: 0.26; filter: blur(135px); }
+[data-theme="dark"] .site-bg__blob--1 { background: radial-gradient(circle, #22d3ee, transparent 70%); }
+[data-theme="dark"] .site-bg__blob--2 { background: radial-gradient(circle, #1c9c8e, transparent 70%); }
+[data-theme="dark"] .site-bg__blob--3 {
+  background: radial-gradient(circle, #22d3ee, transparent 72%);
+  opacity: 0.16;
+}
+[data-theme="dark"] .site-bg__particle {
+  background: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+}
+
+/* --- HERO (navy): deepest surface, a broad cyan light behind the robot,
+   fading into the page ground at the bottom. --- */
 [data-theme="dark"] .hero {
   background:
-    linear-gradient(to bottom, transparent calc(100% - 170px), var(--bg) 100%),
-    radial-gradient(56% 55% at 74% 32%, rgba(45, 212, 191, 0.17), transparent 60%),
+    linear-gradient(to bottom, transparent calc(100% - 170px), var(--dm-navy-1) 100%),
+    radial-gradient(56% 55% at 74% 32%, rgba(34, 211, 238, 0.16), transparent 60%),
     radial-gradient(46% 55% at 12% 90%, rgba(45, 212, 191, 0.07), transparent 66%),
     linear-gradient(165deg, #060d16 0%, #0a1826 46%, #0b2030 76%, #071420 100%);
 }
 
-/* --- SECTION RHYTHM: same two colours, different depth + lighting.
-   interactive sections sit a touch higher on the ink ladder with a
-   soft teal glow; calm sections are flatter and quieter. --- */
-
-/* Stats - calm, structured: a quiet raised shelf between two hairlines */
-[data-theme="dark"] .stats {
-  background: linear-gradient(180deg, rgba(14, 40, 60, 0.5), rgba(10, 22, 34, 0.15));
-  border-top: 1px solid rgba(45, 212, 191, 0.12);
-  border-bottom: 1px solid rgba(45, 212, 191, 0.07);
+/* ==================================================================
+   SURFACE 1 - NAVY sections (.dm-dark, plus CTA / footer)
+   ================================================================== */
+[data-theme="dark"] .dm-dark {
+  position: relative;
+  background: linear-gradient(180deg, var(--dm-navy-1), var(--dm-navy-2));
+}
+[data-theme="dark"] .dm-dark .portfolio,
+[data-theme="dark"] .dm-dark .services-orbit {
+  background: transparent;
+}
+/* a faint cyan seam where a navy surface meets a white one */
+[data-theme="dark"] .dm-dark::before,
+[data-theme="dark"] .dm-light::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.35), transparent);
+  z-index: 2;
+  pointer-events: none;
 }
 
-/* Portfolio - imagery leads; just a faint teal wash from the top-right */
-[data-theme="dark"] .portfolio {
-  background: radial-gradient(58% 46% at 88% 0%, rgba(45, 212, 191, 0.08), transparent 62%);
-}
-
-/* Why GeeksBot - the feature surface: raised ink + a centred teal glow */
-[data-theme="dark"] .about {
-  background:
-    radial-gradient(48% 58% at 50% 42%, rgba(45, 212, 191, 0.1), transparent 62%),
-    linear-gradient(180deg, rgba(16, 33, 49, 0.72), rgba(9, 20, 32, 0.55));
-}
-
-/* Services - technologically sophisticated: gentle ink gradient, the
-   teal comes from the orbit connectors + card interaction already. */
-[data-theme="dark"] .services-orbit {
-  background: linear-gradient(180deg, rgba(9, 19, 30, 0.55), rgba(13, 27, 41, 0.6));
-}
-
-/* Testimonials - the calmest surface: barely-there teal from the top */
-[data-theme="dark"] .testimonials {
-  background: radial-gradient(66% 80% at 50% 0%, rgba(45, 212, 191, 0.045), transparent 70%);
-}
 [data-theme="dark"] .small-features {
-  background: linear-gradient(180deg, transparent, rgba(7, 14, 23, 0.55));
+  background: linear-gradient(180deg, var(--dm-navy-2), var(--dm-navy-1));
 }
-
-/* Final CTA + footer - return to the deepest ink, strongest teal light */
 [data-theme="dark"] .cta {
   background:
-    repeating-linear-gradient(90deg, rgba(45, 212, 191, 0.035) 0 1px, transparent 1px 64px),
-    repeating-linear-gradient(0deg, rgba(45, 212, 191, 0.035) 0 1px, transparent 1px 64px),
-    radial-gradient(60% 65% at 50% 0%, rgba(45, 212, 191, 0.12), transparent 66%),
-    linear-gradient(180deg, var(--ink-900) 0%, #0a1826 58%, #060c15 100%);
+    repeating-linear-gradient(90deg, rgba(34, 211, 238, 0.04) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(0deg, rgba(34, 211, 238, 0.04) 0 1px, transparent 1px 64px),
+    radial-gradient(60% 65% at 50% 0%, rgba(34, 211, 238, 0.13), transparent 66%),
+    linear-gradient(180deg, var(--dm-navy-deep) 0%, #0a1826 58%, #060c15 100%);
 }
 [data-theme="dark"] .footer {
-  background: linear-gradient(180deg, var(--ink-900) 0%, #0a1725 100%);
-  border-top: 1px solid rgba(45, 212, 191, 0.1);
+  background: linear-gradient(180deg, var(--dm-navy-deep) 0%, #0a1725 100%);
+  border-top: 1px solid rgba(34, 211, 238, 0.12);
 }
 [data-theme="dark"] .process {
-  background: linear-gradient(180deg, var(--ink-700) 0%, var(--ink-900) 100%);
+  background: linear-gradient(180deg, var(--dm-navy-2) 0%, var(--dm-navy-deep) 100%);
 }
 [data-theme="dark"] .case-studies {
-  background: radial-gradient(50% 70% at 80% 20%, rgba(45, 212, 191, 0.07), transparent 70%);
+  background: radial-gradient(50% 70% at 80% 20%, rgba(34, 211, 238, 0.06), transparent 70%);
+}
+
+/* ==================================================================
+   SURFACE 2 - WHITE sections (.dm-light : stats, why-geeksbot,
+   testimonials). Tokens flip to navy-on-white; components inside
+   inherit automatically, a few hard-coded ones are patched below.
+   ================================================================== */
+[data-theme="dark"] .dm-light {
+  position: relative;
+  --bg: var(--dm-white-1);
+  --bg-soft: var(--dm-white-2);
+  --card-bg: #ffffff;
+  --card-elev: #ffffff;
+  --heading: var(--dm-ink-on-light);
+  --text: #43566e;
+  --text-muted: #566a83;
+  --text-subtle: #74869c;
+  --border-soft: rgba(15, 34, 51, 0.1);
+  --border-hair: rgba(15, 34, 51, 0.14);
+  --card-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent 40%);
+  background: linear-gradient(180deg, var(--dm-white-1), var(--dm-white-2));
+  color: var(--text);
+  box-shadow: inset 0 44px 60px -46px rgba(3, 10, 20, 0.6);
+}
+
+/* cards on a white surface: clean white, soft shadow, hairline border,
+   cyan only on interaction */
+[data-theme="dark"] .dm-light .stats__card,
+[data-theme="dark"] .dm-light .about-reason,
+[data-theme="dark"] .dm-light .testimonial__card,
+[data-theme="dark"] .dm-light .s-cards {
+  background: #ffffff;
+  border: 1px solid rgba(15, 34, 51, 0.1);
+  box-shadow: 0 12px 34px rgba(9, 24, 40, 0.08);
+}
+/* stats: numbers sit straight on white, divided by hairlines */
+[data-theme="dark"] .dm-light .stats__card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-right: 1px solid rgba(15, 34, 51, 0.1);
+}
+[data-theme="dark"] .dm-light .stats__card:last-child { border-right: none; }
+
+/* why-geeksbot reasons: the light-theme bordered-list look */
+[data-theme="dark"] .dm-light .about-reasons { border-top-color: rgba(15, 34, 51, 0.1); }
+[data-theme="dark"] .dm-light .about-reason {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(15, 34, 51, 0.1);
+  box-shadow: none;
+}
+[data-theme="dark"] .dm-light .about-reason:hover,
+[data-theme="dark"] .dm-light .about-reason.in-view-focus {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.09), rgba(45, 212, 191, 0.08));
+}
+[data-theme="dark"] .dm-light .about-reason:hover .about-reason__body h3,
+[data-theme="dark"] .dm-light .about-reason.in-view-focus .about-reason__body h3 { color: #1d7f9a; }
+
+/* emphasis word on white needs a deeper teal than the on-navy cyan */
+[data-theme="dark"] .dm-light .gradient-text {
+  background: linear-gradient(120deg, #2b8ca8, #1f9a94);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* section labels / pills read fine on white with their light-theme colours,
+   just make sure the badge background is visible */
+[data-theme="dark"] .dm-light .about_sub-title-background {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(45, 212, 191, 0.1));
+  border-color: rgba(34, 211, 238, 0.18);
 }
 
 /* --- CARDS: one component language, ink surface + teal edge. Section
@@ -4524,15 +4601,41 @@ html {
   background: rgba(45, 212, 191, 0.1);
 }
 
-/* --- NAVBAR: transparent over the hero, translucent teal-edged glass
+/* --- NAVBAR: transparent over the hero, translucent cyan-edged glass
    once scrolling starts - content stays visible through it. Dark theme
    only; the light theme bar is unchanged. --- */
 [data-theme="dark"] .header.sticky:not([data-menu-open="true"]) {
   background: rgba(9, 18, 29, 0.55);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
-  border-bottom: 1px solid rgba(45, 212, 191, 0.12);
+  border-bottom: 1px solid rgba(34, 211, 238, 0.14);
   box-shadow: 0 10px 34px rgba(0, 0, 0, 0.3);
+}
+
+/* Over a white .dm-light section: dark ink nav text, light glass -
+   still translucent, content still visible through it. */
+[data-theme="dark"] .header--on-light.sticky:not([data-menu-open="true"]) {
+  background: rgba(255, 255, 255, 0.6);
+  border-bottom-color: rgba(15, 34, 51, 0.1);
+  box-shadow: 0 10px 30px rgba(9, 24, 40, 0.12);
+}
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .header__nav-link {
+  color: #14324a;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .header__nav-link:hover,
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .header__nav-link.active {
+  color: #0e8fa8;
+}
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .header__logo img {
+  filter: none;
+}
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .theme-toggle {
+  color: #14324a;
+  border-color: rgba(15, 34, 51, 0.28);
+}
+[data-theme="dark"] .header--on-light:not([data-menu-open="true"]) .hamburger span {
+  background-color: #14324a;
 }
 
 /* Emphasis word - stays inside the teal family (teal -> teal-cyan) */

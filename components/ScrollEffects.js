@@ -19,8 +19,11 @@ export default function ScrollEffects() {
   useEffect(() => {
     const header = document.getElementById("header");
     const scrollTop = document.getElementById("scrollTop");
-    // Sections the transparent navbar can't be read against in light mode.
+    // Sections the transparent navbar can't be read against (any theme).
     const DARK_BEHIND = ".cta, .footer, .sbcs-section--dark";
+    // Dark theme only: the white surfaces of the alternating dark-mode
+    // system - over these the nav text has to flip to dark ink.
+    const LIGHT_BEHIND_DARK = ".dm-light";
     let ticking = false;
 
     function apply() {
@@ -31,14 +34,18 @@ export default function ScrollEffects() {
       if (window.scrollY > 300) scrollTop?.classList.add("visible");
       else scrollTop?.classList.remove("visible");
 
-      // What's directly behind the middle of the navbar? If it's a dark
-      // section, flip the nav to light text so it stays visible.
+      // What's directly behind the middle of the navbar? Flip the nav
+      // text so it stays legible over whatever scrolls under it.
       if (header) {
+        const isDark =
+          document.documentElement.getAttribute("data-theme") === "dark";
         const y = Math.max(8, header.offsetHeight * 0.5);
         const stack = document.elementsFromPoint(window.innerWidth / 2, y);
         const behind = stack.find((el) => !el.closest("#header"));
         const onDark = !!behind?.closest?.(DARK_BEHIND);
+        const onLight = isDark && !!behind?.closest?.(LIGHT_BEHIND_DARK);
         header.classList.toggle("header--on-dark", onDark);
+        header.classList.toggle("header--on-light", onLight);
       }
     }
 
@@ -52,9 +59,16 @@ export default function ScrollEffects() {
     apply();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
+    // Re-evaluate the moment the theme is toggled.
+    const themeObserver = new MutationObserver(apply);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
+      themeObserver.disconnect();
     };
   }, [pathname]);
 

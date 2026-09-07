@@ -147,7 +147,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Stats ===== */}
-      <section className="stats">
+      <section className="stats dm-light">
         <div className="container">
           <div className="stats__grid">
             <div className="stats__card animate">
@@ -206,10 +206,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Portfolio />
+      <div className="dm-dark">
+        <Portfolio />
+      </div>
 
       {/* ===== About / Why Choose Us ===== */}
-      <section className="about">
+      <section className="about dm-light">
         <div className="container">
           <div className="about__wrapper">
             <div className="about__intro animate">
@@ -249,10 +251,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ServicesOrbit />
+      <div className="dm-dark">
+        <ServicesOrbit />
+      </div>
 
       {/* ===== Testimonials ===== */}
-      <section className="testimonials">
+      <section className="testimonials dm-light">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">
@@ -287,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Small Features ===== */}
-      <section className="small-features" id="features">
+      <section className="small-features dm-dark" id="features">
         <div className="container">
           <div className="small-features__grid">
             {smallFeatures.map((feature) => (
