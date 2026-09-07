@@ -2328,6 +2328,7 @@ button {
   letter-spacing: -0.02em;
   color: var(--heading);
   line-height: 1;
+  transition: color 0.3s ease;
 }
 
 .stats__suffix {
@@ -2429,6 +2430,7 @@ button {
   font-size: 20px;
   color: var(--heading);
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 /* ===== Portfolio ===== */
@@ -4339,31 +4341,78 @@ html {
   color: var(--heading);
 }
 
-/* Richer glow on hover for dark-mode cards */
+/* ==================================================================
+   UNIFIED CARD HOVER (dark theme) - the same "cyan wash + cyan accent
+   + lift" treatment on every card, on navy surfaces and white ones.
+   This is the hover you liked on the Why-GeeksBot reason cards, applied
+   site-wide.
+   ================================================================== */
+
+/* -- on NAVY surfaces: cyan wash over the ink card + cyan edge + glow -- */
 [data-theme="dark"] .stats__card:hover,
-[data-theme="dark"] .about-mission__card:hover,
-[data-theme="dark"] .team__card:hover,
-[data-theme="dark"] .s-cards:hover,
-[data-theme="dark"] .contact__info-card:hover,
 [data-theme="dark"] .stats__card.in-view-focus,
-[data-theme="dark"] .about-mission__card.in-view-focus,
-[data-theme="dark"] .team__card.in-view-focus,
+[data-theme="dark"] .small-features__item:hover,
+[data-theme="dark"] .small-features__item.in-view-focus,
+[data-theme="dark"] .s-cards:hover,
 [data-theme="dark"] .s-cards.in-view-focus,
-[data-theme="dark"] .contact__info-card.in-view-focus {
-  box-shadow: 0 20px 55px rgba(45, 212, 191, 0.22);
-  border-color: rgba(45, 212, 191, 0.32);
+[data-theme="dark"] .services-orbit__card:hover,
+[data-theme="dark"] .services-orbit__card.in-view-focus,
+[data-theme="dark"] .team__card:hover,
+[data-theme="dark"] .team__card.in-view-focus,
+[data-theme="dark"] .about-mission__card:hover,
+[data-theme="dark"] .about-mission__card.in-view-focus,
+[data-theme="dark"] .contact__info-card:hover,
+[data-theme="dark"] .contact__info-card.in-view-focus,
+[data-theme="dark"] .process__card:hover,
+[data-theme="dark"] .process__card.in-view-focus,
+[data-theme="dark"] .case-study:hover,
+[data-theme="dark"] .case-study.in-view-focus,
+[data-theme="dark"] .faq__item:hover,
+[data-theme="dark"] .faq__item.in-view-focus {
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(45, 212, 191, 0.05)),
+    linear-gradient(180deg, var(--ink-500), var(--ink-600));
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.28), 0 22px 52px rgba(34, 211, 238, 0.16);
+}
+[data-theme="dark"] .small-features__item:hover .small-features__title,
+[data-theme="dark"] .small-features__item.in-view-focus .small-features__title,
+[data-theme="dark"] .stats__card:hover .stats__number,
+[data-theme="dark"] .stats__card.in-view-focus .stats__number,
+[data-theme="dark"] .case-study:hover .case-study__title,
+[data-theme="dark"] .case-study.in-view-focus .case-study__title {
+  color: #5fe6d6;
 }
 
-[data-theme="dark"] .contact__info-card:hover,
-[data-theme="dark"] .contact__info-card.in-view-focus {
-  background: linear-gradient(135deg, rgba(63,157,189,0.18), rgba(45,212,191,0.12)), var(--card-bg);
-  box-shadow: 0 0 0 2px rgba(45,212,191,0.36), 0 22px 48px rgba(45,212,191,0.2);
-  border-color: rgba(45,212,191,0.4);
+/* -- on WHITE .dm-light surfaces: the light cyan tint + cyan accent,
+   exactly the Why-GeeksBot reason-card hover -- */
+[data-theme="dark"] .dm-light .stats__card {
+  transition: background 0.35s ease, border-color 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="dark"] .dm-light .stats__card:hover,
+[data-theme="dark"] .dm-light .stats__card.in-view-focus,
+[data-theme="dark"] .dm-light .s-cards:hover,
+[data-theme="dark"] .dm-light .s-cards.in-view-focus {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(45, 212, 191, 0.08));
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(9, 24, 40, 0.1);
+}
+[data-theme="dark"] .dm-light .stats__card:hover,
+[data-theme="dark"] .dm-light .stats__card.in-view-focus {
+  border-right-color: rgba(34, 211, 238, 0.4);
+}
+[data-theme="dark"] .dm-light .s-cards:hover,
+[data-theme="dark"] .dm-light .s-cards.in-view-focus {
+  border-color: rgba(34, 211, 238, 0.32);
+}
+[data-theme="dark"] .dm-light .stats__card:hover .stats__number,
+[data-theme="dark"] .dm-light .stats__card.in-view-focus .stats__number {
+  color: #0e8fa8;
 }
 
 [data-theme="dark"] .portfolio__item:hover,
 [data-theme="dark"] .portfolio__item.in-view-focus {
-  box-shadow: 0 20px 55px rgba(45, 212, 191, 0.28);
+  box-shadow: 0 20px 55px rgba(34, 211, 238, 0.28);
 }
 
 /* Dark scrim so bright product photos sit naturally in the dark theme */
