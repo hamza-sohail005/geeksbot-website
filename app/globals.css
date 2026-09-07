@@ -13,12 +13,9 @@
   --border-soft: rgba(63, 157, 189, 0.08);
   --header-bg: rgba(255, 255, 255, 0.95);
   --nav-text: #4b5563;
-  /* Floating glass navbar (see .header.sticky) */
-  --header-glass: rgba(255, 255, 255, 0.5);
+  /* Backing for the mobile menu bar/panel only (the desktop bar is always
+     transparent - see .header). */
   --header-glass-open: rgba(255, 255, 255, 0.82);
-  --header-glass-fallback: rgba(255, 255, 255, 0.75);
-  --header-glass-border: rgba(255, 255, 255, 0.6);
-  --header-glass-shadow: 0 10px 34px rgba(15, 23, 42, 0.07);
 }
 
 [data-theme="dark"] {
@@ -32,11 +29,7 @@
   --border-soft: rgba(148, 163, 184, 0.14);
   --header-bg: rgba(10, 15, 30, 0.9);
   --nav-text: #cbd5e1;
-  --header-glass: rgba(12, 18, 34, 0.46);
   --header-glass-open: rgba(10, 15, 30, 0.86);
-  --header-glass-fallback: rgba(10, 15, 30, 0.82);
-  --header-glass-border: rgba(148, 163, 184, 0.14);
-  --header-glass-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
 }
 
 /* ===== Reset & Base ===== */
@@ -235,10 +228,11 @@ button {
 }
 
 /* ===== Header ===== */
-/* At the top of the page the bar is fully transparent and blends into the
-   hero. On scroll it becomes a floating translucent glass panel - page
-   content keeps moving behind it, softly blurred rather than hidden. The bar
-   is position:fixed so height changes never shift page layout. */
+/* The bar is fully transparent - at the top AND while scrolling. Page
+   content flows behind it untouched, no panel / blur / border / shadow
+   (ref: thebotss.com). It's position:fixed so nothing ever shifts; only
+   the vertical rhythm tightens on scroll. A soft adaptive text-shadow on
+   the nav items keeps them legible over whatever scrolls underneath. */
 .header {
   position: fixed;
   top: 0;
@@ -247,37 +241,24 @@ button {
   z-index: 99999;
   padding: 22px 0;
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease,
-    border-color 0.3s ease, backdrop-filter 0.3s ease,
-    -webkit-backdrop-filter 0.3s ease;
+  transition: padding 0.3s ease;
 }
 
 .header.sticky {
-  padding: 12px 0;
-  background: var(--header-glass);
-  border-bottom-color: var(--header-glass-border);
-  box-shadow: var(--header-glass-shadow);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  backdrop-filter: blur(14px) saturate(150%);
+  padding: 14px 0;
 }
 
-/* Mobile menu open: nudge the bar more opaque so nav items stay legible */
+/* Mobile: while the full-screen menu is open the bar itself needs a
+   readable backing so the logo + close button don't disappear into it. */
 .header[data-menu-open="true"] {
   background: var(--header-glass-open);
-  border-bottom-color: var(--header-glass-border);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
   backdrop-filter: blur(16px) saturate(150%);
 }
 
-/* Fallback for browsers without backdrop-filter: a more opaque tint so text
-   never sits on unreadable moving content */
 @supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
-  .header.sticky {
-    background: var(--header-glass-fallback);
-  }
   .header[data-menu-open="true"] {
-    background: var(--header-glass-open);
+    background: var(--card-bg);
   }
 }
 
@@ -289,6 +270,7 @@ button {
 
 .header__logo img {
   height: 36px;
+  filter: drop-shadow(0 1px 10px var(--bg));
 }
 
 .header__nav {
@@ -315,6 +297,9 @@ button {
   font-size: 15px;
   transition: color 0.2s;
   position: relative;
+  /* Legibility insurance for the always-transparent bar: an invisible halo
+     in the page background colour that only shows up over busy content. */
+  text-shadow: 0 0 16px var(--bg), 0 1px 2px rgba(15, 23, 42, 0.05);
 }
 
 .header__nav-link::after {
