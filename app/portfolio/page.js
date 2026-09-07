@@ -49,7 +49,7 @@ export default function PortfolioPage() {
         text="A look at the work we have delivered and the thinking behind it, from quick wins to full product builds."
       />
 
-      <Portfolio showIntro={false} showCta={false} />
+      <Portfolio showIntro={false} showCta={false} showFeatured={false} />
 
       <section className="case-studies" id="case-studies">
         <div className="container">

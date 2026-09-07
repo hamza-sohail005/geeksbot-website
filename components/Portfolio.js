@@ -15,9 +15,8 @@ const projects = [
   {
     id: "portfolio-sb-fragrances",
     category: "web",
-    wide: true,
-    caseStudy: true,
-    tag: "Case Study",
+    featured: true,
+    tag: "Featured Case Study",
     title: "SB Fragrances & Oud",
     desc: "A complete fragrance commerce ecosystem built from zero — storefront, catalog, AI product photography, social creative, SEO and local search.",
     href: "/case-studies/sb-fragrances",
@@ -25,7 +24,7 @@ const projects = [
   {
     id: "portfolio-retail-store",
     category: "web",
-    wide: false,
+    wide: true,
     image: "/images/project-01.png",
     tag: "Web Apps",
     title: "Online Store For A Retail Brand",
@@ -64,8 +63,13 @@ const projects = [
   },
 ];
 
-export default function Portfolio({ showIntro = true, showCta = true }) {
+export default function Portfolio({
+  showIntro = true,
+  showCta = true,
+  showFeatured = true,
+}) {
   const [activeFilter, setActiveFilter] = useState("all");
+  const shown = showFeatured ? projects : projects.filter((p) => !p.featured);
 
   return (
     <section className="portfolio" id="our-work">
@@ -100,28 +104,52 @@ export default function Portfolio({ showIntro = true, showCta = true }) {
         </div>
 
         <div className="portfolio__grid">
-          {projects.map((project) => {
+          {shown.map((project) => {
             const visible = activeFilter === "all" || activeFilter === project.category;
-            return (
-              <div
-                key={project.title}
-                id={project.id}
-                className={`portfolio__item ${project.wide ? "portfolio__item--wide" : ""} animate ${visible ? "portfolio-show" : "portfolio-hide"}`}
-              >
-                <div className={`portfolio__image ${project.caseStudy ? "portfolio__image--case" : ""}`}>
-                  {project.caseStudy ? (
-                    <div className="portfolio__casemock" aria-hidden="true">
-                      <span className="portfolio__casemock-bar">
-                        <i></i><i></i><i></i>sbfragrances.com
-                      </span>
-                      <span className="portfolio__casemock-hero"></span>
-                      <span className="portfolio__casemock-row">
-                        <b></b><b></b><b></b><b></b>
+            const classes = [
+              "portfolio__item",
+              project.featured ? "portfolio__item--featured" : "",
+              project.wide ? "portfolio__item--wide" : "",
+              "animate",
+              visible ? "portfolio-show" : "portfolio-hide",
+            ]
+              .filter(Boolean)
+              .join(" ");
+
+            if (project.featured) {
+              return (
+                <Link href={project.href} key={project.title} id={project.id} className={classes}>
+                  <div className="portfolio__case">
+                    <div className="portfolio__case-text">
+                      <span className="portfolio__tag">{project.tag}</span>
+                      <h3 className="portfolio__title">{project.title}</h3>
+                      <p className="portfolio__desc">{project.desc}</p>
+                      <span className="portfolio__link">
+                        <span>View case study</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                          <polyline points="12 5 19 12 12 19" />
+                        </svg>
                       </span>
                     </div>
-                  ) : (
-                    <Image src={project.image} alt={project.title} width={600} height={450} />
-                  )}
+                    <div className="portfolio__case-mock" aria-hidden="true">
+                      <span className="portfolio__case-bar">
+                        <i></i><i></i><i></i>sbfragrances.com
+                      </span>
+                      <span className="portfolio__case-hero" />
+                      <span className="portfolio__case-row">
+                        <b /><b /><b /><b />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            }
+
+            return (
+              <div key={project.title} id={project.id} className={classes}>
+                <div className="portfolio__image">
+                  <Image src={project.image} alt={project.title} width={600} height={450} />
                   <div className="portfolio__overlay">
                     <div className="portfolio__overlay-content">
                       <span className="portfolio__tag">{project.tag}</span>
