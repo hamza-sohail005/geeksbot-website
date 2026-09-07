@@ -42,9 +42,11 @@ export default function PortfolioPage() {
         text="A look at the work we have delivered and the thinking behind it, from quick wins to full product builds."
       />
 
-      <Portfolio showIntro={false} showCta={false} />
+      <div className="dm-dark">
+        <Portfolio showIntro={false} showCta={false} />
+      </div>
 
-      <section className="case-studies" id="case-studies">
+      <section className="case-studies dm-light" id="case-studies">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">

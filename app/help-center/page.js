@@ -99,7 +99,7 @@ export default function Page() {
     <>
       <PageHero title="Help Center" text="Find answers to your questions and get the support you need." />
 
-      <section className="about-mission">
+      <section className="about-mission dm-light">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">

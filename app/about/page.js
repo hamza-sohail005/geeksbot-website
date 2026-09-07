@@ -82,7 +82,7 @@ export default function AboutPage() {
       />
 
       {/* ===== Insights ===== */}
-      <section className="case-studies">
+      <section className="case-studies dm-light">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">
@@ -111,7 +111,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Who We Are ===== */}
-      <section className="about">
+      <section className="about dm-dark">
         <div className="container">
           <div className="about__wrapper">
             <div className="about__intro animate">
@@ -157,7 +157,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Team ===== */}
-      <section className="team">
+      <section className="team dm-light">
         <div className="container">
           <div className="section-title animate">
             <div className="about_sub-title-background">

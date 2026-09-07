@@ -52,7 +52,7 @@ export default function Page() {
         parent={{ label: "Services", href: "/" }}
       />
 
-      <section className="service-detail">
+      <section className="service-detail dm-light">
         <div className="container">
           <div className="service-detail__wrapper">
             <div className="service-detail__content animate">

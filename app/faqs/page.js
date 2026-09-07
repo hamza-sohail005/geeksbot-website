@@ -49,7 +49,7 @@ export default function Page() {
         text="Answers to the questions we hear most often from businesses considering GeeksBot."
       />
 
-      <section className="faq">
+      <section className="faq dm-light">
         <div className="container">
           <div className="faq__list">
             {faqs.map((item, i) => (

@@ -22,7 +22,7 @@ export default function ContactPage() {
         text="Have a question or want to work together? We'd love to hear from you. Get in touch with us and let's start building something great."
       />
 
-      <section className="contact">
+      <section className="contact dm-light">
         <div className="container">
           <div className="contact__wrapper">
             <div className="contact__info-cards">
