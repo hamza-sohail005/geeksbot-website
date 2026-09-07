@@ -4516,15 +4516,24 @@ html {
   box-shadow: inset 0 44px 60px -46px rgba(3, 10, 20, 0.6);
 }
 
-/* cards on a white surface: clean white, soft shadow, hairline border,
-   cyan only on interaction */
+/* cards on a white surface: clean white, soft shadow, hairline border.
+   The :not(:hover):not(.in-view-focus) guard is deliberate - a hovered
+   or scroll-focused testimonial must fall through to the shared teal
+   brand-gradient rule instead of being forced back to white. */
 [data-theme="dark"] .dm-light .stats__card,
 [data-theme="dark"] .dm-light .about-reason,
-[data-theme="dark"] .dm-light .testimonial__card,
-[data-theme="dark"] .dm-light .s-cards {
+[data-theme="dark"] .dm-light .s-cards,
+[data-theme="dark"] .dm-light .testimonial__card:not(:hover):not(.in-view-focus) {
   background: #ffffff;
   border: 1px solid rgba(15, 34, 51, 0.1);
   box-shadow: 0 12px 34px rgba(9, 24, 40, 0.08);
+}
+/* the hovered / scroll-focused testimonial - teal brand gradient */
+[data-theme="dark"] .dm-light .testimonials__grid .testimonial__card:hover,
+[data-theme="dark"] .dm-light .testimonials__grid .testimonial__card.in-view-focus {
+  background: linear-gradient(135deg, #2d8ca8, #3f9dbd, #2dd4bf);
+  border-color: transparent;
+  box-shadow: 0 26px 60px rgba(63, 157, 189, 0.32);
 }
 /* stats: numbers sit straight on white, divided by hairlines */
 [data-theme="dark"] .dm-light .stats__card {
