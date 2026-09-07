@@ -11,6 +11,14 @@ export const metadata = {
 
 const caseStudies = [
   {
+    id: "case-sb-fragrances",
+    tag: "E-Commerce · SEO · AI Creative",
+    title: "SB Fragrances & Oud — A Fragrance Commerce Ecosystem, Built From Zero",
+    text: "No website to a connected system: WordPress + WooCommerce storefront, 40+ product listings, 40+ AI product visuals, 100+ social creatives, technical and local SEO, and 1000+ backlinks.",
+    href: "/case-studies/sb-fragrances",
+    featured: true,
+  },
+  {
     id: "case-retail-scaling",
     tag: "Web Apps",
     title: "Scaling A Retail Platform For Peak Season",
@@ -60,12 +68,18 @@ export default function PortfolioPage() {
 
           <div className="case-studies__grid">
             {caseStudies.map((item, i) => (
-              <Link href={item.href} className="case-study animate" id={item.id} key={item.title}>
+              <Link
+                href={item.href}
+                className={`case-study animate${item.featured ? " case-study--featured" : ""}`}
+                id={item.id}
+                key={item.title}
+              >
                 <span className="case-study__index">{String(i + 1).padStart(2, "0")}</span>
                 <span className="case-study__tag">{item.tag}</span>
                 <h3 className="case-study__title">{item.title}</h3>
                 <p className="case-study__text">{item.text}</p>
                 <span className="case-study__arrow" aria-hidden="true">
+                  {item.featured ? "Read the case study" : null}
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />

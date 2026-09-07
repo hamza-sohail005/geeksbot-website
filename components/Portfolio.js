@@ -13,9 +13,19 @@ const filters = [
 
 const projects = [
   {
-    id: "portfolio-retail-store",
+    id: "portfolio-sb-fragrances",
     category: "web",
     wide: true,
+    caseStudy: true,
+    tag: "Case Study",
+    title: "SB Fragrances & Oud",
+    desc: "A complete fragrance commerce ecosystem built from zero — storefront, catalog, AI product photography, social creative, SEO and local search.",
+    href: "/case-studies/sb-fragrances",
+  },
+  {
+    id: "portfolio-retail-store",
+    category: "web",
+    wide: false,
     image: "/images/project-01.png",
     tag: "Web Apps",
     title: "Online Store For A Retail Brand",
@@ -98,8 +108,20 @@ export default function Portfolio({ showIntro = true, showCta = true }) {
                 id={project.id}
                 className={`portfolio__item ${project.wide ? "portfolio__item--wide" : ""} animate ${visible ? "portfolio-show" : "portfolio-hide"}`}
               >
-                <div className="portfolio__image">
-                  <Image src={project.image} alt={project.title} width={600} height={450} />
+                <div className={`portfolio__image ${project.caseStudy ? "portfolio__image--case" : ""}`}>
+                  {project.caseStudy ? (
+                    <div className="portfolio__casemock" aria-hidden="true">
+                      <span className="portfolio__casemock-bar">
+                        <i></i><i></i><i></i>sbfragrances.com
+                      </span>
+                      <span className="portfolio__casemock-hero"></span>
+                      <span className="portfolio__casemock-row">
+                        <b></b><b></b><b></b><b></b>
+                      </span>
+                    </div>
+                  ) : (
+                    <Image src={project.image} alt={project.title} width={600} height={450} />
+                  )}
                   <div className="portfolio__overlay">
                     <div className="portfolio__overlay-content">
                       <span className="portfolio__tag">{project.tag}</span>
