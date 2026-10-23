@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BOOKING_URL } from "@/data/site";
 import PageHero from "@/components/PageHero";
 
 export const metadata = {
@@ -12,7 +12,7 @@ const faqs = [
   {
     id: "faq-services",
     q: "What services does GeeksBot offer?",
-    a: "We focus on four core services: AI chatbot development, AI automation services, web application development, and mobile app development. We don't spread ourselves thin across unrelated services, so every project gets our full attention.",
+    a: "We focus on five core services: AI chatbot development, AI automation services, web application development, mobile app development, and SEO optimization. We don't spread ourselves thin across unrelated services, so every project gets our full attention.",
   },
   {
     id: "faq-timeline",
@@ -75,9 +75,9 @@ export default function Page() {
             </p>
           </div>
           <div className="animate">
-            <Link href="/contact" className="btn btn--white">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--white">
               Book a Call Today
-            </Link>
+            </a>
           </div>
         </div>
       </section>

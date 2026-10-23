@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { BOOKING_URL } from "@/data/site";
 import Image from "next/image";
 import CountUp from "@/components/CountUp";
 import Portfolio from "@/components/Portfolio";
 import HeroRobot from "@/components/HeroRobot";
 import ServicesOrbit from "@/components/ServicesOrbit";
+
+export const metadata = {
+  alternates: { canonical: "/" },
+};
 
 const aboutCards = [
   {
@@ -24,24 +29,27 @@ const aboutCards = [
   },
 ];
 
+// Verified 5.0 Upwork client reviews. Excerpts are verbatim.
 const testimonials = [
   {
-    text: "GeeksBot rebuilt our website from the ground up and it made a real difference. Our online sales are up significantly since launch.",
-    name: "Sarah Johnson",
-    role: "CEO, TechVentures",
-    featured: false,
+    text: "After a very difficult experience with a previous developer, I was honestly nervous about continuing the work on this website. Arsalan completely changed that experience for me. He is professional, thoughtful, patient, and extremely easy to work with. I would highly recommend Arsalan to anyone looking for a dependable, skilled, and trustworthy developer.",
+    name: "WordPress Website Completion",
+    role: "Verified Upwork Review · Jul 2026",
   },
   {
-    text: "We came to GeeksBot with just an idea for a SaaS platform. They built the entire thing from scratch and it turned out even better than we hoped.",
-    name: "Michael Chen",
-    role: "Founder, CloudSync",
-    featured: true,
+    text: "I think I started this project a bit cautiously, considering the language differences and the distance. However, it turned out not to be an issue at all. I really appreciated his goal-oriented and success-driven mindset. He brought complex ideas to the table, and we were able to implement them together successfully.",
+    name: "Shopify & Amazon Website",
+    role: "Verified Upwork Review · Apr 2026",
   },
   {
-    text: "Our leads more than doubled within a few months of working with GeeksBot. They understand what actually moves the needle for a growing business.",
-    name: "Emily Rodriguez",
-    role: "CMO, GrowthLab",
-    featured: false,
+    text: "The collaboration was excellent. Reliable communication and complete execution of all tasks immediately after the order was placed. He is accessible and provides personalized advice whenever questions arise. I look forward to working together again. Highly recommended! Expert and reliable.",
+    name: "WordPress Update & Content Migration",
+    role: "Verified Upwork Review · Jun 2026",
+  },
+  {
+    text: "Thorough, patient, and detailed. He was able to build my website and update everything exactly as I wanted. Definitely recommend!",
+    name: "Rebrand & SEO Optimization",
+    role: "Verified Upwork Review · Oct 2026",
   },
 ];
 
@@ -134,9 +142,9 @@ export default function HomePage() {
             </p>
 
             <div className="hero__actions">
-              <Link href="/contact" className="btn btn--primary header-btn">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--primary header-btn">
                 Book A Free Consultation
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -266,14 +274,14 @@ export default function HomePage() {
               Businesses Like Yours <span className="gradient-text">Trust GeeksBot</span>
             </h2>
             <p className="section-title__text">
-              Real feedback from real clients we have worked with.
+              Verified 5-star reviews from clients we have worked with on Upwork.
             </p>
           </div>
 
           <div className="testimonials__grid">
             {testimonials.map((testimonial) => (
               <div
-                className={`testimonial__card ${testimonial.featured ? "testimonial__card--featured" : ""} animate`}
+                className="testimonial__card animate"
                 key={testimonial.name}
               >
                 <Stars />

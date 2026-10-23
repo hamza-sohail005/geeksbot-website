@@ -18,48 +18,41 @@ const projects = [
     featured: true,
     tag: "Featured Case Study",
     title: "SB Fragrances & Oud",
-    desc: "A complete fragrance commerce ecosystem built from zero — storefront, catalog, AI product photography, social creative, SEO and local search.",
+    desc: "A complete fragrance commerce ecosystem built from zero — storefront, catalog, AI product photography, SEO and local search. Now on page 1 of Google, with 1.05K organic clicks in 3 months.",
     href: "/case-studies/sb-fragrances",
+    domain: "sbfragrances.com",
+    shot: "/images/case-studies/sb-fragrances/home-hero.webp",
+    shotW: 1296,
+    shotH: 513,
   },
   {
-    id: "portfolio-retail-store",
+    id: "portfolio-intake24",
     category: "web",
-    wide: true,
-    image: "/images/project-01.png",
-    tag: "Web Apps",
-    title: "Online Store For A Retail Brand",
-    desc: "A fast, secure online store where customers can browse and pay in just a few clicks, built to increase conversions.",
-    href: "/web-development",
+    featured: true,
+    theme: "intake",
+    tag: "Case Study · Research Platform",
+    title: "Intake24",
+    desc: "The public website for an open-source dietary research platform — 9 pages, a 5-step product walk-through, Lighthouse 95 desktop performance and 67% lighter images.",
+    href: "/case-studies/intake24",
+    domain: "intake24.org",
+    shot: "/images/case-studies/intake24/home-hero.webp",
+    shotW: 1296,
+    shotH: 504,
   },
   {
-    id: "portfolio-saas-dashboard",
+    id: "portfolio-logyn",
     category: "web",
-    wide: false,
-    image: "/images/showcase-business-growth.png",
-    tag: "Web Apps",
-    title: "Dashboard For A SaaS Company",
-    desc: "A clean, easy to use dashboard that shows live analytics, so teams can see what is happening the moment it happens.",
-    href: "/web-development",
-  },
-  {
-    id: "portfolio-logistics-site",
-    category: "web",
-    wide: false,
-    image: "/images/project-03.png",
-    tag: "Web Apps",
-    title: "Website For A Logistics Company",
-    desc: "A modern company website with a built in blog and fast load times, made to support their team's day to day work.",
-    href: "/web-development",
-  },
-  {
-    id: "portfolio-fintech-app",
-    category: "mobile",
-    wide: true,
-    image: "/images/project-04.png",
-    tag: "Mobile Apps",
-    title: "App Redesign For A Fintech Brand",
-    desc: "A full redesign of their mobile app that made it easier to use and helped more people stick around after signing up.",
-    href: "/app-development",
+    featured: true,
+    theme: "logyn",
+    reverse: true,
+    tag: "Case Study · Product Launch",
+    title: "Logyn",
+    desc: "A launch landing page for a hardware password manager — one scroll from \"what is this?\" to buy now and download, built phone-first in React + Tailwind.",
+    href: "/case-studies/logyn",
+    domain: "logyn-geeksbot.netlify.app",
+    shot: "/images/case-studies/logyn/hero.webp",
+    shotW: 1296,
+    shotH: 810,
   },
 ];
 
@@ -70,6 +63,11 @@ export default function Portfolio({
 }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const shown = showFeatured ? projects : projects.filter((p) => !p.featured);
+  // Only offer filters that have projects behind them; hide the bar when
+  // there is nothing to filter between.
+  const usedFilters = filters.filter(
+    (f) => f.value === "all" || shown.some((p) => p.category === f.value)
+  );
 
   return (
     <section className="portfolio" id="our-work">
@@ -83,15 +81,17 @@ export default function Portfolio({
             Real Projects, <span className="gradient-text">Real Results</span>
           </h2>
           <p className="section-title__text">
-            Here is a look at some of the work we have delivered, from
-            chatbots to full mobile apps. Each project was built to solve a
-            real problem, not just look good in a portfolio.
+            Here is a look at some of the work we have delivered, from a
+            full e-commerce store to a research platform and a product
+            launch. Each project was built to solve a real problem, not just
+            look good in a portfolio.
           </p>
         </div>
         )}
 
+        {usedFilters.length > 2 && (
         <div className="portfolio__filters animate">
-          {filters.map((filter) => (
+          {usedFilters.map((filter) => (
             <button
               key={filter.value}
               type="button"
@@ -102,6 +102,7 @@ export default function Portfolio({
             </button>
           ))}
         </div>
+        )}
 
         <div className="portfolio__grid">
           {shown.map((project) => {
@@ -109,6 +110,8 @@ export default function Portfolio({
             const classes = [
               "portfolio__item",
               project.featured ? "portfolio__item--featured" : "",
+              project.theme ? `portfolio__item--${project.theme}` : "",
+              project.reverse ? "portfolio__item--reverse" : "",
               project.wide ? "portfolio__item--wide" : "",
               "animate",
               visible ? "portfolio-show" : "portfolio-hide",
@@ -134,12 +137,20 @@ export default function Portfolio({
                     </div>
                     <div className="portfolio__case-mock" aria-hidden="true">
                       <span className="portfolio__case-bar">
-                        <i></i><i></i><i></i>sbfragrances.com
+                        <i></i><i></i><i></i>{project.domain}
                       </span>
-                      <span className="portfolio__case-hero" />
-                      <span className="portfolio__case-row">
-                        <b /><b /><b /><b />
-                      </span>
+                      {project.shot ? (
+                        <span className="portfolio__case-shot">
+                          <Image src={project.shot} alt="" width={project.shotW} height={project.shotH} sizes="(max-width: 767px) 92vw, 520px" />
+                        </span>
+                      ) : (
+                        <>
+                          <span className="portfolio__case-hero" />
+                          <span className="portfolio__case-row">
+                            <b /><b /><b /><b />
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
                 </Link>

@@ -2,12 +2,13 @@ import { streamText, tool, convertToModelMessages, createUIMessageStreamResponse
 import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
 import { formatKnowledgeBaseForPrompt, SITE_ROUTES } from "@/data/geek-knowledge-base";
+import { preflight, withCors } from "@/lib/cors";
 
 export const maxDuration = 30;
 
 const SYSTEM_PROMPT = `You are "Geek", the AI guide built into the GeeksBot website
 (geeksbot.com) — a digital agency offering AI chatbot development, AI automation
-services, web application development, and mobile app development. You are also a
+services, web application development, mobile app development, and SEO optimization. You are also a
 live demonstration of what GeeksBot builds for clients, so you represent their
 quality bar: capable, sharp, never generic or scripted.
 
@@ -125,9 +126,13 @@ const submitContactForm = tool({
   // confirmation before actually sending (see GeekAssistant.js).
 });
 
+export function OPTIONS(req) {
+  return preflight(req);
+}
+
 export async function POST(req) {
   if (!process.env.GROQ_API_KEY) {
-    return new Response("Geek is not configured yet (missing GROQ_API_KEY).", { status: 500 });
+    return withCors(req, new Response("Geek is not configured yet (missing GROQ_API_KEY).", { status: 500 }));
   }
 
   const { messages, currentPath } = await req.json();
@@ -141,7 +146,10 @@ export async function POST(req) {
     tools: { navigateTo, scrollToSection, submitContactForm },
   });
 
-  return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
-  });
+  return withCors(
+    req,
+    createUIMessageStreamResponse({
+      stream: toUIMessageStream({ stream: result.stream }),
+    })
+  );
 }

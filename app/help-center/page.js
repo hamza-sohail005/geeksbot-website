@@ -157,23 +157,16 @@ export default function Page() {
             </p>
           </div>
 
-          <div style={{ maxWidth: "820px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div className="help-faq">
             {faqs.map((faq) => (
-              <details
-                className="animate"
-                id={faq.id}
-                key={faq.q}
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: 0, overflow: "hidden" }}
-              >
-                <summary style={{ padding: "20px 24px", cursor: "pointer", fontSize: "17px", fontWeight: 600, color: "#fff", listStyle: "none", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", userSelect: "none" }}>
+              <details className="help-faq__item animate" id={faq.id} key={faq.q}>
+                <summary>
                   {faq.q}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transition: "transform 0.3s ease" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
                 </summary>
-                <div style={{ padding: "0 24px 20px 24px", color: "#b0b0b0", fontSize: "15px", lineHeight: 1.7 }}>
-                  {faq.a}
-                </div>
+                <div className="help-faq__answer">{faq.a}</div>
               </details>
             ))}
           </div>

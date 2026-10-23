@@ -9,10 +9,14 @@ export const SITE_ROUTES = [
   "/ai-chatbot-development",
   "/app-development",
   "/web-development",
+  "/seo-optimization",
   "/contact",
   "/portfolio",
   "/portfolio#our-work",
   "/portfolio#case-studies",
+  "/case-studies/sb-fragrances",
+  "/case-studies/intake24",
+  "/case-studies/logyn",
   "/faqs",
   "/help-center",
   "/cookie-policy",
@@ -31,20 +35,16 @@ export const SITE_ROUTES = [
   "/help-center#help-revisions",
   "/help-center#help-tech",
   "/help-center#help-get-started",
-  "/portfolio#portfolio-retail-store",
-  "/portfolio#portfolio-saas-dashboard",
-  "/portfolio#portfolio-logistics-site",
-  "/portfolio#portfolio-fintech-app",
-  "/portfolio#case-retail-scaling",
-  "/portfolio#case-fintech-relaunch",
-  "/portfolio#case-chatbot-support",
+  "/portfolio#portfolio-sb-fragrances",
+  "/portfolio#portfolio-intake24",
+  "/portfolio#portfolio-logyn",
 ];
 
 const faqs = [
   {
     id: "faq-services",
     q: "What services does GeeksBot offer?",
-    a: "Four core services: AI chatbot development, AI automation services, web application development, and mobile app development.",
+    a: "Five core services: AI chatbot development, AI automation services, web application development, mobile app development, and SEO optimization.",
   },
   {
     id: "faq-timeline",
@@ -69,15 +69,16 @@ const faqs = [
   {
     id: "faq-get-started",
     q: "How do I get started?",
-    a: "Book a free consultation through the Contact page (/contact) to talk through goals, current setup, and a realistic roadmap before any commitment.",
+    a: "Book a free 30-minute consultation directly at https://calendly.com/arsalanpervez-geeksbot/30min, or use the Contact page (/contact), to talk through goals, current setup, and a realistic roadmap before any commitment.",
   },
 ];
 
 const about = {
-  founded: "Founded by Arsalan Pervez and Ashar Shahbaz, both Top Rated professionals on Upwork.",
+  founded: "Led by Arsalan Pervez (Project Lead) and Ashar Shahbaz (Team Lead), both Top Rated professionals on Upwork.",
   team: [
-    { name: "Arsalan Pervez", role: "Co-Founder" },
-    { name: "Ashar Shahbaz", role: "Co-Founder" },
+    { name: "Arsalan Pervez", role: "Project Lead" },
+    { name: "Ashar Shahbaz", role: "Team Lead" },
+    { name: "Hamza Ather", role: "SEO Specialist" },
   ],
   differentiators: [
     "Why Businesses Choose GeeksBot: listens to goals, understands the industry, recommends solutions that create real value instead of just delivering projects.",
@@ -144,25 +145,40 @@ const services = [
     ],
     process: ["Discovery", "Design", "Development", "Launch"],
   },
+  {
+    title: "SEO Optimization",
+    path: "/seo-optimization",
+    summary:
+      "Technical, on-page, local and ecommerce SEO with white hat link building that improves Google visibility and brings in qualified organic traffic. Client results: SB Fragrances on page 1 of Google for oud searches; BrightCore Building Services (commercial cleaning, Charlotte NC, https://brightcorebuildingservices.com, SEO only - website not built by GeeksBot) is described accurately by Google AI answers, backed by local business schema for 14 services and 11 service-area cities.",
+    features: [
+      "Technical SEO Audits and Fixes",
+      "On-Page and Content SEO",
+      "Local SEO and Google Business Profile",
+      "Ecommerce and Product SEO",
+      "White Hat Link Building",
+      "AI Search Visibility (Google AI Answers)",
+    ],
+    process: ["Audit", "Strategy", "Optimization", "Reporting"],
+  },
 ];
 
 const contact = {
   address: "C158, 1, Block 9 Gulshan-e-Iqbal, Karachi, KHI 75300, Pakistan",
   phone: "+92 (323) 201-3083",
   email: "geeksbotdev@gmail.com",
+  booking: "https://calendly.com/arsalanpervez-geeksbot/30min",
 };
 
 const portfolio = {
   projects: [
-    { id: "portfolio-retail-store", title: "Online Store For A Retail Brand", category: "Web Apps", desc: "A fast, secure online store built to increase conversions." },
-    { id: "portfolio-saas-dashboard", title: "Dashboard For A SaaS Company", category: "Web Apps", desc: "A live analytics dashboard so teams can see what's happening in real time." },
-    { id: "portfolio-logistics-site", title: "Website For A Logistics Company", category: "Web Apps", desc: "A modern company website with a built-in blog and fast load times." },
-    { id: "portfolio-fintech-app", title: "App Redesign For A Fintech Brand", category: "Mobile Apps", desc: "A full mobile app redesign that improved usability and retention." },
+    { id: "portfolio-sb-fragrances", title: "SB Fragrances & Oud", category: "Web Apps", desc: "A complete fragrance e-commerce ecosystem built from zero." },
+    { id: "portfolio-intake24", title: "Intake24", category: "Web Apps", desc: "Public website for an open-source dietary research platform." },
+    { id: "portfolio-logyn", title: "Logyn", category: "Web Apps", desc: "Launch landing page for a hardware password manager. Live at https://logyn-geeksbot.netlify.app" },
   ],
   caseStudies: [
-    { id: "case-retail-scaling", title: "Scaling A Retail Platform For Peak Season", tag: "Web Apps", desc: "Rebuilt a growing retailer's checkout flow to handle heavy traffic without losing a sale." },
-    { id: "case-fintech-relaunch", title: "Relaunching A Fintech App Customers Actually Trust", tag: "Mobile Apps", desc: "A ground-up redesign that improved onboarding completion and cut support tickets." },
-    { id: "case-chatbot-support", title: "Automating Support Without Losing The Human Touch", tag: "Chatbots", desc: "An AI chatbot that resolves most incoming questions while handing off the tricky ones seamlessly." },
+    { id: "case-sb-fragrances", route: "/case-studies/sb-fragrances", title: "SB Fragrances & Oud — A Fragrance Commerce Ecosystem, Built From Zero", tag: "E-Commerce · SEO · AI Creative", desc: "No website to a WordPress + WooCommerce storefront with 40+ product listings, 40+ AI product visuals, 100+ social creatives, technical and local SEO, and 1000+ backlinks. SEO results: page 1 on Google for oud searches (e.g. #2 for arabian oud fragrance, #3 for Arabic ouds for Men) and 1.05K clicks / 33.6K impressions in 3 months per Google Search Console." },
+    { id: "case-intake24", route: "/case-studies/intake24", title: "Intake24 — Making a Research Method Feel Easy", tag: "Website · Vue 3 · Performance", desc: "Public website for an open-source dietary recall platform (intake24.org): 9 pages, 31 Vue 3 + Vuetify components, a 5-step product walk-through, Lighthouse 95 desktop performance and 67% lighter images." },
+    { id: "case-logyn", route: "/case-studies/logyn", title: "Logyn — Selling a New Kind of Password Security", tag: "Landing Page · React · Conversion", desc: "Launch landing page for a hardware password manager that stores passwords on a physical card: 7 sections, 5 conversion points, $15 vs $44 price anchoring, phone-first React + Tailwind build." },
   ],
 };
 
@@ -209,6 +225,7 @@ export function formatKnowledgeBaseForPrompt() {
   lines.push(`Address: ${contact.address}`);
   lines.push(`Phone: ${contact.phone}`);
   lines.push(`Email: ${contact.email}`);
+  lines.push(`Book a free 30-minute meeting directly: ${contact.booking}`);
   lines.push("Contact page: /contact");
   lines.push(`Support hours: ${helpCenter.supportHours}`);
 
@@ -216,7 +233,7 @@ export function formatKnowledgeBaseForPrompt() {
   lines.push("(each can be jumped to and highlighted directly with navigateTo using the given path)");
   for (const p of portfolio.projects) lines.push(`- [${p.category}] ${p.title}: ${p.desc} (jump: /portfolio#${p.id})`);
   lines.push("Case studies:");
-  for (const c of portfolio.caseStudies) lines.push(`- [${c.tag}] ${c.title}: ${c.desc} (jump: /portfolio#${c.id})`);
+  for (const c of portfolio.caseStudies) lines.push(`- [${c.tag}] ${c.title}: ${c.desc} (jump: ${c.route || `/portfolio#${c.id}`})`);
 
   lines.push("\n## Help Center (see /help-center)");
   for (const c of helpCenter.categories) lines.push(`- ${c.title}: ${c.items.join("; ")}`);

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { BOOKING_URL } from "@/data/site";
 import PageHero from "@/components/PageHero";
 import ServiceCoreVisual from "@/components/ServiceCoreVisual";
 
@@ -82,9 +82,9 @@ export default function Page() {
                   </li>
                 ))}
               </ul>
-              <Link href="/contact" className="btn btn--primary header-btn">
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--primary header-btn">
                 Book a Call Today
-              </Link>
+              </a>
             </div>
             <ServiceCoreVisual
               benefits={whyGeeksbot}
@@ -122,9 +122,9 @@ export default function Page() {
             </p>
           </div>
           <div className="animate">
-            <Link href="/contact" className="btn btn--white">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--white">
               Book a Call Today
-            </Link>
+            </a>
           </div>
         </div>
       </section>

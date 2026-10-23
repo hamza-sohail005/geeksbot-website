@@ -1,5 +1,21 @@
+import Link from "next/link";
+import Image from "next/image";
 import ContactForm from "@/components/ContactForm";
 import PageHero from "@/components/PageHero";
+import { BOOKING_URL } from "@/data/site";
+
+const NEXT_STEPS = [
+  { t: "We Reply Within 24 Hours", d: "A real person reads your message and gets back to you, Monday to Saturday, 9 AM to 6 PM (PKT)." },
+  { t: "Free Discovery Call", d: "We talk through your goals, your current setup and what success looks like. No commitment needed." },
+  { t: "Proposal & Timeline", d: "You get a clear scope, a custom quote and a realistic timeline before any work begins." },
+  { t: "Kickoff & Build", d: "Work starts in milestones (Discovery, Design, Development, Launch) and you always know where things stand." },
+];
+
+const RECENT_WORK = [
+  { href: "/case-studies/sb-fragrances", tag: "E-Commerce · SEO", title: "SB Fragrances & Oud", img: "/images/case-studies/sb-fragrances/home-hero.webp", w: 1296, h: 513 },
+  { href: "/case-studies/intake24", tag: "Research Platform", title: "Intake24", img: "/images/case-studies/intake24/home-hero.webp", w: 1296, h: 504 },
+  { href: "/case-studies/logyn", tag: "Product Launch", title: "Logyn", img: "/images/case-studies/logyn/hero.webp", w: 1296, h: 810 },
+];
 
 export const metadata = {
   title: "Contact Us",
@@ -44,7 +60,7 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h4>Phone Number</h4>
-                <p>+92 (323) 201-3083</p>
+                <p><a href="tel:+923232013083">+92 (323) 201-3083</a></p>
               </div>
 
               <div className="contact__info-card animate">
@@ -55,7 +71,20 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <h4>Email Address</h4>
-                <p>geeksbotdev@gmail.com</p>
+                <p><a href="mailto:geeksbotdev@gmail.com">geeksbotdev@gmail.com</a></p>
+              </div>
+
+              <div className="contact__info-card animate">
+                <div className="contact__info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </div>
+                <h4>Book a Meeting</h4>
+                <p><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Schedule a free 30-minute call</a></p>
               </div>
             </div>
             
@@ -64,18 +93,48 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="map" style={{ padding: "0 0 100px" }}>
+      <section className="contact-next dm-light">
         <div className="container">
-          <iframe
-            src="https://www.google.com/maps?q=C158%2C%201%2C%20Block%209%20Gulshan-e-Iqbal%2C%20Karachi%2C%20KHI%2075300%2C%20Pakistan&output=embed"
-            width="100%"
-            height="450"
-            style={{ border: 0, borderRadius: "20px" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="GeeksBot Location"
-          ></iframe>
+          <div className="section-title animate">
+            <div className="about_sub-title-background">
+              <h4 className="about__subtitle">What Happens Next</h4>
+            </div>
+            <h2 className="section-title__heading">
+              From Message To <span className="gradient-text">Kickoff</span>
+            </h2>
+            <p className="section-title__text">
+              No sales pressure and no guesswork. Here is exactly what happens
+              after you reach out.
+            </p>
+          </div>
+
+          <ol className="contact-next__steps">
+            {NEXT_STEPS.map((s, i) => (
+              <li className="contact-next__step animate" key={s.t}>
+                <span className="contact-next__n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="contact-next__work animate">
+            <p className="contact-next__work-label">See what we have built recently</p>
+            <div className="contact-next__work-grid">
+              {RECENT_WORK.map((w) => (
+                <Link href={w.href} className="contact-next__card" key={w.href}>
+                  <span className="contact-next__shot">
+                    <Image src={w.img} alt={`${w.title} website`} width={w.w} height={w.h} sizes="(max-width: 767px) 100vw, 360px" />
+                  </span>
+                  <span className="contact-next__meta">
+                    <em>{w.tag}</em>
+                    <strong>{w.title}</strong>
+                    <span>Read the case study →</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>

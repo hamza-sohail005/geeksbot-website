@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import CaseStudyCounter from "./CaseStudyCounter";
+import SeoResults from "../SeoResults";
+import { MoreWork, ScrollShot, ShotTabs, PhoneShot } from "./CaseStudyKit";
 import "./case-study.css";
 
 const LIVE_URL = "https://sbfragrances.com/";
@@ -97,13 +100,26 @@ const PHOTO_STEPS = [
   "WebP + alt text + upload",
 ];
 
+const PHOTO_DIR = "/images/case-studies/sb-fragrances/photo";
+
 const PHOTO_WORK = [
-  { name: "Invictus", brand: "Paco Rabanne", scene: "Aquatic composition; bottle dropped mid-splash for visual energy." },
-  { name: "Polo Red", brand: "Ralph Lauren", scene: "Bold, dark set against smoke for an intense mood." },
-  { name: "Sauvage Parfum", brand: "Dior", scene: "Rugged rock texture with dusk lighting for a masculine tone." },
-  { name: "Dylan Turquoise", brand: "Versace", scene: "Soft silk drape and gold tones for a feminine, luxe feel." },
-  { name: "Polo Green", brand: "Ralph Lauren", scene: "Warm wood tones evoke heritage and tradition." },
-  { name: "Tommy Bahama Maritime", brand: "Collection", scene: "All four scents styled together on one weathered-wood set." },
+  { name: "Invictus 3-Piece Set", brand: "Paco Rabanne", a: "paco-rabanne-1.webp", b: "paco-rabanne-2.webp", scene: "Gift box, bottle, deodorant and travel spray lined up so the whole set reads at a glance." },
+  { name: "Polo Red", brand: "Ralph Lauren", a: "polo-red-1.webp", b: "polo-red-2.webp", scene: "Box and bottle together, then the bottle alone, with the red label kept sharp and accurate." },
+  { name: "Sauvage Parfum Set", brand: "Dior", a: "dior-sauvage-1.webp", b: "dior-sauvage-2.webp", scene: "The detailed limited-edition box stays crisp next to the dark Sauvage bottle." },
+  { name: "Dylan Turquoise Set", brand: "Versace", a: "versace-dylan-1.webp", b: "versace-dylan-2.webp", scene: "Every piece of the 3-piece set shown on the same soft reflective surface." },
+  { name: "Polo Green", brand: "Ralph Lauren", a: "polo-green-1.webp", b: "polo-green-2.webp", scene: "Deep green glass and gold cap lit evenly so the colour matches the real bottle." },
+  { name: "Tommy Bahama Maritime", brand: "4-Piece Set", a: "tommy-bahama-1.webp", b: "tommy-bahama-2.webp", scene: "All four scents styled together, then lined up on their own, so shoppers see exactly what is inside." },
+];
+
+const CATALOG_IMGS = ["p1.webp", "p3.webp", "p5.webp", "p7.webp", "p9.webp", "p11.webp", "p13.webp", "p14.webp", "p15.webp", "p16.webp", "p17.webp", "p18.webp"];
+
+const CREATIVES = [
+  { src: "c1.webp", alt: "Oud and amber perfume still life" },
+  { src: "c2.webp", alt: "Givenchy Gentleman on oud wood" },
+  { src: "c3.webp", alt: "Floral perfume collection with flowers" },
+  { src: "c4.webp", alt: "Paco Rabanne gift set with gold ribbon" },
+  { src: "c5.webp", alt: "Amber Oud Gold Edition close-up" },
+  { src: "c6.webp", alt: "Golden rose hero background" },
 ];
 
 const SOCIAL_PLATFORMS = ["Instagram", "Facebook", "Google Business Profile", "Pinterest"];
@@ -189,10 +205,12 @@ const DIFFERENTIATORS = [
 const MEASURE_VERIFIED = [
   "Product count", "Competitor research", "Creative production", "Pages built",
   "Backlinks built", "SEO implementation", "E-commerce infrastructure", "Website speed optimization",
+  "Organic search: 1.05K clicks & 33.6K impressions in 3 months (Search Console)",
+  "Page-1 Google rankings for target oud keywords (screenshots)",
 ];
 const MEASURE_NOT = [
-  "Revenue or sales figures", "Conversion rate", "Organic traffic change",
-  "Keyword ranking movement", "Follower growth", "ROI / customer acquisition cost",
+  "Revenue or sales figures", "Conversion rate", "Before-vs-after traffic comparison",
+  "Follower growth", "ROI / customer acquisition cost",
 ];
 
 const FINAL_POINTS = [
@@ -310,16 +328,21 @@ function Hero() {
               <span></span><span></span><span></span>
               <em>sbfragrances.com</em>
             </div>
-            <div className="sbcs-browser__body">
-              <div className="sbcs-browser__hero-row" />
-              <div className="sbcs-browser__cards">
-                <span /><span /><span /><span />
-              </div>
-            </div>
+            <Image
+              src="/images/case-studies/sb-fragrances/home-hero.webp"
+              alt="SB Fragrances homepage hero"
+              width={1296}
+              height={513}
+              priority
+              sizes="(max-width: 980px) 100vw, 520px"
+              className="sbcs-browser__shot"
+            />
           </div>
           <div className="sbcs-float sbcs-float--a">
             <span className="sbcs-float__tag">Best seller</span>
-            <span className="sbcs-float__bottle" />
+            <span className="sbcs-float__img">
+              <Image src="/images/case-studies/sb-fragrances/catalog/p3.webp" alt="" width={600} height={800} sizes="104px" />
+            </span>
           </div>
           <div className="sbcs-float sbcs-float--b">
             <span className="sbcs-dot" /> Local search · Garland, TX
@@ -504,6 +527,66 @@ function WebsiteBuild() {
   );
 }
 
+/* ---------------------------------------------------------- live store --- */
+
+const SB_IMG = "/images/case-studies/sb-fragrances";
+
+const LIVE_PAGES = [
+  { label: "Shop", path: "/product-category/men/", src: `${SB_IMG}/shop.webp`, w: 1008, h: 630, alt: "SB Fragrances men's shop page", note: "Price, category, sale and brand filters beside a grid of product cards with discount badges, crossed-out prices and one-click Add to Cart." },
+  { label: "Product Page", path: "/product/amber-oud-gold-edition-al-haramain-100ml/", src: `${SB_IMG}/product.webp`, w: 1008, h: 630, alt: "SB Fragrances product page", note: "Sale price, star rating, in-stock status and a \"sold in the last 24 hours\" urgency badge sit right above Add to Cart and Buy Now." },
+  { label: "Oud Collection", path: "/product-category/arabic-ouds/", src: `${SB_IMG}/category-oud.webp`, w: 1008, h: 630, alt: "SB Fragrances Arabic oud category", note: "A dedicated Arabic oud category, one of the 25+ category pages built around fragrance type and shopping intent." },
+  { label: "Blog", path: "/blog/oud-perfume-fragrance-guide/", src: `${SB_IMG}/blog.webp`, w: 1008, h: 630, alt: "SB Fragrances blog article", note: "Long-form fragrance guides with AI-directed hero imagery, part of the content and semantic SEO strategy." },
+  { label: "About", path: "/about/", src: `${SB_IMG}/about.webp`, w: 1008, h: 630, alt: "SB Fragrances about page", note: "The owner's story and an intro video build trust in authenticity, which matters in a category full of counterfeits." },
+];
+
+function LiveStore() {
+  return (
+    <Section
+      id="live-store"
+      kicker="The Live Store"
+      title="Screenshots From sbfragrances.com"
+      lead="The finished storefront as customers see it today: homepage, catalog, product pages, content and mobile."
+    >
+      <div className="cskit-split">
+        <div className="animate">
+          <ScrollShot
+            src={`${SB_IMG}/home-full.webp`}
+            width={720}
+            height={6416}
+            alt="Full SB Fragrances homepage"
+            domain="sbfragrances.com"
+          />
+        </div>
+        <ul className="cskit-points">
+          <li className="animate"><strong>Hero with instant trust</strong><span>A local promise for Garland, premium product imagery and a 4.8★ Google rating badge (49 reviews) in the first screen.</span></li>
+          <li className="animate"><strong>Merchandised rows</strong><span>Customer favorites, occasions, women&apos;s, men&apos;s, oud and designer collections, each with its own heading and View All.</span></li>
+          <li className="animate"><strong>Store visit + reviews</strong><span>Real customer reviews and a &ldquo;Visit Our Cologne Store in Garland&rdquo; block connect the website to the physical shop.</span></li>
+          <li className="animate"><strong>Brands, blogs and FAQs</strong><span>A designer brand strip, the latest guides and an FAQ section close the page for both shoppers and search engines.</span></li>
+        </ul>
+      </div>
+
+      <ShotTabs shots={LIVE_PAGES} domain="sbfragrances.com" />
+
+      <div className="cskit-phones">
+        <div className="animate">
+          <PhoneShot src={`${SB_IMG}/mobile-home.webp`} width={780} height={1688} alt="SB Fragrances homepage on a phone" />
+        </div>
+        <div className="animate">
+          <PhoneShot src={`${SB_IMG}/mobile-full.webp`} width={312} height={15791} alt="Full SB Fragrances homepage on a phone" scroll />
+        </div>
+        <div className="cskit-phones__note animate">
+          <h3>Built for shoppers on their phones</h3>
+          <p>
+            The hero, rating badge and product cards stack into a single
+            column, with Add to Cart and Buy buttons sized for thumbs. Hover
+            the second phone to scroll the whole mobile homepage.
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 /* -------------------------------------------------------- architecture --- */
 
 function Architecture() {
@@ -552,7 +635,9 @@ function Ecommerce() {
       <div className="sbcs-splitgrid">
         <div className="sbcs-productcard animate">
           <span className="sbcs-productcard__badge">34% OFF</span>
-          <span className="sbcs-productcard__bottle" />
+          <span className="sbcs-productcard__img">
+            <Image src="/images/case-studies/sb-fragrances/catalog/p3.webp" alt="Amber Oud Gold Edition by Al Haramain" width={600} height={800} sizes="300px" />
+          </span>
           <span className="sbcs-productcard__brand">Best seller</span>
           <span className="sbcs-productcard__name">Amber Oud Gold Edition</span>
           <span className="sbcs-productcard__price">
@@ -622,9 +707,11 @@ function Catalog() {
           <li key={f}>{f}</li>
         ))}
       </ul>
-      <div className="sbcs-catalog-visual animate" aria-hidden="true">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <span key={i} style={{ "--i": i }} />
+      <div className="sbcs-catalog-visual sbcs-catalog-visual--real animate">
+        {CATALOG_IMGS.map((f, i) => (
+          <span key={f} style={{ "--i": i }}>
+            <Image src={`/images/case-studies/sb-fragrances/catalog/${f}`} alt="SB Fragrances product listing photo" width={600} height={800} sizes="(max-width: 620px) 33vw, 180px" />
+          </span>
         ))}
       </div>
     </Section>
@@ -654,13 +741,13 @@ function AIPhotography() {
         {PHOTO_WORK.map((p) => (
           <figure className="sbcs-photo animate" key={p.name} tabIndex={0}>
             <div className="sbcs-photo__frame">
-              <span className="sbcs-photo__before">
-                <span className="sbcs-photo__ref" />
-                <em>Before · reference</em>
+              <span className="sbcs-photo__before sbcs-photo__real">
+                <Image src={`${PHOTO_DIR}/${p.a}`} alt={`${p.brand} ${p.name} product photo`} fill sizes="(max-width: 620px) 100vw, 360px" />
+                <em>Main product shot</em>
               </span>
-              <span className="sbcs-photo__after">
-                <span className="sbcs-photo__bottle" />
-                <em>After · directed scene</em>
+              <span className="sbcs-photo__after sbcs-photo__real">
+                <Image src={`${PHOTO_DIR}/${p.b}`} alt={`${p.brand} ${p.name} alternate photo`} fill sizes="(max-width: 620px) 100vw, 360px" />
+                <em>Alternate angle</em>
               </span>
             </div>
             <figcaption>
@@ -671,8 +758,9 @@ function AIPhotography() {
         ))}
       </div>
       <p className="sbcs-caption animate">
-        Hover or focus a card to compare. Product geometry, labels and logos are
-        preserved — the scene changes, the bottle does not.
+        Real product photography from sbfragrances.com. Hover or tap a card
+        to see a second angle. Labels, logos and packaging stay accurate in
+        every shot.
       </p>
     </Section>
   );
@@ -689,11 +777,17 @@ function SocialCreative() {
       title="From Product Assets to a Content Engine"
       lead="100+ social creative assets across Instagram, Facebook, Google Business Profile and Pinterest — built to read like premium fragrance advertising."
     >
-      <div className="sbcs-social-grid animate">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <span key={i} className={`sbcs-social-tile sbcs-social-tile--${i % 4}`} />
+      <div className="sbcs-social-grid sbcs-social-grid--real animate">
+        {CREATIVES.map((c) => (
+          <span key={c.src} className="sbcs-social-tile sbcs-social-tile--real">
+            <Image src={`/images/case-studies/sb-fragrances/creative/${c.src}`} alt={c.alt} fill sizes="(max-width: 620px) 100vw, 360px" />
+          </span>
         ))}
       </div>
+      <p className="sbcs-caption animate">
+        A sample of the AI-directed creative now used across the store&apos;s
+        hero, banners and blog.
+      </p>
       <div className="sbcs-social-meta">
         <div className="animate">
           <h4>Workflow</h4>
@@ -728,20 +822,40 @@ function AIVideo() {
       title="From Static Product Images to AI Video & UGC"
       lead="A production capability was developed alongside the photography — UGC-style ads, in-store video concepts and product-focused motion."
     >
-      <div className="sbcs-video animate" aria-hidden="true">
-        <div className="sbcs-video__frame">
-          <span className="sbcs-video__play" />
+      <div className="sbcs-ugc">
+        <figure className="sbcs-ugc__phone animate">
+          <video
+            className="sbcs-ugc__video"
+            src="/videos/sb-fragrances/ugc-polo-blue-fathers-day.mp4"
+            poster="/videos/sb-fragrances/ugc-polo-blue-poster.webp"
+            controls
+            playsInline
+            preload="metadata"
+            aria-label="UGC video ad: Father's Day gift guide featuring Ralph Lauren Polo Blue"
+          />
+        </figure>
+        <div className="sbcs-ugc__info">
+          <span className="sbcs-ugc__tag animate">UGC Video Ad · 34s · 9:16</span>
+          <h3 className="animate">Father&apos;s Day Gift Guide: Polo Blue</h3>
+          <p className="animate">
+            A creator-style ad built for Reels, TikTok and Shorts. It opens on
+            the question every last-minute shopper is asking, &ldquo;Still
+            don&apos;t have a Father&apos;s Day gift?&rdquo;, and answers it with
+            Ralph Lauren Polo Blue, held clearly in frame from the first second.
+          </p>
+          <ul className="sbcs-ugc__points">
+            <li className="animate"><strong>Hook in the first line</strong><span>A seasonal question that stops the scroll and matches gift-buying intent.</span></li>
+            <li className="animate"><strong>Product always visible</strong><span>The bottle stays in hand and on screen, so the ad works even at a glance.</span></li>
+            <li className="animate"><strong>Captions burned in</strong><span>Readable with the sound off, the way most social video is watched.</span></li>
+            <li className="animate"><strong>Vertical, social-first</strong><span>Shot 9:16 for Instagram, Facebook and TikTok placements.</span></li>
+          </ul>
+          <ul className="sbcs-ugc__caps animate">
+            <li>UGC-style advertising</li>
+            <li>Seasonal campaigns</li>
+            <li>Product-focused video</li>
+          </ul>
         </div>
-        <ul>
-          <li>UGC-style advertising</li>
-          <li>In-store video concepts</li>
-          <li>Product-focused video</li>
-        </ul>
       </div>
-      <p className="sbcs-caption animate">
-        No video files or campaign-level results were available for this
-        document, so this is a capability summary rather than an evidence gallery.
-      </p>
     </Section>
   );
 }
@@ -781,6 +895,21 @@ function SEO() {
           </div>
         </div>
       </div>
+    </Section>
+  );
+}
+
+/* --------------------------------------------------------- seo results --- */
+
+function SEOResultsSection() {
+  return (
+    <Section
+      id="seo-results"
+      kicker="SEO Results"
+      title="Ranking on Page 1 of Google"
+      lead="The SEO work shows up where it matters: SB Fragrances now appears on the first page of Google for high-intent oud searches, next to Wikipedia and national retailers, with rich product listings."
+    >
+      <SeoResults />
     </Section>
   );
 }
@@ -1076,6 +1205,7 @@ export default function SbFragrancesCaseStudy() {
       <Challenge />
       <Framework />
       <WebsiteBuild />
+      <LiveStore />
       <Architecture />
       <Ecommerce />
       <Research />
@@ -1084,6 +1214,7 @@ export default function SbFragrancesCaseStudy() {
       <SocialCreative />
       <AIVideo />
       <SEO />
+      <SEOResultsSection />
       <LocalNationwide />
       <LinkBuilding />
       <Ecosystem />
@@ -1093,6 +1224,7 @@ export default function SbFragrancesCaseStudy() {
       <ToolsTech />
       <Measurement />
       <FinalImpact />
+      <MoreWork current="sb-fragrances" />
       <CaseStudyCTA />
     </article>
   );

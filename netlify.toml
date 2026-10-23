@@ -29,3 +29,12 @@
   for = "/audio/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# The public site is the static build on geeksbot.com (Hostinger); this Netlify
+# deploy serves the chatbot/voice API. Keep its copy of the pages out of
+# Google so it never competes with geeksbot.com. Remove this if the whole
+# site ever moves to Netlify.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

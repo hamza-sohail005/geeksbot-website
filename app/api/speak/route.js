@@ -1,4 +1,14 @@
+import { preflight, withCors } from "@/lib/cors";
+
+export function OPTIONS(req) {
+  return preflight(req);
+}
+
 export async function POST(req) {
+  return withCors(req, await synthesize(req));
+}
+
+async function synthesize(req) {
   const apiKey = process.env.ELEVENLABS_API_KEY;
   const voiceId = process.env.ELEVENLABS_VOICE_ID;
 

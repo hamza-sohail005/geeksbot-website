@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BOOKING_URL } from "@/data/site";
 import PageHero from "@/components/PageHero";
 import Portfolio from "@/components/Portfolio";
 
@@ -19,18 +20,20 @@ const caseStudies = [
     featured: true,
   },
   {
-    id: "case-fintech-relaunch",
-    tag: "Mobile Apps",
-    title: "Relaunching A Fintech App Customers Actually Trust",
-    text: "A ground up redesign that improved onboarding completion and cut support tickets significantly.",
-    href: "/app-development",
+    id: "case-intake24",
+    tag: "Website · Vue 3 · Performance",
+    title: "Intake24 — Making a Research Method Feel Easy",
+    text: "The public website for an open-source dietary recall platform: 9 pages, 31 Vue components, a 5-step product walk-through, Lighthouse 95 desktop performance and 67% lighter images.",
+    href: "/case-studies/intake24",
+    featured: true,
   },
   {
-    id: "case-chatbot-support",
-    tag: "Chatbots",
-    title: "Automating Support Without Losing The Human Touch",
-    text: "An AI chatbot that resolves most incoming questions while handing off the tricky ones seamlessly.",
-    href: "/ai-chatbot-development",
+    id: "case-logyn",
+    tag: "Landing Page · React · Conversion",
+    title: "Logyn — Selling a New Kind of Password Security",
+    text: "A launch page for a hardware password manager: a 7-section narrative, 5 conversion points, $15 vs $44 price anchoring and a phone-first React + Tailwind build.",
+    href: "/case-studies/logyn",
+    featured: true,
   },
 ];
 
@@ -96,9 +99,9 @@ export default function PortfolioPage() {
             </p>
           </div>
           <div className="animate">
-            <Link href="/contact" className="btn btn--white">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--white">
               Book a Call Today
-            </Link>
+            </a>
           </div>
         </div>
       </section>

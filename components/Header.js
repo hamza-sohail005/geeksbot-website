@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BOOKING_URL } from "@/data/site";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -11,6 +12,7 @@ const services = [
   { href: "/ai-automation-services", label: "Automation Service" },
   { href: "/web-development", label: "Web Application Development" },
   { href: "/app-development", label: "Mobile App Development" },
+  { href: "/seo-optimization", label: "SEO Optimization" },
 ];
 
 const portfolioLinks = [
@@ -160,9 +162,9 @@ export default function Header() {
 
           <div className="header__actions">
             <ThemeToggle />
-            <Link href="/contact" className="btn btn--primary header-btn">
+            <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="btn btn--primary header-btn">
               Book a Call
-            </Link>
+            </a>
           </div>
         </div>
       </div>

@@ -2,3 +2,8 @@ node_modules
 .next
 .env.local
 .DS_Store
+.hostinger-build
+dist-hostinger
+
+# Local Netlify folder
+.netlify

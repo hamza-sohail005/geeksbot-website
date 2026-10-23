@@ -9,6 +9,7 @@ import { scrollToAndHighlight } from "@/lib/scrollToAndHighlight";
 import { useSpeechRecognition } from "@/lib/useSpeechRecognition";
 import { speak, stopSpeaking, speechSupported } from "@/lib/speak";
 import { GEEK_GREETING } from "@/lib/geekGreeting";
+import { API_BASE } from "@/lib/api-base";
 
 // Chat history persistence - sessionStorage so a closed/reopened panel (or
 // an accidental page reload) still shows the same conversation, but a new
@@ -112,7 +113,7 @@ export default function GeekAssistant() {
   const { messages, sendMessage, addToolOutput, status, error } = useChat({
     messages: loadStoredMessages(),
     transport: new DefaultChatTransport({
-      api: "/api/chat",
+      api: `${API_BASE}/api/chat`,
       body: () => ({ currentPath: window.location.pathname }),
     }),
     // Without this, addToolOutput() records the tool result locally but never

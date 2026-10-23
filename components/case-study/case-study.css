@@ -1614,10 +1614,11 @@
   .sbcs-milestones,
   .sbcs-tools,
   .sbcs-final,
-  .sbcs-authority-list,
-  .sbcs-stats {
+  .sbcs-authority-list {
     grid-template-columns: 1fr;
   }
+  /* numbers are short - two per row reads better than one long column */
+  .sbcs-stats { gap: 26px 16px; }
   .sbcs-catalog-visual { grid-template-columns: repeat(4, 1fr); }
   .sbcs-ba__panel ul { column-count: 1; }
   .sbcs-funnel li { margin-right: 0 !important; }

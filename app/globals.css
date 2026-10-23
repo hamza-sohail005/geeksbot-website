@@ -292,6 +292,28 @@ button {
   padding: 14px 0;
 }
 
+/* Light theme: frosted glass once scrolling starts, so page content blurs
+   behind the bar instead of colliding with the nav text. Over dark
+   sections (CTA, footer, dark case-study blocks) the glass turns dark to
+   match the light nav text there. */
+html:not([data-theme="dark"]) .header.sticky:not([data-menu-open="true"]) {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(63, 157, 189, 0.12);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+html:not([data-theme="dark"]) .header.sticky.header--on-dark:not([data-menu-open="true"]) {
+  background: rgba(9, 18, 29, 0.55);
+  border-bottom-color: rgba(34, 211, 238, 0.14);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.3);
+}
+@supports not ((-webkit-backdrop-filter: blur(4px)) or (backdrop-filter: blur(4px))) {
+  html:not([data-theme="dark"]) .header.sticky:not([data-menu-open="true"]) {
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
 /* When a dark section (CTA, footer, dark case-study block) sits behind the
    transparent bar, flip the nav to light so it stays visible. */
 .header--on-dark .header__nav-link {
@@ -2082,7 +2104,7 @@ button {
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 28px;
   align-items: stretch;
 }
@@ -2503,10 +2525,16 @@ button {
 
 /* Grid */
 .portfolio__grid {
+  --portfolio-row: 300px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 300px;
+  /* rows size to content: image tiles are fixed-height, featured banners grow */
+  grid-auto-rows: auto;
   gap: 24px;
+}
+
+.portfolio__item:not(.portfolio__item--featured) {
+  height: var(--portfolio-row);
 }
 
 .portfolio__item {
@@ -2648,9 +2676,58 @@ button {
     linear-gradient(150deg, #0c0906, #1a1510);
 }
 
+/* Intake24 + Logyn - same banner, real screenshot in the mock, own palette */
+.portfolio__case-shot {
+  display: block;
+  max-height: 240px;
+  overflow: hidden;
+}
+.portfolio__case-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.portfolio__item--featured:hover .portfolio__case-shot img {
+  transform: scale(1.04);
+}
+.portfolio__item--intake .portfolio__case {
+  background:
+    radial-gradient(80% 130% at 100% 0%, rgba(238, 103, 45, 0.3), transparent 55%),
+    linear-gradient(150deg, #170d07, #2a160c);
+}
+.portfolio__item--intake .portfolio__case-text .portfolio__link { color: #ff9a66; }
+.portfolio__item--intake .portfolio__case-mock { background: #fff; }
+.portfolio__item--intake .portfolio__case-bar { background: #fde7da; color: #c4501c; }
+.portfolio__item--logyn .portfolio__case {
+  background:
+    radial-gradient(80% 130% at 0% 0%, rgba(123, 173, 207, 0.32), transparent 55%),
+    linear-gradient(150deg, #1a202e, #24314a);
+}
+.portfolio__item--logyn .portfolio__case-text .portfolio__link { color: #8fc2e4; }
+.portfolio__item--logyn .portfolio__case-mock { background: #fff; }
+.portfolio__item--logyn .portfolio__case-bar { background: #dcebf5; color: #2f6f9c; }
+[data-theme="dark"] .portfolio__item--intake .portfolio__case {
+  background:
+    radial-gradient(80% 130% at 100% 0%, rgba(238, 103, 45, 0.2), transparent 55%),
+    linear-gradient(150deg, #0c0705, #1c100a);
+}
+[data-theme="dark"] .portfolio__item--logyn .portfolio__case {
+  background:
+    radial-gradient(80% 130% at 0% 0%, rgba(123, 173, 207, 0.2), transparent 55%),
+    linear-gradient(150deg, #0d111a, #172033);
+}
+.portfolio__item--reverse .portfolio__case {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+.portfolio__item--reverse .portfolio__case-mock {
+  order: -1;
+}
+
 @media (max-width: 767px) {
   .portfolio__item--featured { min-height: 0; }
-  .portfolio__case { grid-template-columns: 1fr; }
+  .portfolio__case,
+  .portfolio__item--reverse .portfolio__case { grid-template-columns: 1fr; }
   .portfolio__case-mock { display: none; }
   .portfolio__case-text { padding: 30px 24px; }
 }
@@ -3265,12 +3342,23 @@ button {
   animation: orbitSpin 8s linear infinite;
 }
 
+.team__avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .team__avatar--teal {
   background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
 }
 
 .team__avatar--pink {
   background: linear-gradient(135deg, #f472b6, #ec4899);
+}
+
+.team__avatar--violet {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
 }
 
 .team__info {
@@ -3288,6 +3376,13 @@ button {
   font-size: 14px;
   color: #3f9dbd;
   font-weight: 500;
+}
+
+.team__bio {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
 }
 
 .team__social {
@@ -4140,6 +4235,7 @@ textarea.contact__input {
 .testimonial__card.animate.show:nth-child(1) { transition-delay: 0s; }
 .testimonial__card.animate.show:nth-child(2) { transition-delay: 0.12s; }
 .testimonial__card.animate.show:nth-child(3) { transition-delay: 0.24s; }
+.testimonial__card.animate.show:nth-child(4) { transition-delay: 0.36s; }
 
 .small-features__item.animate.show:nth-child(1) { transition-delay: 0s; }
 .small-features__item.animate.show:nth-child(2) { transition-delay: 0.12s; }
@@ -5186,8 +5282,8 @@ html {
   }
 
   .portfolio__grid {
+    --portfolio-row: 260px;
     grid-template-columns: 1fr;
-    grid-auto-rows: 260px;
     gap: 16px;
   }
 
@@ -5920,4 +6016,339 @@ html {
       height: 40px;
     }
   }
+}
+
+/* ===== Contact - what happens next (replaces the map) ===== */
+.contact-next {
+  padding: 20px 0 110px;
+}
+.contact-next__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  counter-reset: none;
+}
+.contact-next__step {
+  position: relative;
+  padding: 32px 26px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+.contact-next__step:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(63, 157, 189, 0.16);
+  border-color: rgba(63, 157, 189, 0.28);
+}
+.contact-next__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50px;
+  right: -24px;
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, #3f9dbd, #2dd4bf);
+  opacity: 0.5;
+}
+.contact-next__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #3f9dbd, #2dd4bf);
+}
+.contact-next__step h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 10px;
+}
+.contact-next__step p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+.contact-next__work {
+  margin-top: 64px;
+}
+.contact-next__work-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2b8ca8;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.contact-next__work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.contact-next__card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.contact-next__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(63, 157, 189, 0.16);
+}
+.contact-next__shot {
+  display: block;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-soft);
+}
+.contact-next__shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.contact-next__card:hover .contact-next__shot img {
+  transform: scale(1.05);
+}
+.contact-next__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 22px 22px;
+}
+.contact-next__meta em {
+  font-style: normal;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2b8ca8;
+}
+.contact-next__meta strong {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--heading);
+}
+.contact-next__meta span {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #3f9dbd;
+}
+[data-theme="dark"] .contact-next__work-label,
+[data-theme="dark"] .contact-next__meta em {
+  color: #6fe0d4;
+}
+@media (max-width: 1024px) {
+  .contact-next__steps { grid-template-columns: repeat(2, 1fr); }
+  .contact-next__step::after { display: none; }
+}
+@media (max-width: 767px) {
+  .contact-next { padding-bottom: 80px; }
+  .contact-next__steps,
+  .contact-next__work-grid { grid-template-columns: 1fr; }
+}
+
+/* SEO page - client proof block */
+.seo-proof {
+  padding: 100px 0;
+}
+@media (max-width: 767px) {
+  .seo-proof { padding: 70px 0; }
+}
+
+/* Contact info cards - icon on the left, title and detail stacked beside it */
+.contact__wrapper > * { min-width: 0; }
+.contact__info-card {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  column-gap: 18px;
+  align-items: start;
+}
+.contact__info-icon { grid-row: span 2; }
+.contact__info-card h4 { margin-bottom: 4px; }
+.contact__info-card p { overflow-wrap: anywhere; }
+.contact__info-card p a { color: inherit; transition: color 0.2s ease; }
+.contact__info-card p a:hover { color: #3f9dbd; }
+
+/* Help Center FAQ accordion - follows the light/dark theme */
+.help-faq {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.help-faq__item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.help-faq__item:hover,
+.help-faq__item[open] {
+  border-color: rgba(63, 157, 189, 0.35);
+  box-shadow: 0 14px 36px rgba(63, 157, 189, 0.12);
+}
+.help-faq__item summary {
+  padding: 20px 24px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--heading);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+.help-faq__item summary::-webkit-details-marker { display: none; }
+.help-faq__item summary svg {
+  flex-shrink: 0;
+  color: #3f9dbd;
+  transition: transform 0.3s ease;
+}
+.help-faq__item[open] summary svg { transform: rotate(180deg); }
+.help-faq__answer {
+  padding: 0 24px 20px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* ===== Mobile polish ===== */
+.page-hero__breadcrumb {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+.page-hero__breadcrumb > span:last-child { color: var(--text-subtle); }
+
+/* touch screens have no pointer to follow - the custom cursor would just
+   park in the corner and jump to each tap */
+@media (hover: none), (pointer: coarse) {
+  .cursor,
+  .cursor-follower { display: none; }
+}
+
+/* menu button turns into a close (X) while the menu is open */
+.hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 1023px) {
+  /* bigger tap area for the menu button without changing how it looks */
+  .hamburger {
+    box-sizing: content-box;
+    padding: 12px 8px;
+    margin-right: -8px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* open menu: links + actions grouped in the middle, clear of the logo bar */
+  .header__nav {
+    gap: 36px;
+    padding: 96px 24px 40px;
+    overflow-y: auto;
+  }
+  .header__nav nav { flex: 0 0 auto; }
+  .header__nav .header__dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* a blurred header would cap the menu's own blur to the header strip,
+     leaving the page sharp behind the links - let the menu do the blurring */
+  .header[data-menu-open="true"] {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: transparent;
+  }
+  .header[data-menu-open="true"] .header__logo {
+    position: relative;
+    z-index: 10000;
+  }
+  .header__nav-link { padding: 4px 0; font-size: 18px; }
+
+  .page-hero__breadcrumb > span:last-child {
+    min-width: 0;
+    max-width: 62vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .page-hero__breadcrumb a { padding: 6px 0; }
+
+  /* featured project banners: show the real screenshot + summary on phones */
+  .portfolio__case-mock {
+    display: block;
+    order: -1;
+    margin: 18px 18px 0;
+    border-radius: 12px;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
+  }
+  .portfolio__item--featured:hover .portfolio__case-mock { transform: none; }
+  .portfolio__case-shot { max-height: 180px; }
+  .portfolio__case-text { padding: 22px 22px 28px; }
+  .portfolio__case-text .portfolio__desc {
+    display: block;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: none;
+    margin: 0 0 16px;
+  }
+
+  /* footer: two link columns side by side, roomier tap targets */
+  .footer__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 20px;
+  }
+  .footer__links-title { margin-bottom: 12px; }
+  .footer__links-list { gap: 4px; }
+  .footer__links-list a {
+    display: inline-block;
+    padding: 6px 0;
+  }
+  .footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .help-faq__item summary { padding: 16px 18px; font-size: 16px; }
+  .help-faq__answer { padding: 0 18px 18px; }
+}
+
+@media (max-width: 575px) {
+  .process__grid { grid-template-columns: 1fr; }
+  /* full-size tint so the wide, short cards never show its hard edge */
+  .process__card,
+  .process__card:hover,
+  .process__card.in-view-focus {
+    padding: 30px 22px 28px;
+    background-size: 100% 100%, 100% 100%;
+    background-position: 0 0, 0 0;
+  }
+  .process__card::before { font-size: 34px; margin-bottom: 10px; }
+  .contact__info-card { padding: 22px 20px; column-gap: 16px; }
 }

@@ -62,6 +62,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@Geeks_Bot",
     title: "Digital Agency in USA. AI, Web and Mobile App Development. GeeksBot",
     description:
       "GeeksBot is a digital agency in the USA. We build AI chatbots, automation, web apps, and mobile apps for businesses that want real, measurable growth.",
