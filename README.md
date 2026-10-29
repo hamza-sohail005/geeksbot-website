@@ -38,7 +38,7 @@ cp .env.example .env.local   # then fill in real EmailJS credentials
 npm run dev
 ```
 
-Open http://localhost:3000
+Open https://geeksbot.com/
 
 ## Email setup (required for the contact form to work)
 
